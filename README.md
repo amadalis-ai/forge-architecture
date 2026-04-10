@@ -6,7 +6,25 @@ This repository contains the public research, proof artifacts, and execution evi
 
 ---
 
+## Watch it in action
+
+<!-- Videos will be linked here as they are produced. Each video shows a real compiled execution run from start to finish. -->
+
+| Video | What it shows | Duration |
+|-------|--------------|----------|
+| *Coming soon* | Compilation pipeline — from natural language to governed execution | — |
+| *Coming soon* | Billing audit — 753 time entries reconciled with contracts and rate cards | — |
+| *Coming soon* | The compilation brief — how the compiler explains its own decisions | — |
+
+Videos are in [`assets/videos/`](assets/videos/).
+
+---
+
 ## Where to start
+
+**If you want to watch** — see the system compile and execute real work:
+
+- [Videos](#watch-it-in-action) — recorded demos of compiled execution runs
 
 **If you want the story** — what I built, why, and how I got here:
 
