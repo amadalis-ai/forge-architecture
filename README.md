@@ -17,10 +17,6 @@ Both documents are also available on [amadalis.ai](https://amadalis.ai).
 
 | Artifact | What it proves |
 |----------|---------------|
-| [Dispatch packet](prev-content/dispatch-packets.md) | Complete compilation output for a 4-step run with sub-steps, receipts, and retry evidence |
-| [Planner template](prev-content/imprint-template-sample.md) | The imprinting protocol — self-describing templates that drive plan generation |
-| [Domain & workflow packs](prev-content/Autonomy_Seed_Packs_v2_Enriched.json) | 12 domain packs, 12 workflow packs, 24 artifact kinds, 15 slots, 5 policy profiles |
-| [Contract schemas](prev-content/contract-schemas.md) | Three JSON schemas: planner abstract, compiler compiled, operator envelope |
 | [Execution profiles](docs/execution-profiles.md) | Per-phase model bindings, validation manifests, skill policy, budget overrides |
 | [Skill package](docs/html-report-generator/) | Full HTML report generator — 21 files: scripts, templates, themes, schemas |
 
