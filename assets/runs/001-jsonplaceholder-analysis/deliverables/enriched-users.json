@@ -1,0 +1,102 @@
+[
+  {
+    "id": 1,
+    "name": "Leanne Graham",
+    "email": "Sincere@april.biz",
+    "company_name": "Romaguera-Crona",
+    "post_count": 10,
+    "avg_body_length": 164.5,
+    "todo_completion_rate": 0.55,
+    "quality_score": 4.33
+  },
+  {
+    "id": 2,
+    "name": "Ervin Howell",
+    "email": "Shanna@melissa.tv",
+    "company_name": "Deckow-Crist",
+    "post_count": 10,
+    "avg_body_length": 162.9,
+    "todo_completion_rate": 0.4,
+    "quality_score": 4.24
+  },
+  {
+    "id": 3,
+    "name": "Clementine Bauch",
+    "email": "Nathan@yesenia.net",
+    "company_name": "Romaguera-Jacobson",
+    "post_count": 10,
+    "avg_body_length": 153.8,
+    "todo_completion_rate": 0.35,
+    "quality_score": 4.21
+  },
+  {
+    "id": 4,
+    "name": "Patricia Lebsack",
+    "email": "Julianne.OConner@kory.org",
+    "company_name": "Robel-Corkery",
+    "post_count": 10,
+    "avg_body_length": 182.3,
+    "todo_completion_rate": 0.3,
+    "quality_score": 4.18
+  },
+  {
+    "id": 5,
+    "name": "Chelsey Dietrich",
+    "email": "Lucio_Hettinger@annie.ca",
+    "company_name": "Keebler LLC",
+    "post_count": 10,
+    "avg_body_length": 162.5,
+    "todo_completion_rate": 0.6,
+    "quality_score": 4.36
+  },
+  {
+    "id": 6,
+    "name": "Mrs. Dennis Schulist",
+    "email": "Karley_Dach@jasper.info",
+    "company_name": "Considine-Lockman",
+    "post_count": 10,
+    "avg_body_length": 147.0,
+    "todo_completion_rate": 0.3,
+    "quality_score": 4.18
+  },
+  {
+    "id": 7,
+    "name": "Kurtis Weissnat",
+    "email": "Telly.Hoeger@billy.biz",
+    "company_name": "Johns Group",
+    "post_count": 10,
+    "avg_body_length": 163.5,
+    "todo_completion_rate": 0.45,
+    "quality_score": 4.27
+  },
+  {
+    "id": 8,
+    "name": "Nicholas Runolfsdottir V",
+    "email": "Sherwood@rosamond.me",
+    "company_name": "Abernathy Group",
+    "post_count": 10,
+    "avg_body_length": 160.6,
+    "todo_completion_rate": 0.55,
+    "quality_score": 4.33
+  },
+  {
+    "id": 9,
+    "name": "Glenna Reichert",
+    "email": "Chaim_McDermott@dana.io",
+    "company_name": "Yost and Sons",
+    "post_count": 10,
+    "avg_body_length": 154.6,
+    "todo_completion_rate": 0.4,
+    "quality_score": 4.24
+  },
+  {
+    "id": 10,
+    "name": "Clementina DuBuque",
+    "email": "Rey.Padberg@karina.biz",
+    "company_name": "Hoeger LLC",
+    "post_count": 10,
+    "avg_body_length": 154.7,
+    "todo_completion_rate": 0.6,
+    "quality_score": 4.36
+  }
+]

@@ -1,0 +1,1432 @@
+[
+  {
+    "label": "Fetch JSONPlaceholder data",
+    "status": "completed",
+    "step_id": "ps-0-fetch-jsonplaceholder-data",
+    "attempts": 1,
+    "ended_at": 1775787131305,
+    "artifacts": [],
+    "step_hash": "sha256:060d1b1fbab9249f5c7127bb7e41515e31bb6972cb6a2a3fe4aa58c1593555d5",
+    "step_kind": "tool_task",
+    "depends_on": [],
+    "started_at": 1775787019622,
+    "step_index": 0,
+    "kernel_hash": null,
+    "step_nature": "HYBRID",
+    "total_steps": 4,
+    "contract_hash": "sha256:060d1b1fbab9249f5c7127bb7e41515e31bb6972cb6a2a3fe4aa58c1593555d5",
+    "final_backend": "sandbox.session",
+    "repair_policy": {
+      "strategy": "retry_same_contract",
+      "max_retries": 6,
+      "block_on_missing_inputs": false,
+      "immutable_output_bindings": true
+    },
+    "routing_reason": "governed_routing_mode:sandbox_first",
+    "artifact_inputs": [],
+    "execution_hints": null,
+    "fallback_reason": null,
+    "validator_rules": {
+      "fail_on_missing_outputs": false,
+      "require_declared_outputs": false,
+      "require_input_artifact_refs": false,
+      "enforce_compiled_output_bindings": false
+    },
+    "abstract_outputs": [
+      {
+        "slot": "raw_api_dataset",
+        "notes": "Fetched JSONPlaceholder payloads needed for downstream relationship assembly.",
+        "path_hint": null,
+        "row_grain": null,
+        "slot_class": "transport",
+        "format_hint": "json"
+      }
+    ],
+    "allowed_tool_ids": [
+      "sandbox.session"
+    ],
+    "artifact_outputs": [
+      "output/step_result.json",
+      "meta/mcp-tools/journal.ndjson",
+      "meta/mcp-tools/calls.tar.gz",
+      "output/_slots/ps-0-fetch-jsonplaceholder-data/raw_api_dataset.json"
+    ],
+    "expected_outputs": [
+      {
+        "path": "output/step_result.json",
+        "role": "meta",
+        "location": "sandbox"
+      },
+      {
+        "path": "meta/mcp-tools/journal.ndjson",
+        "role": "meta",
+        "location": "sandbox"
+      },
+      {
+        "path": "meta/mcp-tools/calls.tar.gz",
+        "role": "meta",
+        "location": "sandbox"
+      },
+      {
+        "path": "output/_slots/ps-0-fetch-jsonplaceholder-data/raw_api_dataset.json",
+        "role": "primary",
+        "location": "sandbox"
+      }
+    ],
+    "retry_of_step_id": null,
+    "step_result_json": "{\"source\":\"system\",\"status\":\"completed\",\"step_outcome_summary\":[\"Fetch JSONPlaceholder data finished with status=completed.\",\"Tool calls: 1.\",\"Artifacts: .sandbox/runs/run_e2346f78-ccd1-4150-b42f-02e01091d9d7/manifests/ps-0-fetch-jsonplaceholder-data-attempt-1/input_manifest.json, .sandbox/runs/run_e2346f78-ccd1-4150-b42f-02e01091d9d7/manifests/ps-0-fetch-jsonplaceholder-data-attempt-1/output_manifest.json, support/ps-0-fetch-jsonplaceholder-data/input_manifest.json.\",\"Observed resources: support/ps-0-fetch-jsonplaceholder-data/input_manifest.json, /workspace/meta/support/ps-0-fetch-jsonplaceholder-data/input_manifest.json, support/input_manifest.json.\"],\"artifacts_created\":[{\"path\":\".sandbox/runs/run_e2346f78-ccd1-4150-b42f-02e01091d9d7/manifests/ps-0-fetch-jsonplaceholder-data-attempt-1/input_manifest.json\",\"kind\":\"temp\",\"bytes\":745,\"mime\":\"application/json\",\"checksum_sha256\":null},{\"path\":\".sandbox/runs/run_e2346f78-ccd1-4150-b42f-02e01091d9d7/manifests/ps-0-fetch-jsonplaceholder-data-attempt-1/output_manifest.json\",\"kind\":\"temp\",\"bytes\":1576,\"mime\":\"application/json\",\"checksum_sha256\":null},{\"path\":\"support/ps-0-fetch-jsonplaceholder-data/input_manifest.json\",\"kind\":\"temp\",\"bytes\":745,\"mime\":\"application/json\",\"checksum_sha256\":null},{\"path\":\"support/input_manifest.json\",\"kind\":\"temp\",\"bytes\":745,\"mime\":\"application/json\",\"checksum_sha256\":null},{\"path\":\"output/_slots/ps-0-fetch-jsonplaceholder-data/raw_api_dataset.json\",\"kind\":\"deliverable\",\"bytes\":null,\"mime\":null,\"checksum_sha256\":null},{\"path\":\"meta/mcp-tools/journal.ndjson\",\"kind\":\"temp\",\"bytes\":null,\"mime\":null,\"checksum_sha256\":null},{\"path\":\"meta/mcp-tools/calls.tar.gz\",\"kind\":\"temp\",\"bytes\":null,\"mime\":null,\"checksum_sha256\":null}],\"observed_resources\":[{\"type\":\"workspace_file\",\"path\":\"support/ps-0-fetch-jsonplaceholder-data/input_manifest.json\"},{\"type\":\"workspace_file\",\"path\":\"/workspace/meta/support/ps-0-fetch-jsonplaceholder-data/input_manifest.json\"},{\"type\":\"workspace_file\",\"path\":\"support/input_manifest.json\"},{\"type\":\"workspace_file\",\"path\":\"/workspace/meta/input_manifest.json\"},{\"type\":\"log\",\"path\":\".sandbox/runs/run_e2346f78-ccd1-4150-b42f-02e01091d9d7/manifests/ps-0-fetch-jsonplaceholder-data-attempt-1/input_manifest.json\"},{\"type\":\"log\",\"path\":\".sandbox/runs/run_e2346f78-ccd1-4150-b42f-02e01091d9d7/manifests/ps-0-fetch-jsonplaceholder-data-attempt-1/output_manifest.json\"},{\"type\":\"workspace_file\",\"path\":\"/workspace/meta/output_manifest.json\"},{\"type\":\"workspace_file\",\"path\":\"/workspace/output/_slots/ps-0-fetch-jsonplaceholder-data/raw_api_dataset.json\"},{\"type\":\"workspace_file\",\"path\":\"output/_slots/ps-0-fetch-jsonplaceholder-data/raw_api_dataset.json\"},{\"type\":\"workspace_file\",\"path\":\"/workspace/meta/mcp-tools/journal.ndjson\"},{\"type\":\"workspace_file\",\"path\":\"meta/mcp-tools/journal.ndjson\"},{\"type\":\"workspace_file\",\"path\":\"/workspace/meta/mcp-tools/calls.tar.gz\"},{\"type\":\"workspace_file\",\"path\":\"meta/mcp-tools/calls.tar.gz\"}],\"decisions\":[\"Step acceptance criteria: Transport slot raw_api_dataset is written and contains the fetched users collection, per-user posts/todos/albums collections keyed or traceable by user id, the first 20 posts, the first 20 comments, comments for post 1, photos for album 1, and the source identifiers needed for later joins.\",\"Artifacts created: .sandbox/runs/run_e2346f78-ccd1-4150-b42f-02e01091d9d7/manifests/ps-0-fetch-jsonplaceholder-data-attempt-1/input_manifest.json, .sandbox/runs/run_e2346f78-ccd1-4150-b42f-02e01091d9d7/manifests/ps-0-fetch-jsonplaceholder-data-attempt-1/output_manifest.json, support/ps-0-fetch-jsonplaceholder-data/input_manifest.json, support/input_manifest.json\",\"Observed resources: support/ps-0-fetch-jsonplaceholder-data/input_manifest.json, /workspace/meta/support/ps-0-fetch-jsonplaceholder-data/input_manifest.json, support/input_manifest.json, /workspace/meta/input_manifest.json\"],\"assumptions\":[],\"next_step_hints\":[\"Use .sandbox/runs/run_e2346f78-ccd1-4150-b42f-02e01091d9d7/manifests/ps-0-fetch-jsonplaceholder-data-attempt-1/input_manifest.json, .sandbox/runs/run_e2346f78-ccd1-4150-b42f-02e01091d9d7/manifests/ps-0-fetch-jsonplaceholder-data-attempt-1/output_manifest.json, support/ps-0-fetch-jsonplaceholder-data/input_manifest.json as downstream inputs where relevant.\",\"Prefer the concrete observed resources over guessed paths.\"],\"errors_and_recovery\":[],\"repro\":{\"tool_ids\":[\"sandbox.session\"],\"script_paths\":[],\"log_paths\":[],\"rerun_hint\":\"Re-run step ps-0-fetch-jsonplaceholder-data (Fetch JSONPlaceholder data) using sandbox.session\"}}",
+    "success_criteria": "Transport slot raw_api_dataset is written and contains the fetched users collection, per-user posts/todos/albums collections keyed or traceable by user id, the first 20 posts, the first 20 comments, comments for post 1, photos for album 1, and the source identifiers needed for later joins.",
+    "execution_backend": "sandbox.session",
+    "execution_pattern": "single_shot_render",
+    "observations_text": "STEP NATURE: DETERMINISTIC\n\nCONTRACT (MUST):\n* Inputs: none from workspace; fetch JSON from https://jsonplaceholder.typicode.com/users, /users/{id}/posts, /users/{id}/todos, /users/{id}/albums for every discovered user id, plus /posts?_limit=20, /comments?_limit=20, /posts/1/comments, and /albums/1/photos.\n* Outputs: write transport slot raw_api_dataset in JSON carrying all fetched collections and source identifiers required for downstream relationship assembly. No field-level schema has been declared for this artifact. Inspect the real data you read or fetch, choose the smallest coherent set of fields that best satisfies the user's request, and use that same schema consistently for every record or object you write. The artifact shape you materialize is what downstream steps will observe and rely on, so do not let the schema drift once chosen.\n* Acceptance checks: transport slot raw_api_dataset exists; it contains the full /users result, per-user posts/todos/albums for every fetched user id, exactly 20 rows from /posts?_limit=20, exactly 20 rows from /comments?_limit=20, an array from /posts/1/comments, and an array from /albums/1/photos.\n* Constraints / non-goals: do not omit any listed endpoint; do not compute user metrics or render HTML in this step; do not use unlisted endpoints.\n* Interfaces / invariants: preserve join identifiers needed downstream, including user id, post id, post.userId, todo.userId, album.userId, comment.postId, and photo.albumId.\n\nGUIDANCE (SHOULD):\n* Preferred stack/tools: HTTP retrieval with JSON parsing and basic retry/error handling.\n* Preferred patterns: fetch /users first, iterate user ids deterministically, and keep fetched collections clearly distinguishable in the transport artifact.\n* Efficiency / reliability hints: avoid duplicate requests where possible and verify HTTP success before writing the transport artifact.\n\nCREATIVE BRIEF (MAY):\n* Look/feel/tone: none.\n* Stylistic constraints or preferences: none.\n* Optional polish (must not expand scope): none.",
+    "predicted_backend": "sandbox.session",
+    "repair_delta_json": null,
+    "current_attempt_id": null,
+    "execution_contract": {
+      "pattern": "single_shot_render",
+      "step_nature": "HYBRID",
+      "repair_strategy": "retry_with_small_fix",
+      "timeout_ceiling_ms": 1800000,
+      "allowed_tool_call_count": 3
+    },
+    "retry_lineage_json": null,
+    "input_artifact_refs": [],
+    "output_artifact_refs": [
+      {
+        "kind": "artifact",
+        "path": "output/step_result.json",
+        "ref_id": "ps-0-fetch-jsonplaceholder-data:output:0:step-result",
+        "logical_name": "step-result"
+      },
+      {
+        "kind": "artifact",
+        "path": "meta/mcp-tools/journal.ndjson",
+        "ref_id": "ps-0-fetch-jsonplaceholder-data:output:1:journal",
+        "logical_name": "journal"
+      },
+      {
+        "kind": "artifact",
+        "path": "meta/mcp-tools/calls.tar.gz",
+        "ref_id": "ps-0-fetch-jsonplaceholder-data:output:2:calls-tar",
+        "logical_name": "calls-tar"
+      },
+      {
+        "kind": "artifact",
+        "path": "output/_slots/ps-0-fetch-jsonplaceholder-data/raw_api_dataset.json",
+        "ref_id": "ps-0-fetch-jsonplaceholder-data:output:3:raw-api-dataset",
+        "logical_name": "raw-api-dataset"
+      }
+    ],
+    "sandbox_mcp_contract": {
+      "calls_dir": "/workspace/meta/mcp-tools/calls",
+      "transport": "sandbox_tools_proxy",
+      "journal_path": "meta/mcp-tools/journal.ndjson",
+      "python_module": "sandbox_platform",
+      "python_function": "call",
+      "proxy_url_env_var": "TOOLS_PROXY_URL",
+      "calls_archive_path": "meta/mcp-tools/calls.tar.gz",
+      "proxy_token_env_var": "TOOLS_PROXY_TOKEN",
+      "container_result_root": "/workspace/meta/mcp-tools",
+      "python_helper_env_var": "SANDBOX_BRIDGE_PYTHON",
+      "tool_policy_allowlist": [
+        "sandbox.archive.unzip",
+        "sandbox.archive.zip",
+        "sandbox.execStream",
+        "sandbox.fs.read",
+        "sandbox.fs.write",
+        "sandbox.http.request",
+        "sandbox.runtime.node",
+        "sandbox.runtime.pip-install",
+        "workspace.files.materialize",
+        "workspace.files.pdftotext",
+        "workspace.files.put",
+        "workspace.files.write",
+        "workspace.run_files.list",
+        "workspace.run_files.read"
+      ],
+      "workspace_result_root": "meta/mcp-tools"
+    },
+    "recommended_skill_ids": [
+      "skill.system.sandbox"
+    ],
+    "required_capabilities": [
+      "http_api_retrieval",
+      "json_parsing",
+      "remote_data_collection"
+    ],
+    "suggested_skills_json": null,
+    "executable_contract_v2": {
+      "step_id": "ps-0-fetch-jsonplaceholder-data",
+      "step_kind": "tool_task",
+      "provenance": {
+        "finalized_at_ms": 0,
+        "dependency_policy": "declared-closure-committed-output-normalized",
+        "compiled_step_hash": "sha256:060d1b1fbab9249f5c7127bb7e41515e31bb6972cb6a2a3fe4aa58c1593555d5"
+      },
+      "step_label": "Fetch JSONPlaceholder data",
+      "kernel_hash": null,
+      "step_inputs": [],
+      "step_outputs": [
+        {
+          "role": "primary",
+          "ref_id": "ps-0-fetch-jsonplaceholder-data:output:3:raw-api-dataset",
+          "location": "sandbox",
+          "required": true,
+          "logical_path": "output/_slots/ps-0-fetch-jsonplaceholder-data/raw_api_dataset.json",
+          "runtime_path": "/workspace/output/_slots/ps-0-fetch-jsonplaceholder-data/raw_api_dataset.json",
+          "workspace_path": "output/_slots/ps-0-fetch-jsonplaceholder-data/raw_api_dataset.json"
+        }
+      ],
+      "contract_hash": "sha256:060d1b1fbab9249f5c7127bb7e41515e31bb6972cb6a2a3fe4aa58c1593555d5",
+      "final_backend": "sandbox.session",
+      "repair_policy": {
+        "strategy": "retry_same_contract",
+        "max_retries": 6,
+        "block_on_missing_inputs": false,
+        "immutable_output_bindings": true
+      },
+      "execution_mode": null,
+      "routing_reason": "governed_routing_mode:sandbox_first",
+      "support_inputs": [
+        {
+          "location": "sandbox",
+          "required": true,
+          "logical_path": "support/ps-0-fetch-jsonplaceholder-data/input_manifest.json",
+          "runtime_path": "/workspace/meta/support/ps-0-fetch-jsonplaceholder-data/input_manifest.json",
+          "support_kind": "input_manifest",
+          "workspace_path": "support/ps-0-fetch-jsonplaceholder-data/input_manifest.json"
+        },
+        {
+          "location": "sandbox",
+          "required": true,
+          "logical_path": "support/input_manifest.json",
+          "runtime_path": "/workspace/meta/input_manifest.json",
+          "support_kind": "input_manifest",
+          "workspace_path": "support/input_manifest.json"
+        }
+      ],
+      "fallback_reason": null,
+      "support_outputs": [
+        {
+          "role": "auxiliary",
+          "location": "sandbox",
+          "required": true,
+          "logical_path": "output/step_result.json",
+          "runtime_path": "/workspace/output/step_result.json",
+          "support_kind": "system_artifact",
+          "workspace_path": "output/step_result.json"
+        },
+        {
+          "role": "auxiliary",
+          "location": "sandbox",
+          "required": true,
+          "logical_path": "meta/mcp-tools/journal.ndjson",
+          "runtime_path": "/workspace/meta/mcp-tools/journal.ndjson",
+          "support_kind": "system_artifact",
+          "workspace_path": "meta/mcp-tools/journal.ndjson"
+        },
+        {
+          "role": "auxiliary",
+          "location": "sandbox",
+          "required": true,
+          "logical_path": "meta/mcp-tools/calls.tar.gz",
+          "runtime_path": "/workspace/meta/mcp-tools/calls.tar.gz",
+          "support_kind": "system_artifact",
+          "workspace_path": "meta/mcp-tools/calls.tar.gz"
+        }
+      ],
+      "validator_rules": {
+        "fail_on_missing_outputs": false,
+        "require_declared_outputs": false,
+        "require_input_artifact_refs": false,
+        "enforce_compiled_output_bindings": false
+      },
+      "allowed_tool_ids": [
+        "sandbox.session"
+      ],
+      "contract_version": 2,
+      "execution_policy": {
+        "pattern": "single_shot_render",
+        "step_nature": "HYBRID",
+        "repair_strategy": "retry_with_small_fix",
+        "timeout_ceiling_ms": 1800000,
+        "allowed_tool_call_count": 3
+      },
+      "execution_backend": "sandbox.session",
+      "predicted_backend": "sandbox.session"
+    },
+    "continuity_handoff_json": "{\"schema_version\":1,\"step_id\":\"ps-0-fetch-jsonplaceholder-data\",\"step_index\":0,\"total_steps\":4,\"authoritative_outputs\":[{\"path\":\".sandbox/runs/run_e2346f78-ccd1-4150-b42f-02e01091d9d7/manifests/ps-0-fetch-jsonplaceholder-data-attempt-1/input_manifest.json\",\"kind\":\"temp\",\"bytes\":745,\"checksum_sha256\":null},{\"path\":\".sandbox/runs/run_e2346f78-ccd1-4150-b42f-02e01091d9d7/manifests/ps-0-fetch-jsonplaceholder-data-attempt-1/output_manifest.json\",\"kind\":\"temp\",\"bytes\":1576,\"checksum_sha256\":null},{\"path\":\"support/ps-0-fetch-jsonplaceholder-data/input_manifest.json\",\"kind\":\"temp\",\"bytes\":745,\"checksum_sha256\":null},{\"path\":\"support/input_manifest.json\",\"kind\":\"temp\",\"bytes\":745,\"checksum_sha256\":null},{\"path\":\"output/_slots/ps-0-fetch-jsonplaceholder-data/raw_api_dataset.json\",\"kind\":\"deliverable\",\"bytes\":null,\"checksum_sha256\":null},{\"path\":\"meta/mcp-tools/journal.ndjson\",\"kind\":\"temp\",\"bytes\":null,\"checksum_sha256\":null},{\"path\":\"meta/mcp-tools/calls.tar.gz\",\"kind\":\"temp\",\"bytes\":null,\"checksum_sha256\":null}],\"input_provenance\":[{\"type\":\"workspace_file\",\"path\":\"support/ps-0-fetch-jsonplaceholder-data/input_manifest.json\"},{\"type\":\"workspace_file\",\"path\":\"/workspace/meta/support/ps-0-fetch-jsonplaceholder-data/input_manifest.json\"},{\"type\":\"workspace_file\",\"path\":\"support/input_manifest.json\"},{\"type\":\"workspace_file\",\"path\":\"/workspace/meta/input_manifest.json\"},{\"type\":\"log\",\"path\":\".sandbox/runs/run_e2346f78-ccd1-4150-b42f-02e01091d9d7/manifests/ps-0-fetch-jsonplaceholder-data-attempt-1/input_manifest.json\"},{\"type\":\"log\",\"path\":\".sandbox/runs/run_e2346f78-ccd1-4150-b42f-02e01091d9d7/manifests/ps-0-fetch-jsonplaceholder-data-attempt-1/output_manifest.json\"},{\"type\":\"workspace_file\",\"path\":\"/workspace/meta/output_manifest.json\"},{\"type\":\"workspace_file\",\"path\":\"/workspace/output/_slots/ps-0-fetch-jsonplaceholder-data/raw_api_dataset.json\"},{\"type\":\"workspace_file\",\"path\":\"output/_slots/ps-0-fetch-jsonplaceholder-data/raw_api_dataset.json\"},{\"type\":\"workspace_file\",\"path\":\"/workspace/meta/mcp-tools/journal.ndjson\"},{\"type\":\"workspace_file\",\"path\":\"meta/mcp-tools/journal.ndjson\"},{\"type\":\"workspace_file\",\"path\":\"/workspace/meta/mcp-tools/calls.tar.gz\"},{\"type\":\"workspace_file\",\"path\":\"meta/mcp-tools/calls.tar.gz\"}],\"semantic_facts\":[\"Fetch JSONPlaceholder data finished with status=completed.\",\"Tool calls: 1.\",\"Artifacts: .sandbox/runs/run_e2346f78-ccd1-4150-b42f-02e01091d9d7/manifests/ps-0-fetch-jsonplaceholder-data-attempt-1/input_manifest.json, .sandbox/runs/run_e2346f78-ccd1-4150-b42f-02e01091d9d7/manifests/ps-0-fetch-jsonplaceholder-data-attempt-1/output_manifest.json, support/ps-0-fetch-jsonplaceholder-data/input_manifest.json.\",\"Observed resources: support/ps-0-fetch-jsonplaceholder-data/input_manifest.json, /workspace/meta/support/ps-0-fetch-jsonplaceholder-data/input_manifest.json, support/input_manifest.json.\",\"Step acceptance criteria: Transport slot raw_api_dataset is written and contains the fetched users collection, per-user posts/todos/albums collections keyed or traceable by user id, the first 20 posts, the first 20 comments, comments for post 1, photos for album 1, and the source identifiers needed for later joins.\",\"Artifacts created: .sandbox/runs/run_e2346f78-ccd1-4150-b42f-02e01091d9d7/manifests/ps-0-fetch-jsonplaceholder-data-attempt-1/input_manifest.json, .sandbox/runs/run_e2346f78-ccd1-4150-b42f-02e01091d9d7/manifests/ps-0-fetch-jsonplaceholder-data-attempt-1/output_manifest.json, support/ps-0-fetch-jsonplaceholder-data/input_manifest.json, support/input_manifest.json\",\"Observed resources: support/ps-0-fetch-jsonplaceholder-data/input_manifest.json, /workspace/meta/support/ps-0-fetch-jsonplaceholder-data/input_manifest.json, support/input_manifest.json, /workspace/meta/input_manifest.json\"],\"forbidden_assumptions\":[],\"next_step_hints\":[\"Use .sandbox/runs/run_e2346f78-ccd1-4150-b42f-02e01091d9d7/manifests/ps-0-fetch-jsonplaceholder-data-attempt-1/input_manifest.json, .sandbox/runs/run_e2346f78-ccd1-4150-b42f-02e01091d9d7/manifests/ps-0-fetch-jsonplaceholder-data-attempt-1/output_manifest.json, support/ps-0-fetch-jsonplaceholder-data/input_manifest.json as downstream inputs where relevant.\",\"Prefer the concrete observed resources over guessed paths.\"],\"presentation_intent\":null}",
+    "execution_evidence_json": "{\"contract_hash\":\"sha256:060d1b1fbab9249f5c7127bb7e41515e31bb6972cb6a2a3fe4aa58c1593555d5\",\"backend_selected\":\"sandbox.session\",\"backend_reason\":\"compiled_code_contract\",\"predicted_backend\":\"sandbox.session\",\"final_backend\":\"sandbox.session\",\"routing_reason\":\"compiled_code_contract\",\"fallback_reason\":null,\"kernel_hash\":null,\"edge_runtime_evidence\":null,\"edge_wall_ms\":null,\"edge_bytes_in\":null,\"edge_bytes_out\":null,\"edge_gateway_calls\":null,\"edge_cache_mode\":null,\"edge_failover_count\":null,\"tools_used\":[{\"tool_id\":\"sandbox.session\",\"ok\":true,\"output_summary\":\"{\\\"_bookkeeping_summary\\\":true,\\\"_tool\\\":\\\"sandbox.session\\\",\\\"ok\\\":true,\\\"session_id\\\":\\\"sess-mns9r8i4-awr4ej8d\\\",\\\"container_id\\\":\\\"ec27dd5994f644d7df6090cad28cad89152b6d43cc7e2eef7d50efda91d6e48d:mns9r8xu:3eeb4q\\\",\\\"profile_id\\\":\\\"sbx_demo_research_browser_v1\\\",\\\"lease_id\\\":\\\"c9611291-1143-4e4f-9646-5c0b7b39725e\\\",\\\"halt_policy\\\":\\\"halt_on_error\\\",\\\"lease_type\\\":\\\"step\\\",\\\"total_steps\\\":10,\\\"completed_steps\\\":10,\\\"total_duration_ms\\\":74753,\\\"step_preview\\\":[{\\\"step_index\\\":0,\\\"label\\\":\\\"prepare-compiled-workspace\\\",\\\"type\\\":\\\"shell\\\",\\\"ok\\\":true,\\\"exit_code\\\":0,\\\"duration_ms\\\":10626},{\\\"step_index\\\":1,\\\"label\\\":\\\"materialize-compiled-inputs\\\",\\\"type\\\":\\\"materialize\\\",\\\"ok\\\":true,\\\"exit_code\\\":0,\\\"duration_ms\\\":1795},{\\\"step_index\\\":2,\\\"label\\\":\\\"generate-preflight-receipt\\\",\\\"type\\\":\\\"python\\\",\\\"ok\\\":true,\\\"exit_code\\\":0,\\\"duration_ms\\\":11795},{\\\"step_index\\\":3,\\\"label\\\":\\\"verify-preflight-required-inputs\\\",\\\"type\\\":\\\"python\\\",\\\"ok\\\":true,\\\"exit_code\\\":0,\\\"duration_ms\\\":11298},{\\\"step_index\\\":4,\\\"label\\\":\\\"Fetch JSONPlaceholder resources and write transport artifact\\\",\\\"type\\\":\\\"python\\\",\\\"ok\\\":true,\\\"exit_code\\\":0,\\\"duration_ms\\\":11408},{\\\"step_index\\\":5,\\\"label\\\":\\\"generate-postflight-receipt\\\",\\\"type\\\":\\\"python\\\",\\\"ok\\\":true,\\\"exit_code\\\":0,\\\"duration_ms\\\":11315},{\\\"step_index\\\":6,\\\"label\\\":\\\"archive-mcp-call-envelopes\\\",\\\"type\\\":\\\"shell\\\",\\\"ok\\\":true,\\\"exit_code\\\":0,\\\"duration_ms\\\":1189},{\\\"step_index\\\":7,\\\"label\\\":\\\"verify-expected-outputs\\\",\\\"type\\\":\\\"shell\\\",\\\"ok\\\":true,\\\"exit_code\\\":0,\\\"duration_ms\\\":1597}],\\\"failed_step\\\":{\\\"step_index\\\":9,\\\"label\\\":\\\"persist-mcp-mirror\\\",\\\"type\\\":\\\"persist\\\",\\\"ok\\\":true,\\\"exit_code\\\":0,\\\"duration_ms\\\":4489},\\\"persisted_paths\\\":[\\\"output/_slots/ps-0-fetch-jsonplaceholder-data/raw_api_dataset.json\\\",\\\"meta/mcp-tools/journal.ndjson\\\",\\\"meta/mcp-tools/calls.tar.gz\\\"],\\\"persisted_count\\\":3,\\\"materialized_paths\\\":[\\\"support/ps-0-fetch-jsonplaceholder-data/input_manifest.json\\\",\\\"support/input_manifest.json\\\",\\\".sandbox/runs/run_e2346f78-ccd1-4150-b42f-02e01091d9d7/manifests/ps-0-fetch-jsonplaceholder-data-attempt-1/input_manifest.json\\\",\\\".sandbox/runs/run_e2346f78-ccd1-4150-b42f-02e01091d9d7/manifests/ps-0-fetch-jsonplaceholder-data-attempt-1/output_manifest.json\\\"],\\\"materialized_count\\\":4}\",\"duration_ms\":80157,\"observed_resource_refs\":[{\"type\":\"workspace_file\",\"path\":\"support/ps-0-fetch-jsonplaceholder-data/input_manifest.json\"},{\"type\":\"workspace_file\",\"path\":\"/workspace/meta/support/ps-0-fetch-jsonplaceholder-data/input_manifest.json\"},{\"type\":\"workspace_file\",\"path\":\"support/input_manifest.json\"},{\"type\":\"workspace_file\",\"path\":\"/workspace/meta/input_manifest.json\"},{\"type\":\"log\",\"path\":\".sandbox/runs/run_e2346f78-ccd1-4150-b42f-02e01091d9d7/manifests/ps-0-fetch-jsonplaceholder-data-attempt-1/input_manifest.json\"},{\"type\":\"log\",\"path\":\".sandbox/runs/run_e2346f78-ccd1-4150-b42f-02e01091d9d7/manifests/ps-0-fetch-jsonplaceholder-data-attempt-1/output_manifest.json\"},{\"type\":\"workspace_file\",\"path\":\"/workspace/meta/output_manifest.json\"},{\"type\":\"workspace_file\",\"path\":\"/workspace/output/_slots/ps-0-fetch-jsonplaceholder-data/raw_api_dataset.json\"},{\"type\":\"workspace_file\",\"path\":\"output/_slots/ps-0-fetch-jsonplaceholder-data/raw_api_dataset.json\"},{\"type\":\"workspace_file\",\"path\":\"/workspace/meta/mcp-tools/journal.ndjson\"},{\"type\":\"workspace_file\",\"path\":\"meta/mcp-tools/journal.ndjson\"},{\"type\":\"workspace_file\",\"path\":\"/workspace/meta/mcp-tools/calls.tar.gz\"},{\"type\":\"workspace_file\",\"path\":\"meta/mcp-tools/calls.tar.gz\"}],\"input_source_code\":\"import json, os, time\\nfrom pathlib import Path\\nfrom urllib.request import Request, urlopen\\nfrom urllib.error import URLError, HTTPError\\n\\nBASE = 'https://jsonplaceholder.typicode.com'\\nout_path = Path('/workspace/output/_slots/ps-0-fetch-jsonplaceholder-data/raw_api_dataset.json')\\nout_path.parent.mkdir(parents=True, exist_ok=True)\\n\\nsession = {}\\n\\n\\ndef fetch_json(url, retries=3, timeout=20):\\n    last_err = None\\n    for attempt in range(1, retries + 1):\\n        try:\\n            print(f'Fetching {url} (attempt {attempt})...', flush=True)\\n            req = Request(url, headers={'User-Agent': 'Mozilla/5.0'})\\n            with urlopen(req, timeout=timeout) as resp:\\n                raw = resp.read().decode('utf-8')\\n                data = json.loads(raw)\\n                print(f'Fetched {url}: type={type(data).__name__}', flush=True)\\n                return data\\n        except Exception as e:\\n            last_err = e\\n            print(f'WARN fetch failed for {url}: {e}', flush=True)\\n            time.sleep(1.0 * attempt)\\n    raise RuntimeError(f'Failed to fetch {url}: {last_err}')\\n\\nusers = fetch_json(f'{BASE}/users')\\nif not isinstance(users, list):\\n    raise TypeError(f'/users expected list, got {type(users).__name__}')\\nprint(f'Users count: {len(users)}', flush=True)\\n\\nuser_resources = []\\nfor user in users:\\n    uid = user.get('id')\\n    if uid is None:\\n        raise KeyError('user missing id')\\n    posts = fetch_json(f'{BASE}/users/{uid}/posts')\\n    todos = fetch_json(f'{BASE}/users/{uid}/todos')\\n    albums = fetch_json(f'{BASE}/users/{uid}/albums')\\n    user_resources.append({\\n        'user_id': uid,\\n        'posts': posts,\\n        'todos': todos,\\n        'albums': albums,\\n    })\\n    print(f'User {uid}: posts={len(posts)} todos={len(todos)} albums={len(albums)}', flush=True)\\n\\nposts_20 = fetch_json(f'{BASE}/posts?_limit=20')\\ncomments_20 = fetch_json(f'{BASE}/comments?_limit=20')\\npost1_comments = fetch_json(f'{BASE}/posts/1/comments')\\nalbum1_photos = fetch_json(f'{BASE}/albums/1/photos')\\n\\nif not (isinstance(posts_20, list) and len(posts_20) == 20):\\n    raise ValueError(f'Expected exactly 20 posts, got {len(posts_20) if isinstance(posts_20, list) else type(posts_20).__name__}')\\nif not (isinstance(comments_20, list) and len(comments_20) == 20):\\n    raise ValueError(f'Expected exactly 20 comments, got {len(comments_20) if isinstance(comments_20, list) else type(comments_20).__name__}')\\nif not isinstance(post1_comments, list):\\n    raise TypeError(f'/posts/1/comments expected list, got {type(post1_comments).__name__}')\\nif not isinstance(album1_photos, list):\\n    raise TypeError(f'/albums/1/photos expected list, got {type(album1_photos).__name__}')\\n\\npayload = {\\n    'source': {\\n        'base_url': BASE,\\n        'fetched_at_utc': time.strftime('%Y-%m-%dT%H:%M:%SZ', time.gmtime()),\\n    },\\n    'users': users,\\n    'per_user': user_resources,\\n    'posts_20': posts_20,\\n    'comments_20': comments_20,\\n    'post_1_comments': post1_comments,\\n    'album_1_photos': album1_photos,\\n}\\n\\nwith out_path.open('w', encoding='utf-8') as f:\\n    json.dump(payload, f, ensure_ascii=False, indent=2)\\n    f.write('\\\\n')\\n\\nsize = out_path.stat().st_size\\nprint(f'WROTE {out_path} bytes={size}', flush=True)\\nprint(json.dumps({\\n    'exists': out_path.exists(),\\n    'size_bytes': size,\\n    'users': len(users),\\n    'per_user': len(user_resources),\\n    'posts_20': len(posts_20),\\n    'comments_20': len(comments_20),\\n    'post_1_comments': len(post1_comments),\\n    'album_1_photos': len(album1_photos),\\n}, indent=2), flush=True)\\n\",\"input_language\":\"python\"}],\"artifacts_written\":[{\"path\":\".sandbox/runs/run_e2346f78-ccd1-4150-b42f-02e01091d9d7/manifests/ps-0-fetch-jsonplaceholder-data-attempt-1/input_manifest.json\",\"kind\":\"temp\",\"from_tool\":\"sandbox.session\",\"bytes\":745,\"mime\":\"application/json\",\"checksum_sha256\":null},{\"path\":\".sandbox/runs/run_e2346f78-ccd1-4150-b42f-02e01091d9d7/manifests/ps-0-fetch-jsonplaceholder-data-attempt-1/output_manifest.json\",\"kind\":\"temp\",\"from_tool\":\"sandbox.session\",\"bytes\":1576,\"mime\":\"application/json\",\"checksum_sha256\":null},{\"path\":\"support/ps-0-fetch-jsonplaceholder-data/input_manifest.json\",\"kind\":\"temp\",\"from_tool\":\"sandbox.session\",\"bytes\":745,\"mime\":\"application/json\",\"checksum_sha256\":null},{\"path\":\"support/input_manifest.json\",\"kind\":\"temp\",\"from_tool\":\"sandbox.session\",\"bytes\":745,\"mime\":\"application/json\",\"checksum_sha256\":null},{\"path\":\"output/_slots/ps-0-fetch-jsonplaceholder-data/raw_api_dataset.json\",\"kind\":\"deliverable\",\"from_tool\":\"sandbox.session\",\"bytes\":null,\"mime\":null,\"checksum_sha256\":null},{\"path\":\"meta/mcp-tools/journal.ndjson\",\"kind\":\"temp\",\"from_tool\":\"sandbox.session\",\"bytes\":null,\"mime\":null,\"checksum_sha256\":null},{\"path\":\"meta/mcp-tools/calls.tar.gz\",\"kind\":\"temp\",\"from_tool\":\"sandbox.session\",\"bytes\":null,\"mime\":null,\"checksum_sha256\":null}],\"model_response_text\":\"\",\"total_tool_calls\":1,\"total_duration_ms\":104472}",
+    "materialized_input_paths": [],
+    "compiled_step_contract_v1": {
+      "role": "ai_autonomous_worker",
+      "inputs": [],
+      "outputs": [
+        {
+          "slot": "raw_api_dataset",
+          "slot_class": "transport",
+          "artifact_role": "primary",
+          "allocated_path": "output/_slots/ps-0-fetch-jsonplaceholder-data/raw_api_dataset.json",
+          "path_authority": "compiler_allocated"
+        }
+      ],
+      "purpose": "STEP NATURE: DETERMINISTIC\n\nCONTRACT (MUST):\n* Inputs: none from workspace; fetch JSON from https://jsonplaceholder.typicode.com/users, /users/{id}/posts, /users/{id}/todos, /users/{id}/albums for every discovered user id, plus /posts?_limit=20, /comments?_limit=20, /posts/1/comments, and /albums/1/photos.\n* Outputs: write transport slot raw_api_dataset in JSON carrying all fetched collections and source identifiers required for downstream relationship assembly. No field-level schema has been declared for this artifact. Inspect the real data you read or fetch, choose the smallest coherent set of fields that best satisfies the user's request, and use that same schema consistently for every record or object you write. The artifact shape you materialize is what downstream steps will observe and rely on, so do not let the schema drift once chosen.\n* Acceptance checks: transport slot raw_api_dataset exists; it contains the full /users result, per-user posts/todos/albums for every fetched user id, exactly 20 rows from /posts?_limit=20, exactly 20 rows from /comments?_limit=20, an array from /posts/1/comments, and an array from /albums/1/photos.\n* Constraints / non-goals: do not omit any listed endpoint; do not compute user metrics or render HTML in this step; do not use unlisted endpoints.\n* Interfaces / invariants: preserve join identifiers needed downstream, including user id, post id, post.userId, todo.userId, album.userId, comment.postId, and photo.albumId.\n\nGUIDANCE (SHOULD):\n* Preferred stack/tools: HTTP retrieval with JSON parsing and basic retry/error handling.\n* Preferred patterns: fetch /users first, iterate user ids deterministically, and keep fetched collections clearly distinguishable in the transport artifact.\n* Efficiency / reliability hints: avoid duplicate requests where possible and verify HTTP success before writing the transport artifact.\n\nCREATIVE BRIEF (MAY):\n* Look/feel/tone: none.\n* Stylistic constraints or preferences: none.\n* Optional polish (must not expand scope): none.",
+      "step_id": "ps-0-fetch-jsonplaceholder-data",
+      "compiler_decisions": {
+        "warnings": [],
+        "compatibility_status": "compatible"
+      }
+    },
+    "materialized_output_paths": [
+      {
+        "ref_id": "ps-0-fetch-jsonplaceholder-data:output:0:step-result",
+        "runtime_path": "/workspace/output/step_result.json",
+        "workspace_path": "output/step_result.json"
+      },
+      {
+        "ref_id": "ps-0-fetch-jsonplaceholder-data:output:1:journal",
+        "runtime_path": "/workspace/meta/mcp-tools/journal.ndjson",
+        "workspace_path": "meta/mcp-tools/journal.ndjson"
+      },
+      {
+        "ref_id": "ps-0-fetch-jsonplaceholder-data:output:2:calls-tar",
+        "runtime_path": "/workspace/meta/mcp-tools/calls.tar.gz",
+        "workspace_path": "meta/mcp-tools/calls.tar.gz"
+      },
+      {
+        "ref_id": "ps-0-fetch-jsonplaceholder-data:output:3:raw-api-dataset",
+        "runtime_path": "/workspace/output/_slots/ps-0-fetch-jsonplaceholder-data/raw_api_dataset.json",
+        "workspace_path": "output/_slots/ps-0-fetch-jsonplaceholder-data/raw_api_dataset.json"
+      }
+    ],
+    "skill_binding_expectation": {
+      "primary_skill_id": "skill.system.sandbox",
+      "skill_usage_mode": "script_first",
+      "custom_code_scope": [
+        "request_fetching",
+        "json_parsing",
+        "artifact_write"
+      ],
+      "optional_purposes": [
+        "basic_retry_handling",
+        "verify_http_success"
+      ],
+      "required_purposes": [
+        "http_fetch_jsonplaceholder_endpoints",
+        "materialize_raw_api_dataset"
+      ],
+      "custom_code_allowed": true
+    },
+    "__rtShadowPreparing": false
+  },
+  {
+    "label": "Link related API records",
+    "status": "completed",
+    "step_id": "ps-1-link-related-api-records",
+    "attempts": 1,
+    "ended_at": 1775787249878,
+    "artifacts": [],
+    "step_hash": "sha256:81eec65ead76f47f2fc1d9c7059d8bb5a3096f848143c7277d349b2b5382ff3a",
+    "step_kind": "tool_task",
+    "depends_on": [
+      "ps-0-fetch-jsonplaceholder-data"
+    ],
+    "started_at": 1775787132815,
+    "step_index": 1,
+    "kernel_hash": null,
+    "step_nature": "HYBRID",
+    "total_steps": 4,
+    "contract_hash": "sha256:81eec65ead76f47f2fc1d9c7059d8bb5a3096f848143c7277d349b2b5382ff3a",
+    "final_backend": "sandbox.session",
+    "repair_policy": {
+      "strategy": "retry_same_contract",
+      "max_retries": 6,
+      "block_on_missing_inputs": false,
+      "immutable_output_bindings": true
+    },
+    "routing_reason": "governed_routing_mode:sandbox_first",
+    "abstract_inputs": [
+      {
+        "slot": "raw_api_dataset",
+        "notes": "Raw fetched API datasets from the prior step.",
+        "required": true,
+        "row_grain": null,
+        "slot_class": "transport",
+        "format_hint": "json",
+        "child_collection_key": null
+      }
+    ],
+    "artifact_inputs": [],
+    "execution_hints": null,
+    "fallback_reason": null,
+    "validator_rules": {
+      "fail_on_missing_outputs": false,
+      "require_declared_outputs": false,
+      "require_input_artifact_refs": false,
+      "enforce_compiled_output_bindings": false
+    },
+    "abstract_outputs": [
+      {
+        "slot": "related_api_dataset",
+        "notes": "Relationship-resolved user, post, comment, album, todo, and photo data for downstream metric computation and rendering.",
+        "path_hint": null,
+        "row_grain": null,
+        "slot_class": "transport",
+        "format_hint": "json"
+      }
+    ],
+    "allowed_tool_ids": [
+      "sandbox.session"
+    ],
+    "artifact_outputs": [
+      "output/step_result.json",
+      "meta/mcp-tools/journal.ndjson",
+      "meta/mcp-tools/calls.tar.gz",
+      "output/_slots/ps-1-link-related-api-records/related_api_dataset.json"
+    ],
+    "expected_outputs": [
+      {
+        "path": "output/step_result.json",
+        "role": "meta",
+        "location": "sandbox"
+      },
+      {
+        "path": "meta/mcp-tools/journal.ndjson",
+        "role": "meta",
+        "location": "sandbox"
+      },
+      {
+        "path": "meta/mcp-tools/calls.tar.gz",
+        "role": "meta",
+        "location": "sandbox"
+      },
+      {
+        "path": "output/_slots/ps-1-link-related-api-records/related_api_dataset.json",
+        "role": "primary",
+        "location": "sandbox"
+      }
+    ],
+    "retry_of_step_id": null,
+    "step_result_json": "{\"source\":\"system\",\"status\":\"completed\",\"step_outcome_summary\":[\"Link related API records finished with status=completed.\",\"Tool calls: 1.\",\"Artifacts: .sandbox/runs/run_e2346f78-ccd1-4150-b42f-02e01091d9d7/manifests/ps-1-link-related-api-records-attempt-1/input_manifest.json, .sandbox/runs/run_e2346f78-ccd1-4150-b42f-02e01091d9d7/manifests/ps-1-link-related-api-records-attempt-1/output_manifest.json, support/ps-1-link-related-api-records/input_manifest.json.\",\"Observed resources: output/_slots/ps-0-fetch-jsonplaceholder-data/raw_api_dataset.json, /workspace/input/output/_slots/ps-0-fetch-jsonplaceholder-data/raw_api_dataset.json, support/ps-1-link-related-api-records/input_manifest.json.\"],\"artifacts_created\":[{\"path\":\".sandbox/runs/run_e2346f78-ccd1-4150-b42f-02e01091d9d7/manifests/ps-1-link-related-api-records-attempt-1/input_manifest.json\",\"kind\":\"temp\",\"bytes\":1092,\"mime\":\"application/json\",\"checksum_sha256\":null},{\"path\":\".sandbox/runs/run_e2346f78-ccd1-4150-b42f-02e01091d9d7/manifests/ps-1-link-related-api-records-attempt-1/output_manifest.json\",\"kind\":\"temp\",\"bytes\":1582,\"mime\":\"application/json\",\"checksum_sha256\":null},{\"path\":\"support/ps-1-link-related-api-records/input_manifest.json\",\"kind\":\"temp\",\"bytes\":1092,\"mime\":\"application/json\",\"checksum_sha256\":null},{\"path\":\"support/input_manifest.json\",\"kind\":\"temp\",\"bytes\":1092,\"mime\":\"application/json\",\"checksum_sha256\":null},{\"path\":\"output/_slots/ps-1-link-related-api-records/related_api_dataset.json\",\"kind\":\"deliverable\",\"bytes\":null,\"mime\":null,\"checksum_sha256\":null},{\"path\":\"meta/mcp-tools/journal.ndjson\",\"kind\":\"temp\",\"bytes\":null,\"mime\":null,\"checksum_sha256\":null},{\"path\":\"meta/mcp-tools/calls.tar.gz\",\"kind\":\"temp\",\"bytes\":null,\"mime\":null,\"checksum_sha256\":null}],\"observed_resources\":[{\"type\":\"workspace_file\",\"path\":\"output/_slots/ps-0-fetch-jsonplaceholder-data/raw_api_dataset.json\"},{\"type\":\"workspace_file\",\"path\":\"/workspace/input/output/_slots/ps-0-fetch-jsonplaceholder-data/raw_api_dataset.json\"},{\"type\":\"workspace_file\",\"path\":\"support/ps-1-link-related-api-records/input_manifest.json\"},{\"type\":\"workspace_file\",\"path\":\"/workspace/meta/support/ps-1-link-related-api-records/input_manifest.json\"},{\"type\":\"workspace_file\",\"path\":\"support/input_manifest.json\"},{\"type\":\"workspace_file\",\"path\":\"/workspace/meta/input_manifest.json\"},{\"type\":\"log\",\"path\":\".sandbox/runs/run_e2346f78-ccd1-4150-b42f-02e01091d9d7/manifests/ps-1-link-related-api-records-attempt-1/input_manifest.json\"},{\"type\":\"log\",\"path\":\".sandbox/runs/run_e2346f78-ccd1-4150-b42f-02e01091d9d7/manifests/ps-1-link-related-api-records-attempt-1/output_manifest.json\"},{\"type\":\"workspace_file\",\"path\":\"/workspace/meta/output_manifest.json\"},{\"type\":\"workspace_file\",\"path\":\"/workspace/output/_slots/ps-1-link-related-api-records/related_api_dataset.json\"},{\"type\":\"workspace_file\",\"path\":\"output/_slots/ps-1-link-related-api-records/related_api_dataset.json\"},{\"type\":\"workspace_file\",\"path\":\"/workspace/meta/mcp-tools/journal.ndjson\"},{\"type\":\"workspace_file\",\"path\":\"meta/mcp-tools/journal.ndjson\"},{\"type\":\"workspace_file\",\"path\":\"/workspace/meta/mcp-tools/calls.tar.gz\"},{\"type\":\"workspace_file\",\"path\":\"meta/mcp-tools/calls.tar.gz\"}],\"decisions\":[\"Step acceptance criteria: Transport slot related_api_dataset is written and preserves correct user/post/todo/album/comment/photo relationships using only the specified source identifiers and fetched datasets.\",\"Artifacts created: .sandbox/runs/run_e2346f78-ccd1-4150-b42f-02e01091d9d7/manifests/ps-1-link-related-api-records-attempt-1/input_manifest.json, .sandbox/runs/run_e2346f78-ccd1-4150-b42f-02e01091d9d7/manifests/ps-1-link-related-api-records-attempt-1/output_manifest.json, support/ps-1-link-related-api-records/input_manifest.json, support/input_manifest.json\",\"Observed resources: output/_slots/ps-0-fetch-jsonplaceholder-data/raw_api_dataset.json, /workspace/input/output/_slots/ps-0-fetch-jsonplaceholder-data/raw_api_dataset.json, support/ps-1-link-related-api-records/input_manifest.json, /workspace/meta/support/ps-1-link-related-api-records/input_manifest.json\"],\"assumptions\":[],\"next_step_hints\":[\"Use .sandbox/runs/run_e2346f78-ccd1-4150-b42f-02e01091d9d7/manifests/ps-1-link-related-api-records-attempt-1/input_manifest.json, .sandbox/runs/run_e2346f78-ccd1-4150-b42f-02e01091d9d7/manifests/ps-1-link-related-api-records-attempt-1/output_manifest.json, support/ps-1-link-related-api-records/input_manifest.json as downstream inputs where relevant.\",\"Prefer the concrete observed resources over guessed paths.\"],\"errors_and_recovery\":[],\"repro\":{\"tool_ids\":[\"sandbox.session\"],\"script_paths\":[],\"log_paths\":[],\"rerun_hint\":\"Re-run step ps-1-link-related-api-records (Link related API records) using sandbox.session\"}}",
+    "success_criteria": "Transport slot related_api_dataset is written and preserves correct user/post/todo/album/comment/photo relationships using only the specified source identifiers and fetched datasets.",
+    "execution_backend": "sandbox.session",
+    "execution_pattern": "single_shot_render",
+    "observations_text": "STEP NATURE: DETERMINISTIC\n\nCONTRACT (MUST):\n* Inputs: transport slot raw_api_dataset containing the fetched JSONPlaceholder collections from the prior step.\n* Outputs: write transport slot related_api_dataset in JSON containing relationship-resolved data needed downstream: users associated with their posts, todos, and albums via userId; the first 20 posts associated with available comments via postId using the union of /comments?_limit=20 and /posts/1/comments, deduplicated by comment id if overlap exists; and album 1 associated with its photos via albumId. No field-level schema has been declared for this artifact. Inspect the real data you read or fetch, choose the smallest coherent set of fields that best satisfies the user's request, and use that same schema consistently for every record or object you write. The artifact shape you materialize is what downstream steps will observe and rely on, so do not let the schema drift once chosen.\n* Acceptance checks: transport slot related_api_dataset exists; every user record in the related structure has its corresponding posts, todos, and albums attached or traceable; each of the first 20 posts has an associated comments collection based on postId; album 1 has an associated photos collection based on albumId.\n* Constraints / non-goals: do not compute final per-user metrics in this step; do not render HTML in this step; do not lose text fields needed later for avg_body_length or post-body truncation.\n* Interfaces / invariants: use exact source-key relationships only: post.userId = user.id, todo.userId = user.id, album.userId = user.id, comment.postId = post.id, photo.albumId = album.id.\n\nGUIDANCE (SHOULD):\n* Preferred stack/tools: JSON transformation and deterministic join logic.\n* Preferred patterns: preserve original record identifiers and embed or reference children consistently.\n* Efficiency / reliability hints: deduplicate overlapping comment records by comment id before attaching them to posts.\n\nCREATIVE BRIEF (MAY):\n* Look/feel/tone: none.\n* Stylistic constraints or preferences: none.\n* Optional polish (must not expand scope): none.",
+    "predicted_backend": "sandbox.session",
+    "repair_delta_json": null,
+    "current_attempt_id": null,
+    "execution_contract": {
+      "pattern": "single_shot_render",
+      "step_nature": "HYBRID",
+      "repair_strategy": "retry_with_small_fix",
+      "timeout_ceiling_ms": 1800000,
+      "allowed_tool_call_count": 3
+    },
+    "retry_lineage_json": null,
+    "input_artifact_refs": [
+      {
+        "kind": "workspace_file",
+        "path": "output/_slots/ps-0-fetch-jsonplaceholder-data/raw_api_dataset.json",
+        "ref_id": "ps-1-link-related-api-records:input:0:raw-api-dataset",
+        "logical_name": "raw-api-dataset"
+      }
+    ],
+    "output_artifact_refs": [
+      {
+        "kind": "artifact",
+        "path": "output/step_result.json",
+        "ref_id": "ps-1-link-related-api-records:output:0:step-result",
+        "logical_name": "step-result"
+      },
+      {
+        "kind": "artifact",
+        "path": "meta/mcp-tools/journal.ndjson",
+        "ref_id": "ps-1-link-related-api-records:output:1:journal",
+        "logical_name": "journal"
+      },
+      {
+        "kind": "artifact",
+        "path": "meta/mcp-tools/calls.tar.gz",
+        "ref_id": "ps-1-link-related-api-records:output:2:calls-tar",
+        "logical_name": "calls-tar"
+      },
+      {
+        "kind": "artifact",
+        "path": "output/_slots/ps-1-link-related-api-records/related_api_dataset.json",
+        "ref_id": "ps-1-link-related-api-records:output:3:related-api-dataset",
+        "logical_name": "related-api-dataset"
+      }
+    ],
+    "sandbox_mcp_contract": {
+      "calls_dir": "/workspace/meta/mcp-tools/calls",
+      "transport": "sandbox_tools_proxy",
+      "journal_path": "meta/mcp-tools/journal.ndjson",
+      "python_module": "sandbox_platform",
+      "python_function": "call",
+      "proxy_url_env_var": "TOOLS_PROXY_URL",
+      "calls_archive_path": "meta/mcp-tools/calls.tar.gz",
+      "proxy_token_env_var": "TOOLS_PROXY_TOKEN",
+      "container_result_root": "/workspace/meta/mcp-tools",
+      "python_helper_env_var": "SANDBOX_BRIDGE_PYTHON",
+      "tool_policy_allowlist": [
+        "sandbox.archive.unzip",
+        "sandbox.archive.zip",
+        "sandbox.execStream",
+        "sandbox.fs.read",
+        "sandbox.fs.write",
+        "sandbox.http.request",
+        "sandbox.runtime.node",
+        "sandbox.runtime.pip-install",
+        "transform.csv_to_json",
+        "transform.json_to_csv",
+        "transform.jsonata",
+        "workspace.files.materialize",
+        "workspace.files.pdftotext",
+        "workspace.files.put",
+        "workspace.files.write",
+        "workspace.run_files.list",
+        "workspace.run_files.read"
+      ],
+      "workspace_result_root": "meta/mcp-tools"
+    },
+    "recommended_skill_ids": [
+      "skill.data.transform",
+      "skill.system.sandbox"
+    ],
+    "required_capabilities": [
+      "relationship_mapping",
+      "json_transformation",
+      "record_linking"
+    ],
+    "suggested_skills_json": null,
+    "executable_contract_v2": {
+      "step_id": "ps-1-link-related-api-records",
+      "step_kind": "tool_task",
+      "provenance": {
+        "finalized_at_ms": 0,
+        "dependency_policy": "declared-closure-committed-output-normalized",
+        "compiled_step_hash": "sha256:81eec65ead76f47f2fc1d9c7059d8bb5a3096f848143c7277d349b2b5382ff3a"
+      },
+      "step_label": "Link related API records",
+      "kernel_hash": null,
+      "step_inputs": [
+        {
+          "kind": "workspace_file",
+          "ref_id": "ps-1-link-related-api-records:input:0:raw-api-dataset",
+          "must_exist": true,
+          "logical_path": "output/_slots/ps-0-fetch-jsonplaceholder-data/raw_api_dataset.json",
+          "runtime_path": "/workspace/input/output/_slots/ps-0-fetch-jsonplaceholder-data/raw_api_dataset.json",
+          "workspace_path": "output/_slots/ps-0-fetch-jsonplaceholder-data/raw_api_dataset.json"
+        }
+      ],
+      "step_outputs": [
+        {
+          "role": "primary",
+          "ref_id": "ps-1-link-related-api-records:output:3:related-api-dataset",
+          "location": "sandbox",
+          "required": true,
+          "logical_path": "output/_slots/ps-1-link-related-api-records/related_api_dataset.json",
+          "runtime_path": "/workspace/output/_slots/ps-1-link-related-api-records/related_api_dataset.json",
+          "workspace_path": "output/_slots/ps-1-link-related-api-records/related_api_dataset.json"
+        }
+      ],
+      "contract_hash": "sha256:81eec65ead76f47f2fc1d9c7059d8bb5a3096f848143c7277d349b2b5382ff3a",
+      "final_backend": "sandbox.session",
+      "repair_policy": {
+        "strategy": "retry_same_contract",
+        "max_retries": 6,
+        "block_on_missing_inputs": false,
+        "immutable_output_bindings": true
+      },
+      "execution_mode": null,
+      "routing_reason": "governed_routing_mode:sandbox_first",
+      "support_inputs": [
+        {
+          "location": "sandbox",
+          "required": true,
+          "logical_path": "support/ps-1-link-related-api-records/input_manifest.json",
+          "runtime_path": "/workspace/meta/support/ps-1-link-related-api-records/input_manifest.json",
+          "support_kind": "input_manifest",
+          "workspace_path": "support/ps-1-link-related-api-records/input_manifest.json"
+        },
+        {
+          "location": "sandbox",
+          "required": true,
+          "logical_path": "support/input_manifest.json",
+          "runtime_path": "/workspace/meta/input_manifest.json",
+          "support_kind": "input_manifest",
+          "workspace_path": "support/input_manifest.json"
+        }
+      ],
+      "fallback_reason": null,
+      "support_outputs": [
+        {
+          "role": "auxiliary",
+          "location": "sandbox",
+          "required": true,
+          "logical_path": "output/step_result.json",
+          "runtime_path": "/workspace/output/step_result.json",
+          "support_kind": "system_artifact",
+          "workspace_path": "output/step_result.json"
+        },
+        {
+          "role": "auxiliary",
+          "location": "sandbox",
+          "required": true,
+          "logical_path": "meta/mcp-tools/journal.ndjson",
+          "runtime_path": "/workspace/meta/mcp-tools/journal.ndjson",
+          "support_kind": "system_artifact",
+          "workspace_path": "meta/mcp-tools/journal.ndjson"
+        },
+        {
+          "role": "auxiliary",
+          "location": "sandbox",
+          "required": true,
+          "logical_path": "meta/mcp-tools/calls.tar.gz",
+          "runtime_path": "/workspace/meta/mcp-tools/calls.tar.gz",
+          "support_kind": "system_artifact",
+          "workspace_path": "meta/mcp-tools/calls.tar.gz"
+        }
+      ],
+      "validator_rules": {
+        "fail_on_missing_outputs": false,
+        "require_declared_outputs": false,
+        "require_input_artifact_refs": false,
+        "enforce_compiled_output_bindings": false
+      },
+      "allowed_tool_ids": [
+        "sandbox.session"
+      ],
+      "contract_version": 2,
+      "execution_policy": {
+        "pattern": "single_shot_render",
+        "step_nature": "HYBRID",
+        "repair_strategy": "retry_with_small_fix",
+        "timeout_ceiling_ms": 1800000,
+        "allowed_tool_call_count": 3
+      },
+      "execution_backend": "sandbox.session",
+      "predicted_backend": "sandbox.session"
+    },
+    "continuity_handoff_json": "{\"schema_version\":1,\"step_id\":\"ps-1-link-related-api-records\",\"step_index\":1,\"total_steps\":4,\"authoritative_outputs\":[{\"path\":\".sandbox/runs/run_e2346f78-ccd1-4150-b42f-02e01091d9d7/manifests/ps-1-link-related-api-records-attempt-1/input_manifest.json\",\"kind\":\"temp\",\"bytes\":1092,\"checksum_sha256\":null},{\"path\":\".sandbox/runs/run_e2346f78-ccd1-4150-b42f-02e01091d9d7/manifests/ps-1-link-related-api-records-attempt-1/output_manifest.json\",\"kind\":\"temp\",\"bytes\":1582,\"checksum_sha256\":null},{\"path\":\"support/ps-1-link-related-api-records/input_manifest.json\",\"kind\":\"temp\",\"bytes\":1092,\"checksum_sha256\":null},{\"path\":\"support/input_manifest.json\",\"kind\":\"temp\",\"bytes\":1092,\"checksum_sha256\":null},{\"path\":\"output/_slots/ps-1-link-related-api-records/related_api_dataset.json\",\"kind\":\"deliverable\",\"bytes\":null,\"checksum_sha256\":null},{\"path\":\"meta/mcp-tools/journal.ndjson\",\"kind\":\"temp\",\"bytes\":null,\"checksum_sha256\":null},{\"path\":\"meta/mcp-tools/calls.tar.gz\",\"kind\":\"temp\",\"bytes\":null,\"checksum_sha256\":null}],\"input_provenance\":[{\"type\":\"workspace_file\",\"path\":\"output/_slots/ps-0-fetch-jsonplaceholder-data/raw_api_dataset.json\"},{\"type\":\"workspace_file\",\"path\":\"/workspace/input/output/_slots/ps-0-fetch-jsonplaceholder-data/raw_api_dataset.json\"},{\"type\":\"workspace_file\",\"path\":\"support/ps-1-link-related-api-records/input_manifest.json\"},{\"type\":\"workspace_file\",\"path\":\"/workspace/meta/support/ps-1-link-related-api-records/input_manifest.json\"},{\"type\":\"workspace_file\",\"path\":\"support/input_manifest.json\"},{\"type\":\"workspace_file\",\"path\":\"/workspace/meta/input_manifest.json\"},{\"type\":\"log\",\"path\":\".sandbox/runs/run_e2346f78-ccd1-4150-b42f-02e01091d9d7/manifests/ps-1-link-related-api-records-attempt-1/input_manifest.json\"},{\"type\":\"log\",\"path\":\".sandbox/runs/run_e2346f78-ccd1-4150-b42f-02e01091d9d7/manifests/ps-1-link-related-api-records-attempt-1/output_manifest.json\"},{\"type\":\"workspace_file\",\"path\":\"/workspace/meta/output_manifest.json\"},{\"type\":\"workspace_file\",\"path\":\"/workspace/output/_slots/ps-1-link-related-api-records/related_api_dataset.json\"},{\"type\":\"workspace_file\",\"path\":\"output/_slots/ps-1-link-related-api-records/related_api_dataset.json\"},{\"type\":\"workspace_file\",\"path\":\"/workspace/meta/mcp-tools/journal.ndjson\"},{\"type\":\"workspace_file\",\"path\":\"meta/mcp-tools/journal.ndjson\"},{\"type\":\"workspace_file\",\"path\":\"/workspace/meta/mcp-tools/calls.tar.gz\"},{\"type\":\"workspace_file\",\"path\":\"meta/mcp-tools/calls.tar.gz\"}],\"semantic_facts\":[\"Link related API records finished with status=completed.\",\"Tool calls: 1.\",\"Artifacts: .sandbox/runs/run_e2346f78-ccd1-4150-b42f-02e01091d9d7/manifests/ps-1-link-related-api-records-attempt-1/input_manifest.json, .sandbox/runs/run_e2346f78-ccd1-4150-b42f-02e01091d9d7/manifests/ps-1-link-related-api-records-attempt-1/output_manifest.json, support/ps-1-link-related-api-records/input_manifest.json.\",\"Observed resources: output/_slots/ps-0-fetch-jsonplaceholder-data/raw_api_dataset.json, /workspace/input/output/_slots/ps-0-fetch-jsonplaceholder-data/raw_api_dataset.json, support/ps-1-link-related-api-records/input_manifest.json.\",\"Step acceptance criteria: Transport slot related_api_dataset is written and preserves correct user/post/todo/album/comment/photo relationships using only the specified source identifiers and fetched datasets.\",\"Artifacts created: .sandbox/runs/run_e2346f78-ccd1-4150-b42f-02e01091d9d7/manifests/ps-1-link-related-api-records-attempt-1/input_manifest.json, .sandbox/runs/run_e2346f78-ccd1-4150-b42f-02e01091d9d7/manifests/ps-1-link-related-api-records-attempt-1/output_manifest.json, support/ps-1-link-related-api-records/input_manifest.json, support/input_manifest.json\",\"Observed resources: output/_slots/ps-0-fetch-jsonplaceholder-data/raw_api_dataset.json, /workspace/input/output/_slots/ps-0-fetch-jsonplaceholder-data/raw_api_dataset.json, support/ps-1-link-related-api-records/input_manifest.json, /workspace/meta/support/ps-1-link-related-api-records/input_manifest.json\"],\"forbidden_assumptions\":[],\"next_step_hints\":[\"Use .sandbox/runs/run_e2346f78-ccd1-4150-b42f-02e01091d9d7/manifests/ps-1-link-related-api-records-attempt-1/input_manifest.json, .sandbox/runs/run_e2346f78-ccd1-4150-b42f-02e01091d9d7/manifests/ps-1-link-related-api-records-attempt-1/output_manifest.json, support/ps-1-link-related-api-records/input_manifest.json as downstream inputs where relevant.\",\"Prefer the concrete observed resources over guessed paths.\"],\"presentation_intent\":null}",
+    "execution_evidence_json": "{\"contract_hash\":\"sha256:81eec65ead76f47f2fc1d9c7059d8bb5a3096f848143c7277d349b2b5382ff3a\",\"backend_selected\":\"sandbox.session\",\"backend_reason\":\"compiled_code_contract\",\"predicted_backend\":\"sandbox.session\",\"final_backend\":\"sandbox.session\",\"routing_reason\":\"compiled_code_contract\",\"fallback_reason\":null,\"kernel_hash\":null,\"edge_runtime_evidence\":null,\"edge_wall_ms\":null,\"edge_bytes_in\":null,\"edge_bytes_out\":null,\"edge_gateway_calls\":null,\"edge_cache_mode\":null,\"edge_failover_count\":null,\"tools_used\":[{\"tool_id\":\"sandbox.session\",\"ok\":true,\"output_summary\":\"{\\\"_bookkeeping_summary\\\":true,\\\"_tool\\\":\\\"sandbox.session\\\",\\\"ok\\\":true,\\\"session_id\\\":\\\"sess-mns9tn3i-lm74pjcb\\\",\\\"container_id\\\":\\\"ec27dd5994f644d7df6090cad28cad89152b6d43cc7e2eef7d50efda91d6e48d:mns9tni5:epxszt\\\",\\\"profile_id\\\":\\\"sbx_demo_research_browser_v1\\\",\\\"lease_id\\\":\\\"51302361-cfc7-4092-a66d-dc1fcfd46fc0\\\",\\\"halt_policy\\\":\\\"halt_on_error\\\",\\\"lease_type\\\":\\\"step\\\",\\\"total_steps\\\":11,\\\"completed_steps\\\":11,\\\"total_duration_ms\\\":80468,\\\"step_preview\\\":[{\\\"step_index\\\":0,\\\"label\\\":\\\"prepare-compiled-workspace\\\",\\\"type\\\":\\\"shell\\\",\\\"ok\\\":true,\\\"exit_code\\\":0,\\\"duration_ms\\\":11063},{\\\"step_index\\\":1,\\\"label\\\":\\\"materialize-compiled-inputs\\\",\\\"type\\\":\\\"materialize\\\",\\\"ok\\\":true,\\\"exit_code\\\":0,\\\"duration_ms\\\":4762},{\\\"step_index\\\":2,\\\"label\\\":\\\"project-compiled-input-paths\\\",\\\"type\\\":\\\"shell\\\",\\\"ok\\\":true,\\\"exit_code\\\":0,\\\"duration_ms\\\":1991},{\\\"step_index\\\":3,\\\"label\\\":\\\"generate-preflight-receipt\\\",\\\"type\\\":\\\"python\\\",\\\"ok\\\":true,\\\"exit_code\\\":0,\\\"duration_ms\\\":11722},{\\\"step_index\\\":4,\\\"label\\\":\\\"verify-preflight-required-inputs\\\",\\\"type\\\":\\\"python\\\",\\\"ok\\\":true,\\\"exit_code\\\":0,\\\"duration_ms\\\":11297},{\\\"step_index\\\":5,\\\"label\\\":\\\"Link related API records and write outputs\\\",\\\"type\\\":\\\"python\\\",\\\"ok\\\":true,\\\"exit_code\\\":0,\\\"duration_ms\\\":11243},{\\\"step_index\\\":6,\\\"label\\\":\\\"generate-postflight-receipt\\\",\\\"type\\\":\\\"python\\\",\\\"ok\\\":true,\\\"exit_code\\\":0,\\\"duration_ms\\\":11332},{\\\"step_index\\\":7,\\\"label\\\":\\\"archive-mcp-call-envelopes\\\",\\\"type\\\":\\\"shell\\\",\\\"ok\\\":true,\\\"exit_code\\\":0,\\\"duration_ms\\\":1365}],\\\"failed_step\\\":{\\\"step_index\\\":10,\\\"label\\\":\\\"persist-mcp-mirror\\\",\\\"type\\\":\\\"persist\\\",\\\"ok\\\":true,\\\"exit_code\\\":0,\\\"duration_ms\\\":4778},\\\"persisted_paths\\\":[\\\"output/_slots/ps-1-link-related-api-records/related_api_dataset.json\\\",\\\"meta/mcp-tools/journal.ndjson\\\",\\\"meta/mcp-tools/calls.tar.gz\\\"],\\\"persisted_count\\\":3,\\\"materialized_paths\\\":[\\\"output/_slots/ps-0-fetch-jsonplaceholder-data/raw_api_dataset.json\\\",\\\"support/ps-1-link-related-api-records/input_manifest.json\\\",\\\"support/input_manifest.json\\\",\\\".sandbox/runs/run_e2346f78-ccd1-4150-b42f-02e01091d9d7/manifests/ps-1-link-related-api-records-attempt-1/input_manifest.json\\\",\\\".sandbox/runs/run_e2346f78-ccd1-4150-b42f-02e01091d9d7/manifests/ps-1-link-related-api-records-attempt-1/output_manifest.json\\\"],\\\"materialized_count\\\":5}\",\"duration_ms\":86127,\"observed_resource_refs\":[{\"type\":\"workspace_file\",\"path\":\"output/_slots/ps-0-fetch-jsonplaceholder-data/raw_api_dataset.json\"},{\"type\":\"workspace_file\",\"path\":\"/workspace/input/output/_slots/ps-0-fetch-jsonplaceholder-data/raw_api_dataset.json\"},{\"type\":\"workspace_file\",\"path\":\"support/ps-1-link-related-api-records/input_manifest.json\"},{\"type\":\"workspace_file\",\"path\":\"/workspace/meta/support/ps-1-link-related-api-records/input_manifest.json\"},{\"type\":\"workspace_file\",\"path\":\"support/input_manifest.json\"},{\"type\":\"workspace_file\",\"path\":\"/workspace/meta/input_manifest.json\"},{\"type\":\"log\",\"path\":\".sandbox/runs/run_e2346f78-ccd1-4150-b42f-02e01091d9d7/manifests/ps-1-link-related-api-records-attempt-1/input_manifest.json\"},{\"type\":\"log\",\"path\":\".sandbox/runs/run_e2346f78-ccd1-4150-b42f-02e01091d9d7/manifests/ps-1-link-related-api-records-attempt-1/output_manifest.json\"},{\"type\":\"workspace_file\",\"path\":\"/workspace/meta/output_manifest.json\"},{\"type\":\"workspace_file\",\"path\":\"/workspace/output/_slots/ps-1-link-related-api-records/related_api_dataset.json\"},{\"type\":\"workspace_file\",\"path\":\"output/_slots/ps-1-link-related-api-records/related_api_dataset.json\"},{\"type\":\"workspace_file\",\"path\":\"/workspace/meta/mcp-tools/journal.ndjson\"},{\"type\":\"workspace_file\",\"path\":\"meta/mcp-tools/journal.ndjson\"},{\"type\":\"workspace_file\",\"path\":\"/workspace/meta/mcp-tools/calls.tar.gz\"},{\"type\":\"workspace_file\",\"path\":\"meta/mcp-tools/calls.tar.gz\"}],\"input_source_code\":\"import json, os\\nfrom pathlib import Path\\n\\ninput_path = Path('/workspace/input/output/_slots/ps-0-fetch-jsonplaceholder-data/raw_api_dataset.json')\\noutput_path = Path('/workspace/output/_slots/ps-1-link-related-api-records/related_api_dataset.json')\\noutput_path.parent.mkdir(parents=True, exist_ok=True)\\n\\nprint(f'Loading {input_path}...', flush=True)\\nwith input_path.open('r', encoding='utf-8') as f:\\n    raw = json.load(f)\\n\\nif not isinstance(raw, dict):\\n    raise TypeError(f'Expected top-level object, found {type(raw).__name__}')\\n\\nusers = raw.get('users') or []\\nper_user = raw.get('per_user') or []\\nposts_20 = raw.get('posts_20') or []\\ncomments_20 = raw.get('comments_20') or []\\npost_1_comments = raw.get('post_1_comments') or []\\nalbum_1_photos = raw.get('album_1_photos') or []\\n\\n# Build lookup structures.\\nusers_by_id = {u.get('id'): u for u in users if isinstance(u, dict) and u.get('id') is not None}\\nper_user_by_user_id = {r.get('user_id'): r for r in per_user if isinstance(r, dict) and r.get('user_id') is not None}\\n\\n# Collect all comment records available for the first 20 posts from the union, deduplicated by comment id.\\nall_comments = []\\nseen_comment_ids = set()\\nfor comment in comments_20 + post_1_comments:\\n    if not isinstance(comment, dict):\\n        continue\\n    cid = comment.get('id')\\n    if cid is None or cid in seen_comment_ids:\\n        continue\\n    seen_comment_ids.add(cid)\\n    all_comments.append(comment)\\n\\ncomments_by_post_id = {}\\nfor comment in all_comments:\\n    pid = comment.get('postId')\\n    comments_by_post_id.setdefault(pid, []).append(comment)\\n\\n# Preserve user fields needed downstream while attaching related collections.\\nrelated_users = []\\nfor user in users:\\n    if not isinstance(user, dict):\\n        continue\\n    uid = user.get('id')\\n    pu = per_user_by_user_id.get(uid, {}) if uid is not None else {}\\n    posts = pu.get('posts') or []\\n    todos = pu.get('todos') or []\\n    albums = pu.get('albums') or []\\n    related_users.append({\\n        'id': user.get('id'),\\n        'name': user.get('name'),\\n        'username': user.get('username'),\\n        'email': user.get('email'),\\n        'company': user.get('company'),\\n        'posts': posts,\\n        'todos': todos,\\n        'albums': albums,\\n    })\\n\\n# Attach comments to the first 20 posts, preserving post body and identifiers.\\nrelated_posts_20 = []\\nfor post in posts_20:\\n    if not isinstance(post, dict):\\n        continue\\n    pid = post.get('id')\\n    related_posts_20.append({\\n        'userId': post.get('userId'),\\n        'id': post.get('id'),\\n        'title': post.get('title'),\\n        'body': post.get('body'),\\n        'comments': comments_by_post_id.get(pid, []),\\n    })\\n\\n# Album 1 already comes as a photo collection; preserve full fields.\\nrelated_album_1 = {\\n    'albumId': 1,\\n    'photos': [\\n        {\\n            'albumId': photo.get('albumId'),\\n            'id': photo.get('id'),\\n            'title': photo.get('title'),\\n            'url': photo.get('url'),\\n            'thumbnailUrl': photo.get('thumbnailUrl'),\\n        }\\n        for photo in album_1_photos if isinstance(photo, dict)\\n    ],\\n}\\n\\nrelated = {\\n    'users': related_users,\\n    'posts_20': related_posts_20,\\n    'album_1': related_album_1,\\n    'comment_union_source_ids': sorted(list(seen_comment_ids)),\\n}\\n\\nprint(f'Writing {output_path}...', flush=True)\\nwith output_path.open('w', encoding='utf-8') as f:\\n    json.dump(related, f, ensure_ascii=False, indent=2)\\n    f.write('\\\\n')\\n\\n# Verify required output exists and is non-zero.\\nexists = output_path.exists()\\nsize = output_path.stat().st_size if exists else 0\\nprint(json.dumps({'verified': [{'path': str(output_path), 'exists': exists, 'size_bytes': size, 'ok': bool(exists and size > 0)}]}, ensure_ascii=False), flush=True)\\nif not exists or size <= 0:\\n    raise RuntimeError('Primary output missing or empty')\\n\",\"input_language\":\"python\"}],\"artifacts_written\":[{\"path\":\".sandbox/runs/run_e2346f78-ccd1-4150-b42f-02e01091d9d7/manifests/ps-1-link-related-api-records-attempt-1/input_manifest.json\",\"kind\":\"temp\",\"from_tool\":\"sandbox.session\",\"bytes\":1092,\"mime\":\"application/json\",\"checksum_sha256\":null},{\"path\":\".sandbox/runs/run_e2346f78-ccd1-4150-b42f-02e01091d9d7/manifests/ps-1-link-related-api-records-attempt-1/output_manifest.json\",\"kind\":\"temp\",\"from_tool\":\"sandbox.session\",\"bytes\":1582,\"mime\":\"application/json\",\"checksum_sha256\":null},{\"path\":\"support/ps-1-link-related-api-records/input_manifest.json\",\"kind\":\"temp\",\"from_tool\":\"sandbox.session\",\"bytes\":1092,\"mime\":\"application/json\",\"checksum_sha256\":null},{\"path\":\"support/input_manifest.json\",\"kind\":\"temp\",\"from_tool\":\"sandbox.session\",\"bytes\":1092,\"mime\":\"application/json\",\"checksum_sha256\":null},{\"path\":\"output/_slots/ps-1-link-related-api-records/related_api_dataset.json\",\"kind\":\"deliverable\",\"from_tool\":\"sandbox.session\",\"bytes\":null,\"mime\":null,\"checksum_sha256\":null},{\"path\":\"meta/mcp-tools/journal.ndjson\",\"kind\":\"temp\",\"from_tool\":\"sandbox.session\",\"bytes\":null,\"mime\":null,\"checksum_sha256\":null},{\"path\":\"meta/mcp-tools/calls.tar.gz\",\"kind\":\"temp\",\"from_tool\":\"sandbox.session\",\"bytes\":null,\"mime\":null,\"checksum_sha256\":null}],\"model_response_text\":\"\",\"total_tool_calls\":1,\"total_duration_ms\":110768}",
+    "materialized_input_paths": [
+      {
+        "ref_id": "ps-1-link-related-api-records:input:0:raw-api-dataset",
+        "runtime_path": "/workspace/input/output/_slots/ps-0-fetch-jsonplaceholder-data/raw_api_dataset.json",
+        "workspace_path": "output/_slots/ps-0-fetch-jsonplaceholder-data/raw_api_dataset.json"
+      }
+    ],
+    "compiled_step_contract_v1": {
+      "role": "ai_autonomous_worker",
+      "inputs": [],
+      "outputs": [
+        {
+          "slot": "related_api_dataset",
+          "slot_class": "transport",
+          "artifact_role": "primary",
+          "allocated_path": "output/_slots/ps-1-link-related-api-records/related_api_dataset.json",
+          "path_authority": "compiler_allocated"
+        }
+      ],
+      "purpose": "STEP NATURE: DETERMINISTIC\n\nCONTRACT (MUST):\n* Inputs: transport slot raw_api_dataset containing the fetched JSONPlaceholder collections from the prior step.\n* Outputs: write transport slot related_api_dataset in JSON containing relationship-resolved data needed downstream: users associated with their posts, todos, and albums via userId; the first 20 posts associated with available comments via postId using the union of /comments?_limit=20 and /posts/1/comments, deduplicated by comment id if overlap exists; and album 1 associated with its photos via albumId. No field-level schema has been declared for this artifact. Inspect the real data you read or fetch, choose the smallest coherent set of fields that best satisfies the user's request, and use that same schema consistently for every record or object you write. The artifact shape you materialize is what downstream steps will observe and rely on, so do not let the schema drift once chosen.\n* Acceptance checks: transport slot related_api_dataset exists; every user record in the related structure has its corresponding posts, todos, and albums attached or traceable; each of the first 20 posts has an associated comments collection based on postId; album 1 has an associated photos collection based on albumId.\n* Constraints / non-goals: do not compute final per-user metrics in this step; do not render HTML in this step; do not lose text fields needed later for avg_body_length or post-body truncation.\n* Interfaces / invariants: use exact source-key relationships only: post.userId = user.id, todo.userId = user.id, album.userId = user.id, comment.postId = post.id, photo.albumId = album.id.\n\nGUIDANCE (SHOULD):\n* Preferred stack/tools: JSON transformation and deterministic join logic.\n* Preferred patterns: preserve original record identifiers and embed or reference children consistently.\n* Efficiency / reliability hints: deduplicate overlapping comment records by comment id before attaching them to posts.\n\nCREATIVE BRIEF (MAY):\n* Look/feel/tone: none.\n* Stylistic constraints or preferences: none.\n* Optional polish (must not expand scope): none.",
+      "step_id": "ps-1-link-related-api-records",
+      "dependencies": [
+        "Fetch JSONPlaceholder data"
+      ],
+      "compiler_decisions": {
+        "warnings": [],
+        "compatibility_status": "compatible"
+      }
+    },
+    "materialized_output_paths": [
+      {
+        "ref_id": "ps-1-link-related-api-records:output:0:step-result",
+        "runtime_path": "/workspace/output/step_result.json",
+        "workspace_path": "output/step_result.json"
+      },
+      {
+        "ref_id": "ps-1-link-related-api-records:output:1:journal",
+        "runtime_path": "/workspace/meta/mcp-tools/journal.ndjson",
+        "workspace_path": "meta/mcp-tools/journal.ndjson"
+      },
+      {
+        "ref_id": "ps-1-link-related-api-records:output:2:calls-tar",
+        "runtime_path": "/workspace/meta/mcp-tools/calls.tar.gz",
+        "workspace_path": "meta/mcp-tools/calls.tar.gz"
+      },
+      {
+        "ref_id": "ps-1-link-related-api-records:output:3:related-api-dataset",
+        "runtime_path": "/workspace/output/_slots/ps-1-link-related-api-records/related_api_dataset.json",
+        "workspace_path": "output/_slots/ps-1-link-related-api-records/related_api_dataset.json"
+      }
+    ],
+    "skill_binding_expectation": {
+      "primary_skill_id": "skill.data.transform",
+      "skill_usage_mode": "script_preferred",
+      "custom_code_scope": [
+        "deterministic_join_logic",
+        "schema_selection",
+        "output_materialization"
+      ],
+      "optional_purposes": [
+        "validate_relationships"
+      ],
+      "required_purposes": [
+        "join_and_shape_json",
+        "deduplicate_comments",
+        "preserve_needed_text_fields"
+      ],
+      "custom_code_allowed": true
+    },
+    "__rtShadowPreparing": false
+  },
+  {
+    "label": "Compute user metric outputs",
+    "status": "completed",
+    "step_id": "ps-2-compute-user-metric-outputs",
+    "attempts": 1,
+    "ended_at": 1775787371561,
+    "artifacts": [],
+    "step_hash": "sha256:968814d97fca4dfe2288aaf247a9d485e1fbc071342f58e12375e85ae4b733f9",
+    "step_kind": "code_task",
+    "depends_on": [
+      "ps-1-link-related-api-records"
+    ],
+    "started_at": 1775787251397,
+    "step_index": 2,
+    "kernel_hash": null,
+    "step_nature": "HYBRID",
+    "total_steps": 4,
+    "contract_hash": "sha256:968814d97fca4dfe2288aaf247a9d485e1fbc071342f58e12375e85ae4b733f9",
+    "final_backend": "sandbox.session",
+    "repair_policy": {
+      "strategy": "retry_same_contract",
+      "max_retries": 6,
+      "block_on_missing_inputs": true,
+      "immutable_output_bindings": true
+    },
+    "execution_mode": "code",
+    "routing_reason": "compiled_code_contract",
+    "abstract_inputs": [
+      {
+        "slot": "related_api_dataset",
+        "notes": "Relationship-resolved data from the prior step.",
+        "required": true,
+        "row_grain": null,
+        "slot_class": "transport",
+        "format_hint": "json",
+        "child_collection_key": null
+      }
+    ],
+    "artifact_inputs": [],
+    "execution_hints": null,
+    "fallback_reason": null,
+    "validator_rules": {
+      "fail_on_missing_outputs": true,
+      "require_declared_outputs": true,
+      "require_input_artifact_refs": false,
+      "enforce_compiled_output_bindings": true
+    },
+    "abstract_outputs": [
+      {
+        "slot": "report_context",
+        "notes": "Precomputed ranking rows, posts-with-comments rows, and summary statistics for HTML rendering.",
+        "path_hint": null,
+        "row_grain": null,
+        "slot_class": "transport",
+        "format_hint": "json"
+      }
+    ],
+    "allowed_tool_ids": [
+      "sandbox.session"
+    ],
+    "artifact_outputs": [
+      "output/enriched-users.json",
+      "output/step_result.json"
+    ],
+    "expected_outputs": [
+      {
+        "path": "output/enriched-users.json",
+        "role": "enriched per-user metrics dataset",
+        "location": "workspace"
+      },
+      {
+        "path": "output/step_result.json",
+        "role": "meta",
+        "location": "sandbox"
+      }
+    ],
+    "retry_of_step_id": null,
+    "step_result_json": "{\"source\":\"system\",\"status\":\"completed\",\"step_outcome_summary\":[\"Compute user metric outputs finished with status=completed.\",\"Tool calls: 1.\",\"Artifacts: .sandbox/runs/run_e2346f78-ccd1-4150-b42f-02e01091d9d7/manifests/ps-2-compute-user-metric-outputs-attempt-1/input_manifest.json, .sandbox/runs/run_e2346f78-ccd1-4150-b42f-02e01091d9d7/manifests/ps-2-compute-user-metric-outputs-attempt-1/output_manifest.json, support/ps-2-compute-user-metric-outputs/input_manifest.json.\",\"Observed resources: output/_slots/ps-1-link-related-api-records/related_api_dataset.json, /workspace/input/output/_slots/ps-1-link-related-api-records/related_api_dataset.json, support/ps-1-link-related-api-records/input_manifest.json.\"],\"artifacts_created\":[{\"path\":\".sandbox/runs/run_e2346f78-ccd1-4150-b42f-02e01091d9d7/manifests/ps-2-compute-user-metric-outputs-attempt-1/input_manifest.json\",\"kind\":\"temp\",\"bytes\":1724,\"mime\":\"application/json\",\"checksum_sha256\":null},{\"path\":\".sandbox/runs/run_e2346f78-ccd1-4150-b42f-02e01091d9d7/manifests/ps-2-compute-user-metric-outputs-attempt-1/output_manifest.json\",\"kind\":\"temp\",\"bytes\":1454,\"mime\":\"application/json\",\"checksum_sha256\":null},{\"path\":\"support/ps-2-compute-user-metric-outputs/input_manifest.json\",\"kind\":\"temp\",\"bytes\":1724,\"mime\":\"application/json\",\"checksum_sha256\":null},{\"path\":\"support/input_manifest.json\",\"kind\":\"temp\",\"bytes\":1724,\"mime\":\"application/json\",\"checksum_sha256\":null},{\"path\":\"output/enriched-users.json\",\"kind\":\"deliverable\",\"bytes\":null,\"mime\":null,\"checksum_sha256\":null}],\"observed_resources\":[{\"type\":\"workspace_file\",\"path\":\"output/_slots/ps-1-link-related-api-records/related_api_dataset.json\"},{\"type\":\"workspace_file\",\"path\":\"/workspace/input/output/_slots/ps-1-link-related-api-records/related_api_dataset.json\"},{\"type\":\"workspace_file\",\"path\":\"support/ps-1-link-related-api-records/input_manifest.json\"},{\"type\":\"workspace_file\",\"path\":\"/workspace/input/support/ps-1-link-related-api-records/input_manifest.json\"},{\"type\":\"workspace_file\",\"path\":\"support/input_manifest.json\"},{\"type\":\"workspace_file\",\"path\":\"/workspace/input/support/input_manifest.json\"},{\"type\":\"workspace_file\",\"path\":\"support/ps-2-compute-user-metric-outputs/input_manifest.json\"},{\"type\":\"workspace_file\",\"path\":\"/workspace/meta/support/ps-2-compute-user-metric-outputs/input_manifest.json\"},{\"type\":\"workspace_file\",\"path\":\"/workspace/meta/input_manifest.json\"},{\"type\":\"log\",\"path\":\".sandbox/runs/run_e2346f78-ccd1-4150-b42f-02e01091d9d7/manifests/ps-2-compute-user-metric-outputs-attempt-1/input_manifest.json\"},{\"type\":\"log\",\"path\":\".sandbox/runs/run_e2346f78-ccd1-4150-b42f-02e01091d9d7/manifests/ps-2-compute-user-metric-outputs-attempt-1/output_manifest.json\"},{\"type\":\"workspace_file\",\"path\":\"/workspace/meta/output_manifest.json\"},{\"type\":\"workspace_file\",\"path\":\".skills/skill.sandbox.data_analysis/SKILL.md\"},{\"type\":\"workspace_file\",\"path\":\"/skills/skill.sandbox.data_analysis/SKILL.md\"},{\"type\":\"workspace_file\",\"path\":\"/workspace/output/enriched-users.json\"},{\"type\":\"workspace_file\",\"path\":\"output/enriched-users.json\"}],\"decisions\":[\"Step acceptance criteria: File output/enriched-users.json exists and parses as a bare JSON array with one object per user containing id, name, email, company_name, post_count, avg_body_length, todo_completion_rate, and quality_score; each metric follows the requested formulas; transport slot report_context is written for downstream rendering and contains ranked user rows, first-20-post rows with associated comments, and summary_statistics.\",\"Artifacts created: .sandbox/runs/run_e2346f78-ccd1-4150-b42f-02e01091d9d7/manifests/ps-2-compute-user-metric-outputs-attempt-1/input_manifest.json, .sandbox/runs/run_e2346f78-ccd1-4150-b42f-02e01091d9d7/manifests/ps-2-compute-user-metric-outputs-attempt-1/output_manifest.json, support/ps-2-compute-user-metric-outputs/input_manifest.json, support/input_manifest.json\",\"Observed resources: output/_slots/ps-1-link-related-api-records/related_api_dataset.json, /workspace/input/output/_slots/ps-1-link-related-api-records/related_api_dataset.json, support/ps-1-link-related-api-records/input_manifest.json, /workspace/input/support/ps-1-link-related-api-records/input_manifest.json\"],\"assumptions\":[],\"next_step_hints\":[\"Use .sandbox/runs/run_e2346f78-ccd1-4150-b42f-02e01091d9d7/manifests/ps-2-compute-user-metric-outputs-attempt-1/input_manifest.json, .sandbox/runs/run_e2346f78-ccd1-4150-b42f-02e01091d9d7/manifests/ps-2-compute-user-metric-outputs-attempt-1/output_manifest.json, support/ps-2-compute-user-metric-outputs/input_manifest.json as downstream inputs where relevant.\",\"Prefer the concrete observed resources over guessed paths.\"],\"errors_and_recovery\":[],\"repro\":{\"tool_ids\":[\"sandbox.session\"],\"script_paths\":[],\"log_paths\":[],\"rerun_hint\":\"Re-run step ps-2-compute-user-metric-outputs (Compute user metric outputs) using sandbox.session\"}}",
+    "success_criteria": "File output/enriched-users.json exists and parses as a bare JSON array with one object per user containing id, name, email, company_name, post_count, avg_body_length, todo_completion_rate, and quality_score; each metric follows the requested formulas; transport slot report_context is written for downstream rendering and contains ranked user rows, first-20-post rows with associated comments, and summary_statistics.",
+    "execution_backend": "sandbox.session",
+    "execution_pattern": "single_shot_render",
+    "observations_text": "STEP NATURE: DETERMINISTIC\n\nCONTRACT (MUST):\n* Inputs: transport slot related_api_dataset containing relationship-resolved users, posts, comments, todos, albums, and photos.\n* Outputs: write output/enriched-users.json as a bare JSON array with one object per user and exact fields id, name, email, company_name, post_count, avg_body_length, todo_completion_rate, quality_score. Compute post_count as total authored posts, avg_body_length as the mean character length of that user's post bodies (0 if no posts), todo_completion_rate as completed_todos / total_todos with a numeric result between 0.0 and 1.0 (0 if no todos), and quality_score as (post_count * 0.4) + (todo_completion_rate * 0.6). Also write transport slot report_context in JSON carrying the ranked user rows, first-20-post rows with associated comments for rendering, and summary statistics: total_users, total_posts_fetched, total_comments_fetched, average_quality_score. No field-level schema has been declared for this artifact. Inspect the real data you read or fetch, choose the smallest coherent set of fields that best satisfies the user's request, and use that same schema consistently for every record or object you write. The artifact shape you materialize is what downstream steps will observe and rely on, so do not let the schema drift once chosen.\n* Acceptance checks: output/enriched-users.json exists and parses as a bare array; each array element contains exactly the required fields; todo_completion_rate values are numeric and between 0.0 and 1.0 inclusive; quality_score equals (post_count * 0.4) + (todo_completion_rate * 0.6) for each user; transport slot report_context exists and includes ranked users, post-comment render rows for the first 20 posts, and summary statistics for the HTML step.\n* Constraints / non-goals: do not render HTML in this step; do not rename user-specified output fields; do not drop users with zero-valued metrics.\n* Interfaces / invariants: ranking data for downstream rendering must be sorted by quality_score descending; total_posts_fetched must count the first-20-post collection used for the Posts with Comments table; total_comments_fetched must count the unique comment records attached to those displayed posts after deduplication; average_quality_score must be the arithmetic mean of all users' quality_score values.\n\nGUIDANCE (SHOULD):\n* Preferred stack/tools: deterministic aggregation over the related JSON artifact.\n* Preferred patterns: calculate per-user metrics first, then derive ranking rows and summary statistics from those results.\n* Efficiency / reliability hints: keep numeric calculations stable and preserve full-precision numeric values in JSON; percentage formatting belongs in the HTML step, not here.\n\nCREATIVE BRIEF (MAY):\n* Look/feel/tone: none.\n* Stylistic constraints or preferences: none.\n* Optional polish (must not expand scope): none.",
+    "predicted_backend": "sandbox.session",
+    "repair_delta_json": null,
+    "artifact_contracts": {
+      "output/enriched-users.json": {
+        "notes": [
+          "Top-level JSON must be a bare array.",
+          "One object per user.",
+          "Do not rename any requested field."
+        ],
+        "format": "json",
+        "kind_key": "table.json_rows",
+        "slot_key": "report_context",
+        "row_grain": "rate_card_row",
+        "profile_id": "billing.table.json_rows.rate_cards.v1",
+        "provenance": {
+          "require_source_artifact_ids": true
+        },
+        "logical_path": "output/enriched-users.json",
+        "required_fields": [
+          "id",
+          "name",
+          "email",
+          "company_name",
+          "post_count",
+          "avg_body_length",
+          "todo_completion_rate",
+          "quality_score"
+        ],
+        "structural_hash": "sha256:1d9744632cba9a618c4720e35905e839a371002c7806f52a4ce2030857d8570d",
+        "entity_schema_id": "billing.rate_card",
+        "structure_locked": true,
+        "structural_authority": "explicit_step_contract",
+        "structural_contract_v1": {
+          "required_fields": [
+            "id",
+            "name",
+            "email",
+            "company_name",
+            "post_count",
+            "avg_body_length",
+            "todo_completion_rate",
+            "quality_score"
+          ],
+          "required_top_level_type": "array"
+        },
+        "required_top_level_type": "array"
+      }
+    },
+    "current_attempt_id": null,
+    "execution_contract": {
+      "pattern": "single_shot_render",
+      "step_nature": "HYBRID",
+      "repair_strategy": "retry_with_small_fix",
+      "timeout_ceiling_ms": 1800000,
+      "allowed_tool_call_count": 3
+    },
+    "retry_lineage_json": null,
+    "input_artifact_refs": [
+      {
+        "kind": "workspace_file",
+        "path": "output/_slots/ps-0-fetch-jsonplaceholder-data/raw_api_dataset.json",
+        "ref_id": "ps-2-compute-user-metric-outputs:input:0:raw-api-dataset",
+        "logical_name": "raw-api-dataset"
+      },
+      {
+        "kind": "workspace_file",
+        "path": "output/_slots/ps-1-link-related-api-records/related_api_dataset.json",
+        "ref_id": "ps-2-compute-user-metric-outputs:input:1:related-api-dataset",
+        "logical_name": "related-api-dataset"
+      }
+    ],
+    "output_artifact_refs": [
+      {
+        "kind": "artifact",
+        "path": "output/enriched-users.json",
+        "ref_id": "ps-2-compute-user-metric-outputs:output:0:enriched-users",
+        "logical_name": "enriched-users"
+      },
+      {
+        "kind": "artifact",
+        "path": "output/step_result.json",
+        "ref_id": "ps-2-compute-user-metric-outputs:output:1:step-result",
+        "logical_name": "step-result"
+      }
+    ],
+    "sandbox_mcp_contract": null,
+    "recommended_skill_ids": [
+      "skill.sandbox.data_analysis"
+    ],
+    "required_capabilities": [
+      "metric_calculation",
+      "json_output_generation",
+      "summary_aggregation"
+    ],
+    "suggested_skills_json": null,
+    "executable_contract_v2": {
+      "step_id": "ps-2-compute-user-metric-outputs",
+      "step_kind": "code_task",
+      "provenance": {
+        "finalized_at_ms": 0,
+        "dependency_policy": "declared-closure-committed-output-normalized",
+        "compiled_step_hash": "sha256:968814d97fca4dfe2288aaf247a9d485e1fbc071342f58e12375e85ae4b733f9"
+      },
+      "step_label": "Compute user metric outputs",
+      "kernel_hash": null,
+      "step_inputs": [
+        {
+          "kind": "workspace_file",
+          "ref_id": "ps-2-compute-user-metric-outputs:input:0:raw-api-dataset",
+          "must_exist": true,
+          "logical_path": "output/_slots/ps-0-fetch-jsonplaceholder-data/raw_api_dataset.json",
+          "runtime_path": "/workspace/input/output/_slots/ps-0-fetch-jsonplaceholder-data/raw_api_dataset.json",
+          "workspace_path": "output/_slots/ps-0-fetch-jsonplaceholder-data/raw_api_dataset.json"
+        },
+        {
+          "kind": "workspace_file",
+          "ref_id": "ps-2-compute-user-metric-outputs:input:1:related-api-dataset",
+          "must_exist": true,
+          "logical_path": "output/_slots/ps-1-link-related-api-records/related_api_dataset.json",
+          "runtime_path": "/workspace/input/output/_slots/ps-1-link-related-api-records/related_api_dataset.json",
+          "workspace_path": "output/_slots/ps-1-link-related-api-records/related_api_dataset.json"
+        }
+      ],
+      "step_outputs": [
+        {
+          "role": "primary",
+          "ref_id": "ps-2-compute-user-metric-outputs:output:0:enriched-users",
+          "location": "workspace",
+          "required": true,
+          "logical_path": "output/enriched-users.json",
+          "runtime_path": "/workspace/output/enriched-users.json",
+          "workspace_path": "output/enriched-users.json"
+        }
+      ],
+      "contract_hash": "sha256:968814d97fca4dfe2288aaf247a9d485e1fbc071342f58e12375e85ae4b733f9",
+      "final_backend": "sandbox.session",
+      "repair_policy": {
+        "strategy": "retry_same_contract",
+        "max_retries": 6,
+        "block_on_missing_inputs": true,
+        "immutable_output_bindings": true
+      },
+      "execution_mode": "code",
+      "routing_reason": "compiled_code_contract",
+      "support_inputs": [
+        {
+          "location": "sandbox",
+          "required": true,
+          "logical_path": "support/ps-2-compute-user-metric-outputs/input_manifest.json",
+          "runtime_path": "/workspace/meta/support/ps-2-compute-user-metric-outputs/input_manifest.json",
+          "support_kind": "input_manifest",
+          "workspace_path": "support/ps-2-compute-user-metric-outputs/input_manifest.json"
+        },
+        {
+          "location": "sandbox",
+          "required": true,
+          "logical_path": "support/input_manifest.json",
+          "runtime_path": "/workspace/meta/input_manifest.json",
+          "support_kind": "input_manifest",
+          "workspace_path": "support/input_manifest.json"
+        }
+      ],
+      "fallback_reason": null,
+      "support_outputs": [
+        {
+          "role": "auxiliary",
+          "location": "sandbox",
+          "required": true,
+          "logical_path": "output/step_result.json",
+          "runtime_path": "/workspace/output/step_result.json",
+          "support_kind": "system_artifact",
+          "workspace_path": "output/step_result.json"
+        }
+      ],
+      "validator_rules": {
+        "fail_on_missing_outputs": true,
+        "require_declared_outputs": true,
+        "require_input_artifact_refs": false,
+        "enforce_compiled_output_bindings": true
+      },
+      "allowed_tool_ids": [
+        "sandbox.session"
+      ],
+      "contract_version": 2,
+      "execution_policy": {
+        "pattern": "single_shot_render",
+        "step_nature": "HYBRID",
+        "repair_strategy": "retry_with_small_fix",
+        "timeout_ceiling_ms": 1800000,
+        "allowed_tool_call_count": 3
+      },
+      "execution_backend": "sandbox.session",
+      "predicted_backend": "sandbox.session"
+    },
+    "continuity_handoff_json": "{\"schema_version\":1,\"step_id\":\"ps-2-compute-user-metric-outputs\",\"step_index\":2,\"total_steps\":4,\"authoritative_outputs\":[{\"path\":\".sandbox/runs/run_e2346f78-ccd1-4150-b42f-02e01091d9d7/manifests/ps-2-compute-user-metric-outputs-attempt-1/input_manifest.json\",\"kind\":\"temp\",\"bytes\":1724,\"checksum_sha256\":null},{\"path\":\".sandbox/runs/run_e2346f78-ccd1-4150-b42f-02e01091d9d7/manifests/ps-2-compute-user-metric-outputs-attempt-1/output_manifest.json\",\"kind\":\"temp\",\"bytes\":1454,\"checksum_sha256\":null},{\"path\":\"support/ps-2-compute-user-metric-outputs/input_manifest.json\",\"kind\":\"temp\",\"bytes\":1724,\"checksum_sha256\":null},{\"path\":\"support/input_manifest.json\",\"kind\":\"temp\",\"bytes\":1724,\"checksum_sha256\":null},{\"path\":\"output/enriched-users.json\",\"kind\":\"deliverable\",\"bytes\":null,\"checksum_sha256\":null}],\"input_provenance\":[{\"type\":\"workspace_file\",\"path\":\"output/_slots/ps-1-link-related-api-records/related_api_dataset.json\"},{\"type\":\"workspace_file\",\"path\":\"/workspace/input/output/_slots/ps-1-link-related-api-records/related_api_dataset.json\"},{\"type\":\"workspace_file\",\"path\":\"support/ps-1-link-related-api-records/input_manifest.json\"},{\"type\":\"workspace_file\",\"path\":\"/workspace/input/support/ps-1-link-related-api-records/input_manifest.json\"},{\"type\":\"workspace_file\",\"path\":\"support/input_manifest.json\"},{\"type\":\"workspace_file\",\"path\":\"/workspace/input/support/input_manifest.json\"},{\"type\":\"workspace_file\",\"path\":\"support/ps-2-compute-user-metric-outputs/input_manifest.json\"},{\"type\":\"workspace_file\",\"path\":\"/workspace/meta/support/ps-2-compute-user-metric-outputs/input_manifest.json\"},{\"type\":\"workspace_file\",\"path\":\"/workspace/meta/input_manifest.json\"},{\"type\":\"log\",\"path\":\".sandbox/runs/run_e2346f78-ccd1-4150-b42f-02e01091d9d7/manifests/ps-2-compute-user-metric-outputs-attempt-1/input_manifest.json\"},{\"type\":\"log\",\"path\":\".sandbox/runs/run_e2346f78-ccd1-4150-b42f-02e01091d9d7/manifests/ps-2-compute-user-metric-outputs-attempt-1/output_manifest.json\"},{\"type\":\"workspace_file\",\"path\":\"/workspace/meta/output_manifest.json\"},{\"type\":\"workspace_file\",\"path\":\".skills/skill.sandbox.data_analysis/SKILL.md\"},{\"type\":\"workspace_file\",\"path\":\"/skills/skill.sandbox.data_analysis/SKILL.md\"},{\"type\":\"workspace_file\",\"path\":\"/workspace/output/enriched-users.json\"},{\"type\":\"workspace_file\",\"path\":\"output/enriched-users.json\"}],\"semantic_facts\":[\"Compute user metric outputs finished with status=completed.\",\"Tool calls: 1.\",\"Artifacts: .sandbox/runs/run_e2346f78-ccd1-4150-b42f-02e01091d9d7/manifests/ps-2-compute-user-metric-outputs-attempt-1/input_manifest.json, .sandbox/runs/run_e2346f78-ccd1-4150-b42f-02e01091d9d7/manifests/ps-2-compute-user-metric-outputs-attempt-1/output_manifest.json, support/ps-2-compute-user-metric-outputs/input_manifest.json.\",\"Observed resources: output/_slots/ps-1-link-related-api-records/related_api_dataset.json, /workspace/input/output/_slots/ps-1-link-related-api-records/related_api_dataset.json, support/ps-1-link-related-api-records/input_manifest.json.\",\"Step acceptance criteria: File output/enriched-users.json exists and parses as a bare JSON array with one object per user containing id, name, email, company_name, post_count, avg_body_length, todo_completion_rate, and quality_score; each metric follows the requested formulas; transport slot report_context is written for downstream rendering and contains ranked user rows, first-20-post rows with associated comments, and summary_statistics.\",\"Artifacts created: .sandbox/runs/run_e2346f78-ccd1-4150-b42f-02e01091d9d7/manifests/ps-2-compute-user-metric-outputs-attempt-1/input_manifest.json, .sandbox/runs/run_e2346f78-ccd1-4150-b42f-02e01091d9d7/manifests/ps-2-compute-user-metric-outputs-attempt-1/output_manifest.json, support/ps-2-compute-user-metric-outputs/input_manifest.json, support/input_manifest.json\",\"Observed resources: output/_slots/ps-1-link-related-api-records/related_api_dataset.json, /workspace/input/output/_slots/ps-1-link-related-api-records/related_api_dataset.json, support/ps-1-link-related-api-records/input_manifest.json, /workspace/input/support/ps-1-link-related-api-records/input_manifest.json\"],\"forbidden_assumptions\":[],\"next_step_hints\":[\"Use .sandbox/runs/run_e2346f78-ccd1-4150-b42f-02e01091d9d7/manifests/ps-2-compute-user-metric-outputs-attempt-1/input_manifest.json, .sandbox/runs/run_e2346f78-ccd1-4150-b42f-02e01091d9d7/manifests/ps-2-compute-user-metric-outputs-attempt-1/output_manifest.json, support/ps-2-compute-user-metric-outputs/input_manifest.json as downstream inputs where relevant.\",\"Prefer the concrete observed resources over guessed paths.\"],\"presentation_intent\":null}",
+    "execution_evidence_json": "{\"contract_hash\":\"sha256:25927711d61c1f636eb5d8183c6df55c94a608342110a8e716e23f2813d264bf\",\"backend_selected\":\"sandbox.session\",\"backend_reason\":\"edge_isolate_known_shape\",\"predicted_backend\":\"edge_isolate\",\"final_backend\":\"sandbox.session\",\"routing_reason\":\"edge_isolate_known_shape\",\"fallback_reason\":\"edge_isolate_prompt_binding_missing\",\"kernel_hash\":null,\"edge_runtime_evidence\":null,\"edge_wall_ms\":null,\"edge_bytes_in\":null,\"edge_bytes_out\":null,\"edge_gateway_calls\":null,\"edge_cache_mode\":null,\"edge_failover_count\":null,\"tools_used\":[{\"tool_id\":\"sandbox.session\",\"ok\":true,\"output_summary\":\"{\\\"_bookkeeping_summary\\\":true,\\\"_tool\\\":\\\"sandbox.session\\\",\\\"ok\\\":true,\\\"session_id\\\":\\\"sess-mns9w9yz-akuqtip5\\\",\\\"container_id\\\":\\\"ec27dd5994f644d7df6090cad28cad89152b6d43cc7e2eef7d50efda91d6e48d:mns9wabe:rwosh2\\\",\\\"profile_id\\\":\\\"sbx_demo_research_browser_v1\\\",\\\"lease_id\\\":\\\"c4771797-f41b-47a1-affe-3a1b2a592dfd\\\",\\\"halt_policy\\\":\\\"halt_on_error\\\",\\\"lease_type\\\":\\\"step\\\",\\\"total_steps\\\":9,\\\"completed_steps\\\":9,\\\"total_duration_ms\\\":79017,\\\"step_preview\\\":[{\\\"step_index\\\":0,\\\"label\\\":\\\"prepare-compiled-workspace\\\",\\\"type\\\":\\\"shell\\\",\\\"ok\\\":true,\\\"exit_code\\\":0,\\\"duration_ms\\\":10980},{\\\"step_index\\\":1,\\\"label\\\":\\\"materialize-compiled-inputs\\\",\\\"type\\\":\\\"materialize\\\",\\\"ok\\\":true,\\\"exit_code\\\":0,\\\"duration_ms\\\":7463},{\\\"step_index\\\":2,\\\"label\\\":\\\"project-compiled-input-paths\\\",\\\"type\\\":\\\"shell\\\",\\\"ok\\\":true,\\\"exit_code\\\":0,\\\"duration_ms\\\":2931},{\\\"step_index\\\":3,\\\"label\\\":\\\"generate-preflight-receipt\\\",\\\"type\\\":\\\"python\\\",\\\"ok\\\":true,\\\"exit_code\\\":0,\\\"duration_ms\\\":11623},{\\\"step_index\\\":4,\\\"label\\\":\\\"verify-preflight-required-inputs\\\",\\\"type\\\":\\\"python\\\",\\\"ok\\\":true,\\\"exit_code\\\":0,\\\"duration_ms\\\":11356},{\\\"step_index\\\":5,\\\"label\\\":\\\"compute metrics and write outputs\\\",\\\"type\\\":\\\"python\\\",\\\"ok\\\":true,\\\"exit_code\\\":0,\\\"duration_ms\\\":11290},{\\\"step_index\\\":6,\\\"label\\\":\\\"generate-postflight-receipt\\\",\\\"type\\\":\\\"python\\\",\\\"ok\\\":true,\\\"exit_code\\\":0,\\\"duration_ms\\\":11340},{\\\"step_index\\\":7,\\\"label\\\":\\\"verify-expected-outputs\\\",\\\"type\\\":\\\"shell\\\",\\\"ok\\\":true,\\\"exit_code\\\":0,\\\"duration_ms\\\":1234}],\\\"failed_step\\\":{\\\"step_index\\\":8,\\\"label\\\":\\\"persist-compiled-outputs\\\",\\\"type\\\":\\\"persist\\\",\\\"ok\\\":true,\\\"exit_code\\\":0,\\\"duration_ms\\\":2341},\\\"persisted_paths\\\":[\\\"output/enriched-users.json\\\"],\\\"persisted_count\\\":1,\\\"materialized_paths\\\":[\\\"output/_slots/ps-1-link-related-api-records/related_api_dataset.json\\\",\\\"support/ps-1-link-related-api-records/input_manifest.json\\\",\\\"support/input_manifest.json\\\",\\\"support/ps-2-compute-user-metric-outputs/input_manifest.json\\\",\\\"support/input_manifest.json\\\",\\\".sandbox/runs/run_e2346f78-ccd1-4150-b42f-02e01091d9d7/manifests/ps-2-compute-user-metric-outputs-attempt-1/input_manifest.json\\\",\\\".sandbox/runs/run_e2346f78-ccd1-4150-b42f-02e01091d9d7/manifests/ps-2-compute-user-metric-outputs-attempt-1/output_manifest.json\\\",\\\".skills/skill.sandbox.data_analysis/SKILL.md\\\"],\\\"materialized_count\\\":8}\",\"duration_ms\":84789,\"observed_resource_refs\":[{\"type\":\"workspace_file\",\"path\":\"output/_slots/ps-1-link-related-api-records/related_api_dataset.json\"},{\"type\":\"workspace_file\",\"path\":\"/workspace/input/output/_slots/ps-1-link-related-api-records/related_api_dataset.json\"},{\"type\":\"workspace_file\",\"path\":\"support/ps-1-link-related-api-records/input_manifest.json\"},{\"type\":\"workspace_file\",\"path\":\"/workspace/input/support/ps-1-link-related-api-records/input_manifest.json\"},{\"type\":\"workspace_file\",\"path\":\"support/input_manifest.json\"},{\"type\":\"workspace_file\",\"path\":\"/workspace/input/support/input_manifest.json\"},{\"type\":\"workspace_file\",\"path\":\"support/ps-2-compute-user-metric-outputs/input_manifest.json\"},{\"type\":\"workspace_file\",\"path\":\"/workspace/meta/support/ps-2-compute-user-metric-outputs/input_manifest.json\"},{\"type\":\"workspace_file\",\"path\":\"/workspace/meta/input_manifest.json\"},{\"type\":\"log\",\"path\":\".sandbox/runs/run_e2346f78-ccd1-4150-b42f-02e01091d9d7/manifests/ps-2-compute-user-metric-outputs-attempt-1/input_manifest.json\"},{\"type\":\"log\",\"path\":\".sandbox/runs/run_e2346f78-ccd1-4150-b42f-02e01091d9d7/manifests/ps-2-compute-user-metric-outputs-attempt-1/output_manifest.json\"},{\"type\":\"workspace_file\",\"path\":\"/workspace/meta/output_manifest.json\"},{\"type\":\"workspace_file\",\"path\":\".skills/skill.sandbox.data_analysis/SKILL.md\"},{\"type\":\"workspace_file\",\"path\":\"/skills/skill.sandbox.data_analysis/SKILL.md\"},{\"type\":\"workspace_file\",\"path\":\"/workspace/output/enriched-users.json\"},{\"type\":\"workspace_file\",\"path\":\"output/enriched-users.json\"}],\"input_source_code\":\"import json, os, statistics, math\\nfrom pathlib import Path\\nimport pandas as pd\\n\\nbase = Path('/workspace')\\ninput_path = base / 'input/output/_slots/ps-1-link-related-api-records/related_api_dataset.json'\\nmanifest1 = base / 'input/support/ps-1-link-related-api-records/input_manifest.json'\\nmanifest2 = base / 'input/support/input_manifest.json'\\nout_path = base / 'output/enriched-users.json'\\nstep_result_path = base / 'output/step_result.json'\\nreport_context_path = base / 'output/report_context.json'\\n\\nprint(f'Loading {input_path}...', flush=True)\\nwith open(input_path, 'r', encoding='utf-8') as f:\\n    data = json.load(f)\\nprint(f'Loading {manifest1}...', flush=True)\\nwith open(manifest1, 'r', encoding='utf-8') as f:\\n    m1 = json.load(f)\\nprint(f'Loading {manifest2}...', flush=True)\\nwith open(manifest2, 'r', encoding='utf-8') as f:\\n    m2 = json.load(f)\\n\\nif not isinstance(data, dict):\\n    raise ValueError(f'Expected object at top level, got {type(data).__name__}')\\nusers = data.get('users') or []\\nposts_20 = data.get('posts_20') or []\\nprint(f'Observed users={len(users)}, posts_20={len(posts_20)}', flush=True)\\n\\n# Normalize user records\\nuser_rows = []\\nfor u in users:\\n    company = u.get('company') or {}\\n    user_rows.append({\\n        'id': u.get('id'),\\n        'name': u.get('name'),\\n        'email': u.get('email'),\\n        'company_name': company.get('name') if isinstance(company, dict) else None,\\n    })\\n\\n# Build per-user metrics from linked posts/todos\\nfor row, u in zip(user_rows, users):\\n    posts = u.get('posts') or []\\n    todos = u.get('todos') or []\\n    post_count = len(posts)\\n    avg_body_length = (sum(len((p.get('body') or '')) for p in posts) / post_count) if post_count else 0\\n    completed = sum(1 for t in todos if bool(t.get('completed')))\\n    total_todos = len(todos)\\n    todo_completion_rate = (completed / total_todos) if total_todos else 0\\n    quality_score = (post_count * 0.4) + (todo_completion_rate * 0.6)\\n    row.update({\\n        'post_count': post_count,\\n        'avg_body_length': avg_body_length,\\n        'todo_completion_rate': todo_completion_rate,\\n        'quality_score': quality_score,\\n    })\\n\\n# Validate and write enriched-users.json\\nrequired_fields = ['id','name','email','company_name','post_count','avg_body_length','todo_completion_rate','quality_score']\\nenriched = [{k: r.get(k) for k in required_fields} for r in user_rows]\\nfor i, r in enumerate(enriched):\\n    if set(r.keys()) != set(required_fields):\\n        raise ValueError(f'Row {i} field mismatch: {sorted(r.keys())}')\\n    tcr = r['todo_completion_rate']\\n    if not isinstance(tcr, (int, float)) or not (0.0 <= tcr <= 1.0):\\n        raise ValueError(f'Row {i} invalid todo_completion_rate={tcr!r}')\\n    expected_q = (r['post_count'] * 0.4) + (r['todo_completion_rate'] * 0.6)\\n    if not math.isclose(r['quality_score'], expected_q, rel_tol=1e-12, abs_tol=1e-12):\\n        raise ValueError(f'Row {i} quality_score mismatch: {r[\\\"quality_score\\\"]} vs {expected_q}')\\n\\nout_path.parent.mkdir(parents=True, exist_ok=True)\\nwith open(out_path, 'w', encoding='utf-8') as f:\\n    json.dump(enriched, f, ensure_ascii=False, indent=2)\\n\\n# Report context for downstream rendering\\nranked = sorted(enriched, key=lambda r: (-r['quality_score'], r['name'] or '', r['id']))\\nranked_rows = []\\nfor idx, r in enumerate(ranked, start=1):\\n    ranked_rows.append({\\n        'rank': idx,\\n        'name': r['name'],\\n        'email': r['email'],\\n        'post_count': r['post_count'],\\n        'completion_rate_pct': r['todo_completion_rate'] * 100,\\n        'quality_score': r['quality_score'],\\n    })\\n\\n# first 20 posts with associated comments\\npost_rows = []\\nunique_comment_ids = set()\\nfor p in posts_20:\\n    comments = p.get('comments') or []\\n    seen = set()\\n    deduped_comments = []\\n    for c in comments:\\n        cid = c.get('id')\\n        if cid in seen:\\n            continue\\n        seen.add(cid)\\n        if cid is not None:\\n            unique_comment_ids.add(cid)\\n        deduped_comments.append({\\n            'author_name': c.get('name'),\\n            'comment_body': c.get('body'),\\n        })\\n    post_rows.append({\\n        'title': p.get('title'),\\n        'body': p.get('body'),\\n        'comments': deduped_comments,\\n        'comment_summary': 'No comments.' if not deduped_comments else None,\\n    })\\n\\nsummary_statistics = {\\n    'total_users': len(enriched),\\n    'total_posts_fetched': len(posts_20),\\n    'total_comments_fetched': len(unique_comment_ids),\\n    'average_quality_score': sum(r['quality_score'] for r in enriched) / len(enriched) if enriched else 0,\\n}\\n\\nreport_context = {\\n    'ranked_users': ranked_rows,\\n    'post_comment_rows': post_rows,\\n    'summary_statistics': summary_statistics,\\n}\\nwith open(report_context_path, 'w', encoding='utf-8') as f:\\n    json.dump(report_context, f, ensure_ascii=False, indent=2)\\n\\nstep_result = {\\n    'status': 'success',\\n    'summary': 'Computed enriched user metrics and prepared downstream report context.',\\n    'inputs_used': [str(input_path), str(manifest1), str(manifest2)],\\n    'outputs_written': [str(out_path), str(report_context_path)],\\n    'validations': [\\n        {'name': 'enriched-users exists', 'ok': out_path.exists(), 'details': f'{out_path} size={out_path.stat().st_size if out_path.exists() else 0}'},\\n        {'name': 'report_context exists', 'ok': report_context_path.exists(), 'details': f'{report_context_path} size={report_context_path.stat().st_size if report_context_path.exists() else 0}'},\\n    ],\\n    'deviations': [],\\n    'needs_plan_repair': False,\\n}\\nwith open(step_result_path, 'w', encoding='utf-8') as f:\\n    json.dump(step_result, f, ensure_ascii=False, indent=2)\\n\\nchecks = {\\n    'enriched_users_exists': out_path.exists() and out_path.stat().st_size > 0,\\n    'report_context_exists': report_context_path.exists() and report_context_path.stat().st_size > 0,\\n    'step_result_exists': step_result_path.exists() and step_result_path.stat().st_size > 0,\\n}\\nprint(json.dumps(checks, indent=2), flush=True)\\nif not all(checks.values()):\\n    raise SystemExit('Missing required output(s)')\\n\",\"input_language\":\"python\"}],\"artifacts_written\":[{\"path\":\".sandbox/runs/run_e2346f78-ccd1-4150-b42f-02e01091d9d7/manifests/ps-2-compute-user-metric-outputs-attempt-1/input_manifest.json\",\"kind\":\"temp\",\"from_tool\":\"sandbox.session\",\"bytes\":1724,\"mime\":\"application/json\",\"checksum_sha256\":null},{\"path\":\".sandbox/runs/run_e2346f78-ccd1-4150-b42f-02e01091d9d7/manifests/ps-2-compute-user-metric-outputs-attempt-1/output_manifest.json\",\"kind\":\"temp\",\"from_tool\":\"sandbox.session\",\"bytes\":1454,\"mime\":\"application/json\",\"checksum_sha256\":null},{\"path\":\"support/ps-2-compute-user-metric-outputs/input_manifest.json\",\"kind\":\"temp\",\"from_tool\":\"sandbox.session\",\"bytes\":1724,\"mime\":\"application/json\",\"checksum_sha256\":null},{\"path\":\"support/input_manifest.json\",\"kind\":\"temp\",\"from_tool\":\"sandbox.session\",\"bytes\":1724,\"mime\":\"application/json\",\"checksum_sha256\":null},{\"path\":\"output/enriched-users.json\",\"kind\":\"deliverable\",\"from_tool\":\"sandbox.session\",\"bytes\":null,\"mime\":null,\"checksum_sha256\":null}],\"model_response_text\":\"\",\"total_tool_calls\":1,\"total_duration_ms\":113509}",
+    "materialized_input_paths": [
+      {
+        "ref_id": "ps-2-compute-user-metric-outputs:input:0:raw-api-dataset",
+        "runtime_path": "/workspace/input/output/_slots/ps-0-fetch-jsonplaceholder-data/raw_api_dataset.json",
+        "workspace_path": "output/_slots/ps-0-fetch-jsonplaceholder-data/raw_api_dataset.json"
+      },
+      {
+        "ref_id": "ps-2-compute-user-metric-outputs:input:1:related-api-dataset",
+        "runtime_path": "/workspace/input/output/_slots/ps-1-link-related-api-records/related_api_dataset.json",
+        "workspace_path": "output/_slots/ps-1-link-related-api-records/related_api_dataset.json"
+      }
+    ],
+    "compiled_step_contract_v1": {
+      "role": "ai_autonomous_worker",
+      "inputs": [],
+      "outputs": [
+        {
+          "slot": "report_context",
+          "kind_key": "table.json_rows",
+          "path_hint": "output/enriched-users.json",
+          "row_grain": {
+            "grain_type": "custom",
+            "cardinality": "many",
+            "custom_label": "rate_card_row"
+          },
+          "profile_id": "billing.table.json_rows.rate_cards.v1",
+          "slot_class": "transport",
+          "artifact_role": "primary",
+          "allocated_path": null,
+          "path_authority": "user_pinned",
+          "entity_schema_id": "billing.rate_card",
+          "required_validations": [
+            "shape",
+            "required_fields",
+            "row_grain",
+            "provenance"
+          ],
+          "provenance_requirements": {
+            "require_source_artifact_ids": true
+          }
+        }
+      ],
+      "purpose": "STEP NATURE: DETERMINISTIC\n\nCONTRACT (MUST):\n* Inputs: transport slot related_api_dataset containing relationship-resolved users, posts, comments, todos, albums, and photos.\n* Outputs: write output/enriched-users.json as a bare JSON array with one object per user and exact fields id, name, email, company_name, post_count, avg_body_length, todo_completion_rate, quality_score. Compute post_count as total authored posts, avg_body_length as the mean character length of that user's post bodies (0 if no posts), todo_completion_rate as completed_todos / total_todos with a numeric result between 0.0 and 1.0 (0 if no todos), and quality_score as (post_count * 0.4) + (todo_completion_rate * 0.6). Also write transport slot report_context in JSON carrying the ranked user rows, first-20-post rows with associated comments for rendering, and summary statistics: total_users, total_posts_fetched, total_comments_fetched, average_quality_score. No field-level schema has been declared for this artifact. Inspect the real data you read or fetch, choose the smallest coherent set of fields that best satisfies the user's request, and use that same schema consistently for every record or object you write. The artifact shape you materialize is what downstream steps will observe and rely on, so do not let the schema drift once chosen.\n* Acceptance checks: output/enriched-users.json exists and parses as a bare array; each array element contains exactly the required fields; todo_completion_rate values are numeric and between 0.0 and 1.0 inclusive; quality_score equals (post_count * 0.4) + (todo_completion_rate * 0.6) for each user; transport slot report_context exists and includes ranked users, post-comment render rows for the first 20 posts, and summary statistics for the HTML step.\n* Constraints / non-goals: do not render HTML in this step; do not rename user-specified output fields; do not drop users with zero-valued metrics.\n* Interfaces / invariants: ranking data for downstream rendering must be sorted by quality_score descending; total_posts_fetched must count the first-20-post collection used for the Posts with Comments table; total_comments_fetched must count the unique comment records attached to those displayed posts after deduplication; average_quality_score must be the arithmetic mean of all users' quality_score values.\n\nGUIDANCE (SHOULD):\n* Preferred stack/tools: deterministic aggregation over the related JSON artifact.\n* Preferred patterns: calculate per-user metrics first, then derive ranking rows and summary statistics from those results.\n* Efficiency / reliability hints: keep numeric calculations stable and preserve full-precision numeric values in JSON; percentage formatting belongs in the HTML step, not here.\n\nCREATIVE BRIEF (MAY):\n* Look/feel/tone: none.\n* Stylistic constraints or preferences: none.\n* Optional polish (must not expand scope): none.",
+      "step_id": "ps-2-compute-user-metric-outputs",
+      "dependencies": [
+        "Link related API records"
+      ],
+      "compiler_decisions": {
+        "warnings": [],
+        "resolution_mode": "manual_override",
+        "compatibility_status": "compatible"
+      }
+    },
+    "materialized_output_paths": [
+      {
+        "ref_id": "ps-2-compute-user-metric-outputs:output:0:enriched-users",
+        "runtime_path": "/workspace/output/enriched-users.json",
+        "workspace_path": "output/enriched-users.json"
+      },
+      {
+        "ref_id": "ps-2-compute-user-metric-outputs:output:1:step-result",
+        "runtime_path": "/workspace/output/step_result.json",
+        "workspace_path": "output/step_result.json"
+      }
+    ],
+    "skill_binding_expectation": {
+      "primary_skill_id": "skill.sandbox.data_analysis",
+      "skill_usage_mode": "reference_only",
+      "custom_code_scope": [
+        "read_related_api_dataset",
+        "compute_per_user_metrics",
+        "build_report_context",
+        "write_json_artifacts"
+      ],
+      "optional_purposes": [
+        "schema_consistency",
+        "validation"
+      ],
+      "required_purposes": [
+        "aggregate_related_json",
+        "compute_user_metrics",
+        "materialize_output_artifacts"
+      ],
+      "custom_code_allowed": true
+    },
+    "__rtShadowPreparing": false
+  },
+  {
+    "label": "Render rankings HTML page",
+    "status": "completed",
+    "step_id": "ps-3-render-rankings-html-page",
+    "attempts": 1,
+    "ended_at": 1775787529955,
+    "artifacts": [],
+    "step_hash": "sha256:457d68e116c53736f79d4baa031dae5b8e8dd538bdb9a537ead656190e615146",
+    "step_kind": "hybrid_task",
+    "depends_on": [
+      "ps-2-compute-user-metric-outputs"
+    ],
+    "started_at": 1775787373015,
+    "step_index": 3,
+    "kernel_hash": null,
+    "step_nature": "HYBRID",
+    "total_steps": 4,
+    "contract_hash": "sha256:457d68e116c53736f79d4baa031dae5b8e8dd538bdb9a537ead656190e615146",
+    "final_backend": "sandbox.session",
+    "repair_policy": {
+      "strategy": "retry_same_contract",
+      "max_retries": 6,
+      "block_on_missing_inputs": true,
+      "immutable_output_bindings": true
+    },
+    "execution_mode": "hybrid",
+    "routing_reason": "compiled_code_contract",
+    "abstract_inputs": [
+      {
+        "slot": "report_context",
+        "notes": "Precomputed ranking rows, posts-with-comments rows, and summary statistics.",
+        "required": true,
+        "row_grain": null,
+        "slot_class": "transport",
+        "format_hint": "json",
+        "child_collection_key": null
+      }
+    ],
+    "artifact_inputs": [],
+    "execution_hints": null,
+    "fallback_reason": null,
+    "validator_rules": {
+      "fail_on_missing_outputs": true,
+      "require_declared_outputs": true,
+      "require_input_artifact_refs": true,
+      "enforce_compiled_output_bindings": true
+    },
+    "allowed_tool_ids": [
+      "sandbox.session"
+    ],
+    "artifact_outputs": [
+      "output/user-rankings.html",
+      "output/step_result.json"
+    ],
+    "expected_outputs": [
+      {
+        "path": "output/user-rankings.html",
+        "role": "styled HTML rankings report",
+        "location": "workspace"
+      },
+      {
+        "path": "output/step_result.json",
+        "role": "meta",
+        "location": "sandbox"
+      }
+    ],
+    "input_file_paths": [
+      "output/enriched-users.json"
+    ],
+    "retry_of_step_id": null,
+    "step_result_json": "{\"source\":\"system\",\"status\":\"completed\",\"step_outcome_summary\":[\"Render rankings HTML page finished with status=completed.\",\"Tool calls: 1.\",\"Artifacts: .sandbox/runs/run_e2346f78-ccd1-4150-b42f-02e01091d9d7/manifests/ps-3-render-rankings-html-page-attempt-1/input_manifest.json, .sandbox/runs/run_e2346f78-ccd1-4150-b42f-02e01091d9d7/manifests/ps-3-render-rankings-html-page-attempt-1/output_manifest.json, support/ps-3-render-rankings-html-page/input_manifest.json.\",\"Observed resources: output/enriched-users.json, /workspace/input/output/enriched-users.json, output/_slots/ps-0-fetch-jsonplaceholder-data/raw_api_dataset.json.\"],\"artifacts_created\":[{\"path\":\".sandbox/runs/run_e2346f78-ccd1-4150-b42f-02e01091d9d7/manifests/ps-3-render-rankings-html-page-attempt-1/input_manifest.json\",\"kind\":\"temp\",\"bytes\":1730,\"mime\":\"application/json\",\"checksum_sha256\":null},{\"path\":\".sandbox/runs/run_e2346f78-ccd1-4150-b42f-02e01091d9d7/manifests/ps-3-render-rankings-html-page-attempt-1/output_manifest.json\",\"kind\":\"temp\",\"bytes\":1549,\"mime\":\"application/json\",\"checksum_sha256\":null},{\"path\":\"support/ps-3-render-rankings-html-page/input_manifest.json\",\"kind\":\"temp\",\"bytes\":1730,\"mime\":\"application/json\",\"checksum_sha256\":null},{\"path\":\"support/input_manifest.json\",\"kind\":\"temp\",\"bytes\":1730,\"mime\":\"application/json\",\"checksum_sha256\":null},{\"path\":\"output/user-rankings.html\",\"kind\":\"deliverable\",\"bytes\":null,\"mime\":null,\"checksum_sha256\":null}],\"observed_resources\":[{\"type\":\"workspace_file\",\"path\":\"output/enriched-users.json\"},{\"type\":\"workspace_file\",\"path\":\"/workspace/input/output/enriched-users.json\"},{\"type\":\"workspace_file\",\"path\":\"output/_slots/ps-0-fetch-jsonplaceholder-data/raw_api_dataset.json\"},{\"type\":\"workspace_file\",\"path\":\"/workspace/input/output/_slots/ps-0-fetch-jsonplaceholder-data/raw_api_dataset.json\"},{\"type\":\"workspace_file\",\"path\":\"output/_slots/ps-1-link-related-api-records/related_api_dataset.json\"},{\"type\":\"workspace_file\",\"path\":\"/workspace/input/output/_slots/ps-1-link-related-api-records/related_api_dataset.json\"},{\"type\":\"workspace_file\",\"path\":\"support/ps-3-render-rankings-html-page/input_manifest.json\"},{\"type\":\"workspace_file\",\"path\":\"/workspace/meta/support/ps-3-render-rankings-html-page/input_manifest.json\"},{\"type\":\"workspace_file\",\"path\":\"support/input_manifest.json\"},{\"type\":\"workspace_file\",\"path\":\"/workspace/meta/input_manifest.json\"},{\"type\":\"log\",\"path\":\".sandbox/runs/run_e2346f78-ccd1-4150-b42f-02e01091d9d7/manifests/ps-3-render-rankings-html-page-attempt-1/input_manifest.json\"},{\"type\":\"log\",\"path\":\".sandbox/runs/run_e2346f78-ccd1-4150-b42f-02e01091d9d7/manifests/ps-3-render-rankings-html-page-attempt-1/output_manifest.json\"},{\"type\":\"workspace_file\",\"path\":\"/workspace/meta/output_manifest.json\"},{\"type\":\"workspace_file\",\"path\":\".skills/skill.sandbox.html_report_builder/REFERENCE_BIBLE.md\"},{\"type\":\"workspace_file\",\"path\":\"/skills/skill.sandbox.html_report_builder/REFERENCE_BIBLE.md\"},{\"type\":\"workspace_file\",\"path\":\".skills/skill.sandbox.html_report_builder/SKILL.md\"},{\"type\":\"workspace_file\",\"path\":\"/skills/skill.sandbox.html_report_builder/SKILL.md\"},{\"type\":\"workspace_file\",\"path\":\".skills/skill.sandbox.html_report_builder/assets/base.css\"},{\"type\":\"workspace_file\",\"path\":\"/skills/skill.sandbox.html_report_builder/assets/base.css\"},{\"type\":\"workspace_file\",\"path\":\".skills/skill.sandbox.html_report_builder/assets/lib/chart.min.js\"},{\"type\":\"workspace_file\",\"path\":\"/skills/skill.sandbox.html_report_builder/assets/lib/chart.min.js\"},{\"type\":\"workspace_file\",\"path\":\".skills/skill.sandbox.html_report_builder/assets/templates/comparison.html\"},{\"type\":\"workspace_file\",\"path\":\"/skills/skill.sandbox.html_report_builder/assets/templates/comparison.html\"},{\"type\":\"workspace_file\",\"path\":\".skills/skill.sandbox.html_report_builder/assets/templates/dashboard.html\"},{\"type\":\"workspace_file\",\"path\":\"/skills/skill.sandbox.html_report_builder/assets/templates/dashboard.html\"},{\"type\":\"workspace_file\",\"path\":\".skills/skill.sandbox.html_report_builder/assets/templates/executive-brief.html\"},{\"type\":\"workspace_file\",\"path\":\"/skills/skill.sandbox.html_report_builder/assets/templates/executive-brief.html\"},{\"type\":\"workspace_file\",\"path\":\".skills/skill.sandbox.html_report_builder/assets/templates/newsletter.html\"},{\"type\":\"workspace_file\",\"path\":\"/skills/skill.sandbox.html_report_builder/assets/templates/newsletter.html\"},{\"type\":\"workspace_file\",\"path\":\".skills/skill.sandbox.html_report_builder/assets/templates/standard.html\"},{\"type\":\"workspace_file\",\"path\":\"/skills/skill.sandbox.html_report_builder/assets/templates/standard.html\"},{\"type\":\"workspace_file\",\"path\":\".skills/skill.sandbox.html_report_builder/assets/theme-manifest.json\"},{\"type\":\"workspace_file\",\"path\":\"/skills/skill.sandbox.html_report_builder/assets/theme-manifest.json\"},{\"type\":\"workspace_file\",\"path\":\".skills/skill.sandbox.html_report_builder/assets/themes/compliance.css\"},{\"type\":\"workspace_file\",\"path\":\"/skills/skill.sandbox.html_report_builder/assets/themes/compliance.css\"},{\"type\":\"workspace_file\",\"path\":\".skills/skill.sandbox.html_report_builder/assets/themes/executive.css\"},{\"type\":\"workspace_file\",\"path\":\"/skills/skill.sandbox.html_report_builder/assets/themes/executive.css\"},{\"type\":\"workspace_file\",\"path\":\".skills/skill.sandbox.html_report_builder/assets/themes/minimal.css\"},{\"type\":\"workspace_file\",\"path\":\"/skills/skill.sandbox.html_report_builder/assets/themes/minimal.css\"},{\"type\":\"workspace_file\",\"path\":\".skills/skill.sandbox.html_report_builder/assets/themes/modern.css\"},{\"type\":\"workspace_file\",\"path\":\"/skills/skill.sandbox.html_report_builder/assets/themes/modern.css\"},{\"type\":\"workspace_file\",\"path\":\".skills/skill.sandbox.html_report_builder/assets/themes/technical.css\"},{\"type\":\"workspace_file\",\"path\":\"/skills/skill.sandbox.html_report_builder/assets/themes/technical.css\"},{\"type\":\"workspace_file\",\"path\":\".skills/skill.sandbox.html_report_builder/references/content-schema.json\"},{\"type\":\"workspace_file\",\"path\":\"/skills/skill.sandbox.html_report_builder/references/content-schema.json\"},{\"type\":\"workspace_file\",\"path\":\".skills/skill.sandbox.html_report_builder/references/theme-contract.md\"},{\"type\":\"workspace_file\",\"path\":\"/skills/skill.sandbox.html_report_builder/references/theme-contract.md\"},{\"type\":\"workspace_file\",\"path\":\".skills/skill.sandbox.html_report_builder/scripts/html_to_pdf.py\"},{\"type\":\"workspace_file\",\"path\":\"/skills/skill.sandbox.html_report_builder/scripts/html_to_pdf.py\"},{\"type\":\"workspace_file\",\"path\":\".skills/skill.sandbox.html_report_builder/scripts/render_report.py\"},{\"type\":\"workspace_file\",\"path\":\"/skills/skill.sandbox.html_report_builder/scripts/render_report.py\"},{\"type\":\"workspace_file\",\"path\":\".skills/skill.sandbox.html_report_builder/scripts/validate_report.py\"},{\"type\":\"workspace_file\",\"path\":\"/skills/skill.sandbox.html_report_builder/scripts/validate_report.py\"},{\"type\":\"workspace_file\",\"path\":\"/workspace/output/user-rankings.html\"},{\"type\":\"workspace_file\",\"path\":\"output/user-rankings.html\"}],\"decisions\":[\"Step acceptance criteria: File output/user-rankings.html exists and contains the required three sections; the User Rankings Table lists all users in descending quality_score order; the Posts with Comments Table covers the first 20 posts with truncated bodies and nested comments or the literal text No comments.; the Summary Statistics section shows total users, total posts fetched, total comments fetched, and average quality score; CSS styling includes alternating row colors and responsive table behavior.\",\"Artifacts created: .sandbox/runs/run_e2346f78-ccd1-4150-b42f-02e01091d9d7/manifests/ps-3-render-rankings-html-page-attempt-1/input_manifest.json, .sandbox/runs/run_e2346f78-ccd1-4150-b42f-02e01091d9d7/manifests/ps-3-render-rankings-html-page-attempt-1/output_manifest.json, support/ps-3-render-rankings-html-page/input_manifest.json, support/input_manifest.json\",\"Observed resources: output/enriched-users.json, /workspace/input/output/enriched-users.json, output/_slots/ps-0-fetch-jsonplaceholder-data/raw_api_dataset.json, /workspace/input/output/_slots/ps-0-fetch-jsonplaceholder-data/raw_api_dataset.json\"],\"assumptions\":[],\"next_step_hints\":[\"Use .sandbox/runs/run_e2346f78-ccd1-4150-b42f-02e01091d9d7/manifests/ps-3-render-rankings-html-page-attempt-1/input_manifest.json, .sandbox/runs/run_e2346f78-ccd1-4150-b42f-02e01091d9d7/manifests/ps-3-render-rankings-html-page-attempt-1/output_manifest.json, support/ps-3-render-rankings-html-page/input_manifest.json as downstream inputs where relevant.\",\"Prefer the concrete observed resources over guessed paths.\"],\"errors_and_recovery\":[],\"repro\":{\"tool_ids\":[\"sandbox.session\"],\"script_paths\":[\".skills/skill.sandbox.html_report_builder/assets/lib/chart.min.js\",\"/skills/skill.sandbox.html_report_builder/assets/lib/chart.min.js\",\".skills/skill.sandbox.html_report_builder/scripts/html_to_pdf.py\",\"/skills/skill.sandbox.html_report_builder/scripts/html_to_pdf.py\",\".skills/skill.sandbox.html_report_builder/scripts/render_report.py\",\"/skills/skill.sandbox.html_report_builder/scripts/render_report.py\",\".skills/skill.sandbox.html_report_builder/scripts/validate_report.py\",\"/skills/skill.sandbox.html_report_builder/scripts/validate_report.py\"],\"log_paths\":[],\"rerun_hint\":\"Re-run step ps-3-render-rankings-html-page (Render rankings HTML page) using sandbox.session\"}}",
+    "success_criteria": "File output/user-rankings.html exists and contains the required three sections; the User Rankings Table lists all users in descending quality_score order; the Posts with Comments Table covers the first 20 posts with truncated bodies and nested comments or the literal text No comments.; the Summary Statistics section shows total users, total posts fetched, total comments fetched, and average quality score; CSS styling includes alternating row colors and responsive table behavior.",
+    "execution_backend": "sandbox.session",
+    "execution_pattern": "single_shot_render",
+    "observations_text": "STEP NATURE: HYBRID\n\nCONTRACT (MUST):\n* Inputs: user-deliverable file output/enriched-users.json from the prior step and transport slot report_context containing ranked users, first-20-post rows with associated comments, and summary statistics.\n* Outputs: write output/user-rankings.html as a styled HTML page containing (1) a User Rankings Table for all users ranked by quality_score descending with columns rank, name, email, post count, completion rate shown as a percentage, and quality score; (2) a Posts with Comments Table for the first 20 posts showing post title, body truncated to 100 characters, and a nested list of associated comments showing author name and comment body, or the literal text No comments. when none are attached; and (3) a Summary Statistics section showing total users, total posts fetched, total comments fetched, and average quality score across all users.\n* Acceptance checks: output/user-rankings.html exists; it contains the three required sections; the rankings table is sorted by quality_score descending; completion rates are presented as percentages; post bodies shown in the posts table are truncated to at most 100 displayed characters before any ellipsis treatment; CSS provides alternating row colors, clear headings, and a responsive table layout.\n* Constraints / non-goals: do not fetch new data in this step; do not recompute upstream metrics beyond presentation formatting; do not modify output/enriched-users.json.\n* Interfaces / invariants: use the ranked user data and summary values from report_context consistently with output/enriched-users.json; preserve user names, emails, and numeric scores from upstream artifacts.\n\nGUIDANCE (SHOULD):\n* Preferred stack/tools: HTML templating and inline or embedded CSS suitable for a standalone file.\n* Preferred patterns: render semantically structured headings and tables; use nested lists inside the comments cell; keep layout readable on narrower screens.\n* Efficiency / reliability hints: keep the HTML self-contained and avoid external asset dependencies.\n\nCREATIVE BRIEF (SHOULD when user gave explicit creative direction, MAY otherwise):\n* Look/feel/tone: clean, readable, and professional.\n* Stylistic constraints or preferences: use alternating row colors, proper section headings, and responsive table layout.\n* Optional polish (must not expand scope): subtle spacing, consistent typography, and restrained visual hierarchy.",
+    "predicted_backend": "sandbox.session",
+    "repair_delta_json": null,
+    "artifact_contracts": {
+      "output/user-rankings.html": {
+        "notes": [
+          "Include sections titled User Rankings Table, Posts with Comments Table, and Summary Statistics.",
+          "Rankings table columns must include rank, name, email, post count, completion rate, and quality score.",
+          "Posts table must cover the first 20 posts and show No comments. when a post has no associated comments."
+        ],
+        "format": "html",
+        "logical_path": "output/user-rankings.html"
+      }
+    },
+    "creative_direction": "Create a clean, readable HTML report with clear section headings, alternating row colors, and a responsive table layout that remains legible across screen sizes.",
+    "current_attempt_id": null,
+    "execution_contract": {
+      "pattern": "single_shot_render",
+      "step_nature": "HYBRID",
+      "repair_strategy": "retry_with_small_fix",
+      "timeout_ceiling_ms": 1800000,
+      "allowed_tool_call_count": 3
+    },
+    "retry_lineage_json": null,
+    "input_artifact_refs": [
+      {
+        "kind": "workspace_file",
+        "path": "output/enriched-users.json",
+        "ref_id": "ps-3-render-rankings-html-page:input:0:enriched-users",
+        "logical_name": "enriched-users"
+      },
+      {
+        "kind": "workspace_file",
+        "path": "output/_slots/ps-0-fetch-jsonplaceholder-data/raw_api_dataset.json",
+        "ref_id": "ps-3-render-rankings-html-page:input:1:raw-api-dataset",
+        "logical_name": "raw-api-dataset"
+      },
+      {
+        "kind": "workspace_file",
+        "path": "output/_slots/ps-1-link-related-api-records/related_api_dataset.json",
+        "ref_id": "ps-3-render-rankings-html-page:input:2:related-api-dataset",
+        "logical_name": "related-api-dataset"
+      }
+    ],
+    "presentation_intent": {
+      "summary": "Standalone HTML analytics page presenting user rankings, posts with comments, and summary statistics.",
+      "audience": "general reader reviewing sample API analysis output",
+      "anti_goals": [
+        "cluttered styling",
+        "external asset dependencies",
+        "overly decorative visuals"
+      ],
+      "visual_mode": "responsive tabular report",
+      "tone_keywords": [
+        "clean",
+        "readable",
+        "professional"
+      ],
+      "theme_keywords": [
+        "alternating row colors",
+        "proper headings",
+        "responsive tables"
+      ],
+      "deliverable_kind": "html report"
+    },
+    "output_artifact_refs": [
+      {
+        "kind": "artifact",
+        "path": "output/user-rankings.html",
+        "ref_id": "ps-3-render-rankings-html-page:output:0:user-rankings",
+        "logical_name": "user-rankings"
+      },
+      {
+        "kind": "artifact",
+        "path": "output/step_result.json",
+        "ref_id": "ps-3-render-rankings-html-page:output:1:step-result",
+        "logical_name": "step-result"
+      }
+    ],
+    "sandbox_mcp_contract": null,
+    "recommended_skill_ids": [
+      "skill.sandbox.html_report_builder",
+      "skill.system.sandbox"
+    ],
+    "required_capabilities": [
+      "html_rendering",
+      "css_styling",
+      "report_generation"
+    ],
+    "suggested_skills_json": null,
+    "executable_contract_v2": {
+      "step_id": "ps-3-render-rankings-html-page",
+      "step_kind": "hybrid_task",
+      "provenance": {
+        "finalized_at_ms": 0,
+        "dependency_policy": "declared-closure-committed-output-normalized",
+        "compiled_step_hash": "sha256:457d68e116c53736f79d4baa031dae5b8e8dd538bdb9a537ead656190e615146"
+      },
+      "step_label": "Render rankings HTML page",
+      "kernel_hash": null,
+      "step_inputs": [
+        {
+          "kind": "workspace_file",
+          "ref_id": "ps-3-render-rankings-html-page:input:0:enriched-users",
+          "must_exist": true,
+          "logical_path": "output/enriched-users.json",
+          "runtime_path": "/workspace/input/output/enriched-users.json",
+          "workspace_path": "output/enriched-users.json"
+        },
+        {
+          "kind": "workspace_file",
+          "ref_id": "ps-3-render-rankings-html-page:input:1:raw-api-dataset",
+          "must_exist": true,
+          "logical_path": "output/_slots/ps-0-fetch-jsonplaceholder-data/raw_api_dataset.json",
+          "runtime_path": "/workspace/input/output/_slots/ps-0-fetch-jsonplaceholder-data/raw_api_dataset.json",
+          "workspace_path": "output/_slots/ps-0-fetch-jsonplaceholder-data/raw_api_dataset.json"
+        },
+        {
+          "kind": "workspace_file",
+          "ref_id": "ps-3-render-rankings-html-page:input:2:related-api-dataset",
+          "must_exist": true,
+          "logical_path": "output/_slots/ps-1-link-related-api-records/related_api_dataset.json",
+          "runtime_path": "/workspace/input/output/_slots/ps-1-link-related-api-records/related_api_dataset.json",
+          "workspace_path": "output/_slots/ps-1-link-related-api-records/related_api_dataset.json"
+        }
+      ],
+      "step_outputs": [
+        {
+          "role": "primary",
+          "ref_id": "ps-3-render-rankings-html-page:output:0:user-rankings",
+          "location": "workspace",
+          "required": true,
+          "logical_path": "output/user-rankings.html",
+          "runtime_path": "/workspace/output/user-rankings.html",
+          "workspace_path": "output/user-rankings.html"
+        }
+      ],
+      "contract_hash": "sha256:457d68e116c53736f79d4baa031dae5b8e8dd538bdb9a537ead656190e615146",
+      "final_backend": "sandbox.session",
+      "repair_policy": {
+        "strategy": "retry_same_contract",
+        "max_retries": 6,
+        "block_on_missing_inputs": true,
+        "immutable_output_bindings": true
+      },
+      "execution_mode": "hybrid",
+      "routing_reason": "compiled_code_contract",
+      "support_inputs": [
+        {
+          "location": "sandbox",
+          "required": true,
+          "logical_path": "support/ps-3-render-rankings-html-page/input_manifest.json",
+          "runtime_path": "/workspace/meta/support/ps-3-render-rankings-html-page/input_manifest.json",
+          "support_kind": "input_manifest",
+          "workspace_path": "support/ps-3-render-rankings-html-page/input_manifest.json"
+        },
+        {
+          "location": "sandbox",
+          "required": true,
+          "logical_path": "support/input_manifest.json",
+          "runtime_path": "/workspace/meta/input_manifest.json",
+          "support_kind": "input_manifest",
+          "workspace_path": "support/input_manifest.json"
+        }
+      ],
+      "fallback_reason": null,
+      "support_outputs": [
+        {
+          "role": "auxiliary",
+          "location": "sandbox",
+          "required": true,
+          "logical_path": "output/step_result.json",
+          "runtime_path": "/workspace/output/step_result.json",
+          "support_kind": "system_artifact",
+          "workspace_path": "output/step_result.json"
+        }
+      ],
+      "validator_rules": {
+        "fail_on_missing_outputs": true,
+        "require_declared_outputs": true,
+        "require_input_artifact_refs": true,
+        "enforce_compiled_output_bindings": true
+      },
+      "allowed_tool_ids": [
+        "sandbox.session"
+      ],
+      "contract_version": 2,
+      "execution_policy": {
+        "pattern": "single_shot_render",
+        "step_nature": "HYBRID",
+        "repair_strategy": "retry_with_small_fix",
+        "timeout_ceiling_ms": 1800000,
+        "allowed_tool_call_count": 3
+      },
+      "execution_backend": "sandbox.session",
+      "predicted_backend": "sandbox.session"
+    },
+    "continuity_handoff_json": "{\"schema_version\":1,\"step_id\":\"ps-3-render-rankings-html-page\",\"step_index\":3,\"total_steps\":4,\"authoritative_outputs\":[{\"path\":\".sandbox/runs/run_e2346f78-ccd1-4150-b42f-02e01091d9d7/manifests/ps-3-render-rankings-html-page-attempt-1/input_manifest.json\",\"kind\":\"temp\",\"bytes\":1730,\"checksum_sha256\":null},{\"path\":\".sandbox/runs/run_e2346f78-ccd1-4150-b42f-02e01091d9d7/manifests/ps-3-render-rankings-html-page-attempt-1/output_manifest.json\",\"kind\":\"temp\",\"bytes\":1549,\"checksum_sha256\":null},{\"path\":\"support/ps-3-render-rankings-html-page/input_manifest.json\",\"kind\":\"temp\",\"bytes\":1730,\"checksum_sha256\":null},{\"path\":\"support/input_manifest.json\",\"kind\":\"temp\",\"bytes\":1730,\"checksum_sha256\":null},{\"path\":\"output/user-rankings.html\",\"kind\":\"deliverable\",\"bytes\":null,\"checksum_sha256\":null}],\"input_provenance\":[{\"type\":\"workspace_file\",\"path\":\"output/enriched-users.json\"},{\"type\":\"workspace_file\",\"path\":\"/workspace/input/output/enriched-users.json\"},{\"type\":\"workspace_file\",\"path\":\"output/_slots/ps-0-fetch-jsonplaceholder-data/raw_api_dataset.json\"},{\"type\":\"workspace_file\",\"path\":\"/workspace/input/output/_slots/ps-0-fetch-jsonplaceholder-data/raw_api_dataset.json\"},{\"type\":\"workspace_file\",\"path\":\"output/_slots/ps-1-link-related-api-records/related_api_dataset.json\"},{\"type\":\"workspace_file\",\"path\":\"/workspace/input/output/_slots/ps-1-link-related-api-records/related_api_dataset.json\"},{\"type\":\"workspace_file\",\"path\":\"support/ps-3-render-rankings-html-page/input_manifest.json\"},{\"type\":\"workspace_file\",\"path\":\"/workspace/meta/support/ps-3-render-rankings-html-page/input_manifest.json\"},{\"type\":\"workspace_file\",\"path\":\"support/input_manifest.json\"},{\"type\":\"workspace_file\",\"path\":\"/workspace/meta/input_manifest.json\"},{\"type\":\"log\",\"path\":\".sandbox/runs/run_e2346f78-ccd1-4150-b42f-02e01091d9d7/manifests/ps-3-render-rankings-html-page-attempt-1/input_manifest.json\"},{\"type\":\"log\",\"path\":\".sandbox/runs/run_e2346f78-ccd1-4150-b42f-02e01091d9d7/manifests/ps-3-render-rankings-html-page-attempt-1/output_manifest.json\"},{\"type\":\"workspace_file\",\"path\":\"/workspace/meta/output_manifest.json\"},{\"type\":\"workspace_file\",\"path\":\".skills/skill.sandbox.html_report_builder/REFERENCE_BIBLE.md\"},{\"type\":\"workspace_file\",\"path\":\"/skills/skill.sandbox.html_report_builder/REFERENCE_BIBLE.md\"},{\"type\":\"workspace_file\",\"path\":\".skills/skill.sandbox.html_report_builder/SKILL.md\"},{\"type\":\"workspace_file\",\"path\":\"/skills/skill.sandbox.html_report_builder/SKILL.md\"},{\"type\":\"workspace_file\",\"path\":\".skills/skill.sandbox.html_report_builder/assets/base.css\"},{\"type\":\"workspace_file\",\"path\":\"/skills/skill.sandbox.html_report_builder/assets/base.css\"},{\"type\":\"workspace_file\",\"path\":\".skills/skill.sandbox.html_report_builder/assets/lib/chart.min.js\"},{\"type\":\"workspace_file\",\"path\":\"/skills/skill.sandbox.html_report_builder/assets/lib/chart.min.js\"},{\"type\":\"workspace_file\",\"path\":\".skills/skill.sandbox.html_report_builder/assets/templates/comparison.html\"},{\"type\":\"workspace_file\",\"path\":\"/skills/skill.sandbox.html_report_builder/assets/templates/comparison.html\"},{\"type\":\"workspace_file\",\"path\":\".skills/skill.sandbox.html_report_builder/assets/templates/dashboard.html\"},{\"type\":\"workspace_file\",\"path\":\"/skills/skill.sandbox.html_report_builder/assets/templates/dashboard.html\"},{\"type\":\"workspace_file\",\"path\":\".skills/skill.sandbox.html_report_builder/assets/templates/executive-brief.html\"},{\"type\":\"workspace_file\",\"path\":\"/skills/skill.sandbox.html_report_builder/assets/templates/executive-brief.html\"},{\"type\":\"workspace_file\",\"path\":\".skills/skill.sandbox.html_report_builder/assets/templates/newsletter.html\"},{\"type\":\"workspace_file\",\"path\":\"/skills/skill.sandbox.html_report_builder/assets/templates/newsletter.html\"},{\"type\":\"workspace_file\",\"path\":\".skills/skill.sandbox.html_report_builder/assets/templates/standard.html\"},{\"type\":\"workspace_file\",\"path\":\"/skills/skill.sandbox.html_report_builder/assets/templates/standard.html\"},{\"type\":\"workspace_file\",\"path\":\".skills/skill.sandbox.html_report_builder/assets/theme-manifest.json\"},{\"type\":\"workspace_file\",\"path\":\"/skills/skill.sandbox.html_report_builder/assets/theme-manifest.json\"},{\"type\":\"workspace_file\",\"path\":\".skills/skill.sandbox.html_report_builder/assets/themes/compliance.css\"},{\"type\":\"workspace_file\",\"path\":\"/skills/skill.sandbox.html_report_builder/assets/themes/compliance.css\"},{\"type\":\"workspace_file\",\"path\":\".skills/skill.sandbox.html_report_builder/assets/themes/executive.css\"},{\"type\":\"workspace_file\",\"path\":\"/skills/skill.sandbox.html_report_builder/assets/themes/executive.css\"},{\"type\":\"workspace_file\",\"path\":\".skills/skill.sandbox.html_report_builder/assets/themes/minimal.css\"},{\"type\":\"workspace_file\",\"path\":\"/skills/skill.sandbox.html_report_builder/assets/themes/minimal.css\"},{\"type\":\"workspace_file\",\"path\":\".skills/skill.sandbox.html_report_builder/assets/themes/modern.css\"},{\"type\":\"workspace_file\",\"path\":\"/skills/skill.sandbox.html_report_builder/assets/themes/modern.css\"},{\"type\":\"workspace_file\",\"path\":\".skills/skill.sandbox.html_report_builder/assets/themes/technical.css\"},{\"type\":\"workspace_file\",\"path\":\"/skills/skill.sandbox.html_report_builder/assets/themes/technical.css\"},{\"type\":\"workspace_file\",\"path\":\".skills/skill.sandbox.html_report_builder/references/content-schema.json\"},{\"type\":\"workspace_file\",\"path\":\"/skills/skill.sandbox.html_report_builder/references/content-schema.json\"},{\"type\":\"workspace_file\",\"path\":\".skills/skill.sandbox.html_report_builder/references/theme-contract.md\"},{\"type\":\"workspace_file\",\"path\":\"/skills/skill.sandbox.html_report_builder/references/theme-contract.md\"},{\"type\":\"workspace_file\",\"path\":\".skills/skill.sandbox.html_report_builder/scripts/html_to_pdf.py\"},{\"type\":\"workspace_file\",\"path\":\"/skills/skill.sandbox.html_report_builder/scripts/html_to_pdf.py\"},{\"type\":\"workspace_file\",\"path\":\".skills/skill.sandbox.html_report_builder/scripts/render_report.py\"},{\"type\":\"workspace_file\",\"path\":\"/skills/skill.sandbox.html_report_builder/scripts/render_report.py\"},{\"type\":\"workspace_file\",\"path\":\".skills/skill.sandbox.html_report_builder/scripts/validate_report.py\"},{\"type\":\"workspace_file\",\"path\":\"/skills/skill.sandbox.html_report_builder/scripts/validate_report.py\"},{\"type\":\"workspace_file\",\"path\":\"/workspace/output/user-rankings.html\"},{\"type\":\"workspace_file\",\"path\":\"output/user-rankings.html\"}],\"semantic_facts\":[\"Render rankings HTML page finished with status=completed.\",\"Tool calls: 1.\",\"Artifacts: .sandbox/runs/run_e2346f78-ccd1-4150-b42f-02e01091d9d7/manifests/ps-3-render-rankings-html-page-attempt-1/input_manifest.json, .sandbox/runs/run_e2346f78-ccd1-4150-b42f-02e01091d9d7/manifests/ps-3-render-rankings-html-page-attempt-1/output_manifest.json, support/ps-3-render-rankings-html-page/input_manifest.json.\",\"Observed resources: output/enriched-users.json, /workspace/input/output/enriched-users.json, output/_slots/ps-0-fetch-jsonplaceholder-data/raw_api_dataset.json.\",\"Step acceptance criteria: File output/user-rankings.html exists and contains the required three sections; the User Rankings Table lists all users in descending quality_score order; the Posts with Comments Table covers the first 20 posts with truncated bodies and nested comments or the literal text No comments.; the Summary Statistics section shows total users, total posts fetched, total comments fetched, and average quality score; CSS styling includes alternating row colors and responsive table behavior.\",\"Artifacts created: .sandbox/runs/run_e2346f78-ccd1-4150-b42f-02e01091d9d7/manifests/ps-3-render-rankings-html-page-attempt-1/input_manifest.json, .sandbox/runs/run_e2346f78-ccd1-4150-b42f-02e01091d9d7/manifests/ps-3-render-rankings-html-page-attempt-1/output_manifest.json, support/ps-3-render-rankings-html-page/input_manifest.json, support/input_manifest.json\",\"Observed resources: output/enriched-users.json, /workspace/input/output/enriched-users.json, output/_slots/ps-0-fetch-jsonplaceholder-data/raw_api_dataset.json, /workspace/input/output/_slots/ps-0-fetch-jsonplaceholder-data/raw_api_dataset.json\"],\"forbidden_assumptions\":[],\"next_step_hints\":[\"Use .sandbox/runs/run_e2346f78-ccd1-4150-b42f-02e01091d9d7/manifests/ps-3-render-rankings-html-page-attempt-1/input_manifest.json, .sandbox/runs/run_e2346f78-ccd1-4150-b42f-02e01091d9d7/manifests/ps-3-render-rankings-html-page-attempt-1/output_manifest.json, support/ps-3-render-rankings-html-page/input_manifest.json as downstream inputs where relevant.\",\"Prefer the concrete observed resources over guessed paths.\"],\"presentation_intent\":{\"summary\":\"Standalone HTML analytics page presenting user rankings, posts with comments, and summary statistics.\",\"audience\":\"general reader reviewing sample API analysis output\",\"anti_goals\":[\"cluttered styling\",\"external asset dependencies\",\"overly decorative visuals\"],\"visual_mode\":\"responsive tabular report\",\"tone_keywords\":[\"clean\",\"readable\",\"professional\"],\"theme_keywords\":[\"alternating row colors\",\"proper headings\",\"responsive tables\"],\"deliverable_kind\":\"html report\"}}",
+    "execution_evidence_json": "{\"contract_hash\":\"sha256:457d68e116c53736f79d4baa031dae5b8e8dd538bdb9a537ead656190e615146\",\"backend_selected\":\"sandbox.session\",\"backend_reason\":\"compiled_code_contract\",\"predicted_backend\":\"sandbox.session\",\"final_backend\":\"sandbox.session\",\"routing_reason\":\"compiled_code_contract\",\"fallback_reason\":null,\"kernel_hash\":null,\"edge_runtime_evidence\":null,\"edge_wall_ms\":null,\"edge_bytes_in\":null,\"edge_bytes_out\":null,\"edge_gateway_calls\":null,\"edge_cache_mode\":null,\"edge_failover_count\":null,\"tools_used\":[{\"tool_id\":\"sandbox.session\",\"ok\":true,\"output_summary\":\"{\\\"_bookkeeping_summary\\\":true,\\\"_tool\\\":\\\"sandbox.session\\\",\\\"ok\\\":true,\\\"session_id\\\":\\\"sess-mns9z2br-0c1hmkcj\\\",\\\"container_id\\\":\\\"ec27dd5994f644d7df6090cad28cad89152b6d43cc7e2eef7d50efda91d6e48d:mns9z2p9:8ylxe1\\\",\\\"profile_id\\\":\\\"sbx_demo_research_browser_v1\\\",\\\"lease_id\\\":\\\"ad376a60-49de-4919-acef-b81a7578a08b\\\",\\\"halt_policy\\\":\\\"halt_on_error\\\",\\\"lease_type\\\":\\\"step\\\",\\\"total_steps\\\":13,\\\"completed_steps\\\":13,\\\"total_duration_ms\\\":104318,\\\"step_preview\\\":[{\\\"step_index\\\":0,\\\"label\\\":\\\"prepare-compiled-workspace\\\",\\\"type\\\":\\\"shell\\\",\\\"ok\\\":true,\\\"exit_code\\\":0,\\\"duration_ms\\\":538},{\\\"step_index\\\":1,\\\"label\\\":\\\"materialize-compiled-inputs\\\",\\\"type\\\":\\\"materialize\\\",\\\"ok\\\":true,\\\"exit_code\\\":0,\\\"duration_ms\\\":3711},{\\\"step_index\\\":2,\\\"label\\\":\\\"project-compiled-input-paths\\\",\\\"type\\\":\\\"shell\\\",\\\"ok\\\":true,\\\"exit_code\\\":0,\\\"duration_ms\\\":8306},{\\\"step_index\\\":3,\\\"label\\\":\\\"generate-preflight-receipt\\\",\\\"type\\\":\\\"python\\\",\\\"ok\\\":true,\\\"exit_code\\\":0,\\\"duration_ms\\\":11359},{\\\"step_index\\\":4,\\\"label\\\":\\\"verify-preflight-required-inputs\\\",\\\"type\\\":\\\"python\\\",\\\"ok\\\":true,\\\"exit_code\\\":0,\\\"duration_ms\\\":11300},{\\\"step_index\\\":5,\\\"label\\\":\\\"verify-skill-paths\\\",\\\"type\\\":\\\"shell\\\",\\\"ok\\\":true,\\\"exit_code\\\":0,\\\"duration_ms\\\":1224},{\\\"step_index\\\":6,\\\"label\\\":\\\"Render report and verify outputs\\\",\\\"type\\\":\\\"python\\\",\\\"ok\\\":true,\\\"exit_code\\\":0,\\\"duration_ms\\\":11612},{\\\"step_index\\\":7,\\\"label\\\":\\\"normalize-html-report-content-input\\\",\\\"type\\\":\\\"python\\\",\\\"ok\\\":true,\\\"exit_code\\\":0,\\\"duration_ms\\\":11302}],\\\"failed_step\\\":{\\\"step_index\\\":12,\\\"label\\\":\\\"persist-compiled-outputs\\\",\\\"type\\\":\\\"persist\\\",\\\"ok\\\":true,\\\"exit_code\\\":0,\\\"duration_ms\\\":2268},\\\"persisted_paths\\\":[\\\"output/user-rankings.html\\\"],\\\"persisted_count\\\":1,\\\"materialized_paths\\\":[\\\"output/enriched-users.json\\\",\\\"output/_slots/ps-0-fetch-jsonplaceholder-data/raw_api_dataset.json\\\",\\\"output/_slots/ps-1-link-related-api-records/related_api_dataset.json\\\",\\\"support/ps-3-render-rankings-html-page/input_manifest.json\\\",\\\"support/input_manifest.json\\\",\\\".sandbox/runs/run_e2346f78-ccd1-4150-b42f-02e01091d9d7/manifests/ps-3-render-rankings-html-page-attempt-1/input_manifest.json\\\",\\\".sandbox/runs/run_e2346f78-ccd1-4150-b42f-02e01091d9d7/manifests/ps-3-render-rankings-html-page-attempt-1/output_manifest.json\\\",\\\".skills/skill.sandbox.html_report_builder/REFERENCE_BIBLE.md\\\"],\\\"materialized_count\\\":27}\",\"duration_ms\":115027,\"observed_resource_refs\":[{\"type\":\"workspace_file\",\"path\":\"output/enriched-users.json\"},{\"type\":\"workspace_file\",\"path\":\"/workspace/input/output/enriched-users.json\"},{\"type\":\"workspace_file\",\"path\":\"output/_slots/ps-0-fetch-jsonplaceholder-data/raw_api_dataset.json\"},{\"type\":\"workspace_file\",\"path\":\"/workspace/input/output/_slots/ps-0-fetch-jsonplaceholder-data/raw_api_dataset.json\"},{\"type\":\"workspace_file\",\"path\":\"output/_slots/ps-1-link-related-api-records/related_api_dataset.json\"},{\"type\":\"workspace_file\",\"path\":\"/workspace/input/output/_slots/ps-1-link-related-api-records/related_api_dataset.json\"},{\"type\":\"workspace_file\",\"path\":\"support/ps-3-render-rankings-html-page/input_manifest.json\"},{\"type\":\"workspace_file\",\"path\":\"/workspace/meta/support/ps-3-render-rankings-html-page/input_manifest.json\"},{\"type\":\"workspace_file\",\"path\":\"support/input_manifest.json\"},{\"type\":\"workspace_file\",\"path\":\"/workspace/meta/input_manifest.json\"},{\"type\":\"log\",\"path\":\".sandbox/runs/run_e2346f78-ccd1-4150-b42f-02e01091d9d7/manifests/ps-3-render-rankings-html-page-attempt-1/input_manifest.json\"},{\"type\":\"log\",\"path\":\".sandbox/runs/run_e2346f78-ccd1-4150-b42f-02e01091d9d7/manifests/ps-3-render-rankings-html-page-attempt-1/output_manifest.json\"},{\"type\":\"workspace_file\",\"path\":\"/workspace/meta/output_manifest.json\"},{\"type\":\"workspace_file\",\"path\":\".skills/skill.sandbox.html_report_builder/REFERENCE_BIBLE.md\"},{\"type\":\"workspace_file\",\"path\":\"/skills/skill.sandbox.html_report_builder/REFERENCE_BIBLE.md\"},{\"type\":\"workspace_file\",\"path\":\".skills/skill.sandbox.html_report_builder/SKILL.md\"},{\"type\":\"workspace_file\",\"path\":\"/skills/skill.sandbox.html_report_builder/SKILL.md\"},{\"type\":\"workspace_file\",\"path\":\".skills/skill.sandbox.html_report_builder/assets/base.css\"},{\"type\":\"workspace_file\",\"path\":\"/skills/skill.sandbox.html_report_builder/assets/base.css\"},{\"type\":\"workspace_file\",\"path\":\".skills/skill.sandbox.html_report_builder/assets/lib/chart.min.js\"},{\"type\":\"workspace_file\",\"path\":\"/skills/skill.sandbox.html_report_builder/assets/lib/chart.min.js\"},{\"type\":\"workspace_file\",\"path\":\".skills/skill.sandbox.html_report_builder/assets/templates/comparison.html\"},{\"type\":\"workspace_file\",\"path\":\"/skills/skill.sandbox.html_report_builder/assets/templates/comparison.html\"},{\"type\":\"workspace_file\",\"path\":\".skills/skill.sandbox.html_report_builder/assets/templates/dashboard.html\"},{\"type\":\"workspace_file\",\"path\":\"/skills/skill.sandbox.html_report_builder/assets/templates/dashboard.html\"},{\"type\":\"workspace_file\",\"path\":\".skills/skill.sandbox.html_report_builder/assets/templates/executive-brief.html\"},{\"type\":\"workspace_file\",\"path\":\"/skills/skill.sandbox.html_report_builder/assets/templates/executive-brief.html\"},{\"type\":\"workspace_file\",\"path\":\".skills/skill.sandbox.html_report_builder/assets/templates/newsletter.html\"},{\"type\":\"workspace_file\",\"path\":\"/skills/skill.sandbox.html_report_builder/assets/templates/newsletter.html\"},{\"type\":\"workspace_file\",\"path\":\".skills/skill.sandbox.html_report_builder/assets/templates/standard.html\"},{\"type\":\"workspace_file\",\"path\":\"/skills/skill.sandbox.html_report_builder/assets/templates/standard.html\"},{\"type\":\"workspace_file\",\"path\":\".skills/skill.sandbox.html_report_builder/assets/theme-manifest.json\"},{\"type\":\"workspace_file\",\"path\":\"/skills/skill.sandbox.html_report_builder/assets/theme-manifest.json\"},{\"type\":\"workspace_file\",\"path\":\".skills/skill.sandbox.html_report_builder/assets/themes/compliance.css\"},{\"type\":\"workspace_file\",\"path\":\"/skills/skill.sandbox.html_report_builder/assets/themes/compliance.css\"},{\"type\":\"workspace_file\",\"path\":\".skills/skill.sandbox.html_report_builder/assets/themes/executive.css\"},{\"type\":\"workspace_file\",\"path\":\"/skills/skill.sandbox.html_report_builder/assets/themes/executive.css\"},{\"type\":\"workspace_file\",\"path\":\".skills/skill.sandbox.html_report_builder/assets/themes/minimal.css\"},{\"type\":\"workspace_file\",\"path\":\"/skills/skill.sandbox.html_report_builder/assets/themes/minimal.css\"},{\"type\":\"workspace_file\",\"path\":\".skills/skill.sandbox.html_report_builder/assets/themes/modern.css\"},{\"type\":\"workspace_file\",\"path\":\"/skills/skill.sandbox.html_report_builder/assets/themes/modern.css\"},{\"type\":\"workspace_file\",\"path\":\".skills/skill.sandbox.html_report_builder/assets/themes/technical.css\"},{\"type\":\"workspace_file\",\"path\":\"/skills/skill.sandbox.html_report_builder/assets/themes/technical.css\"},{\"type\":\"workspace_file\",\"path\":\".skills/skill.sandbox.html_report_builder/references/content-schema.json\"},{\"type\":\"workspace_file\",\"path\":\"/skills/skill.sandbox.html_report_builder/references/content-schema.json\"},{\"type\":\"workspace_file\",\"path\":\".skills/skill.sandbox.html_report_builder/references/theme-contract.md\"},{\"type\":\"workspace_file\",\"path\":\"/skills/skill.sandbox.html_report_builder/references/theme-contract.md\"},{\"type\":\"workspace_file\",\"path\":\".skills/skill.sandbox.html_report_builder/scripts/html_to_pdf.py\"},{\"type\":\"workspace_file\",\"path\":\"/skills/skill.sandbox.html_report_builder/scripts/html_to_pdf.py\"},{\"type\":\"workspace_file\",\"path\":\".skills/skill.sandbox.html_report_builder/scripts/render_report.py\"},{\"type\":\"workspace_file\",\"path\":\"/skills/skill.sandbox.html_report_builder/scripts/render_report.py\"},{\"type\":\"workspace_file\",\"path\":\".skills/skill.sandbox.html_report_builder/scripts/validate_report.py\"},{\"type\":\"workspace_file\",\"path\":\"/skills/skill.sandbox.html_report_builder/scripts/validate_report.py\"},{\"type\":\"workspace_file\",\"path\":\"/workspace/output/user-rankings.html\"},{\"type\":\"workspace_file\",\"path\":\"output/user-rankings.html\"}],\"input_source_code\":\"import json, os, math, textwrap\\nfrom pathlib import Path\\nfrom jinja2 import Template\\n\\nbase = Path('/workspace')\\ninput_users = base / 'input/output/enriched-users.json'\\ninput_raw = base / 'input/output/_slots/ps-0-fetch-jsonplaceholder-data/raw_api_dataset.json'\\ninput_related = base / 'input/output/_slots/ps-1-link-related-api-records/related_api_dataset.json'\\nout_html = base / 'output/user-rankings.html'\\ncontent_path = base / 'work/content.json'\\nout_step_result = base / 'output/step_result.json'\\n\\nprint(f'Loading {input_users}...', flush=True)\\nusers = json.loads(input_users.read_text(encoding=\\\"utf-8\\\"))\\nprint(f'Loading {input_raw}...', flush=True)\\nraw = json.loads(input_raw.read_text(encoding=\\\"utf-8\\\"))\\nprint(f'Loading {input_related}...', flush=True)\\nrelated = json.loads(input_related.read_text(encoding=\\\"utf-8\\\"))\\n\\nposts = related.get('posts_20') or raw.get('posts_20') or []\\ncomments_by_post = {}\\nfor p in posts:\\n    comments_by_post[p.get('id')] = p.get('comments') or []\\n\\nranked = sorted(users, key=lambda r: (r.get('quality_score', 0), r.get('name', '')), reverse=True)\\nuser_rows = []\\nfor idx, u in enumerate(ranked, start=1):\\n    user_rows.append([\\n        str(idx),\\n        str(u.get('name', '')),\\n        str(u.get('email', '')),\\n        str(u.get('post_count', '')),\\n        f\\\"{float(u.get('todo_completion_rate', 0)) * 100:.1f}%\\\",\\n        f\\\"{float(u.get('quality_score', 0)):.2f}\\\",\\n    ])\\n\\npost_rows = []\\nfor p in posts[:20]:\\n    body = str(p.get('body', ''))\\n    truncated = body if len(body) <= 100 else body[:100].rstrip() + '…'\\n    comments = p.get('comments') or []\\n    if comments:\\n        comment_lines = []\\n        for c in comments:\\n            author = c.get('name') or c.get('email') or 'Unknown'\\n            comment_lines.append(f\\\"- **{author}**: {c.get('body', '')}\\\")\\n        comment_md = '\\\\n'.join(comment_lines)\\n    else:\\n        comment_md = 'No comments.'\\n    post_rows.append([str(p.get('title', '')), truncated, comment_md])\\n\\nsummary = raw if isinstance(raw, dict) else {}\\nsummary_stats = {\\n    'total_users': len(users),\\n    'total_posts_fetched': len(posts),\\n    'total_comments_fetched': len(summary.get('comments_20') or []),\\n    'average_quality_score': (sum(float(u.get('quality_score', 0)) for u in users) / len(users)) if users else 0,\\n}\\n\\ncontent = {\\n    'theme': 'technical',\\n    'metadata': {\\n        'title': 'User Rankings Report',\\n        'subtitle': 'JSONPlaceholder sample API analysis',\\n        'date': '2026-04-10',\\n        'author': 'Automated Pipeline',\\n        'confidentiality': 'Internal',\\n    },\\n    'sections': [\\n        {\\n            'type': 'section',\\n            'heading': 'User Rankings Table',\\n            'level': 1,\\n            'body': 'Users are ranked by quality score in descending order.',\\n        },\\n        {\\n            'type': 'table',\\n            'heading': 'User Rankings Table',\\n            'columns': ['Rank', 'Name', 'Email', 'Post Count', 'Completion Rate', 'Quality Score'],\\n            'rows': user_rows,\\n        },\\n        {\\n            'type': 'section',\\n            'heading': 'Posts with Comments Table',\\n            'level': 1,\\n            'body': 'The first 20 posts are shown below with truncated bodies and associated comments.',\\n        },\\n        {\\n            'type': 'table',\\n            'heading': 'Posts with Comments Table',\\n            'columns': ['Post Title', 'Body (truncated)', 'Comments'],\\n            'rows': post_rows,\\n        },\\n        {\\n            'type': 'section',\\n            'heading': 'Summary Statistics',\\n            'level': 1,\\n            'body': f\\\"- Total users: {summary_stats['total_users']}\\\\n- Total posts fetched: {summary_stats['total_posts_fetched']}\\\\n- Total comments fetched: {summary_stats['total_comments_fetched']}\\\\n- Average quality score: {summary_stats['average_quality_score']:.2f}\\\",\\n        },\\n    ],\\n}\\n\\ncontent_path.parent.mkdir(parents=True, exist_ok=True)\\nout_html.parent.mkdir(parents=True, exist_ok=True)\\ncontent_path.write_text(json.dumps(content, indent=2), encoding='utf-8')\\nprint(f'Wrote {content_path}', flush=True)\\nprint('Running renderer...', flush=True)\\nimport subprocess, sys\\nsubprocess.run(['python3', '/skills/skill.sandbox.html_report_builder/scripts/render_report.py', '--content', str(content_path), '--theme', 'technical', '--output', str(out_html)], check=True)\\nprint('Validating HTML...', flush=True)\\nsubprocess.run(['python3', '/skills/skill.sandbox.html_report_builder/scripts/validate_report.py', str(out_html)], check=True)\\n\\nstep_result = {\\n    'status': 'success',\\n    'summary': 'Rendered rankings HTML report from upstream enriched users and report context.',\\n    'inputs_used': [str(input_users), str(input_raw), str(input_related)],\\n    'outputs_written': [str(out_html)],\\n    'skill_usage': [{\\n        'skill_id': 'skill.sandbox.html_report_builder',\\n        'script_path': '/skills/skill.sandbox.html_report_builder/scripts/render_report.py',\\n        'mode': 'direct',\\n        'purpose': 'render_html_report'\\n    }],\\n    'validations': [],\\n    'deviations': [],\\n    'needs_plan_repair': False\\n}\\nout_step_result.write_text(json.dumps(step_result, indent=2), encoding='utf-8')\\nprint(f'Wrote {out_step_result}', flush=True)\\nchecks = []\\nfor p in [out_html, out_step_result]:\\n    checks.append({'path': str(p), 'exists': p.exists(), 'size_bytes': p.stat().st_size if p.exists() else 0})\\nprint(json.dumps({'verification': checks}, indent=2), flush=True)\\n\",\"input_language\":\"python\"}],\"artifacts_written\":[{\"path\":\".sandbox/runs/run_e2346f78-ccd1-4150-b42f-02e01091d9d7/manifests/ps-3-render-rankings-html-page-attempt-1/input_manifest.json\",\"kind\":\"temp\",\"from_tool\":\"sandbox.session\",\"bytes\":1730,\"mime\":\"application/json\",\"checksum_sha256\":null},{\"path\":\".sandbox/runs/run_e2346f78-ccd1-4150-b42f-02e01091d9d7/manifests/ps-3-render-rankings-html-page-attempt-1/output_manifest.json\",\"kind\":\"temp\",\"from_tool\":\"sandbox.session\",\"bytes\":1549,\"mime\":\"application/json\",\"checksum_sha256\":null},{\"path\":\"support/ps-3-render-rankings-html-page/input_manifest.json\",\"kind\":\"temp\",\"from_tool\":\"sandbox.session\",\"bytes\":1730,\"mime\":\"application/json\",\"checksum_sha256\":null},{\"path\":\"support/input_manifest.json\",\"kind\":\"temp\",\"from_tool\":\"sandbox.session\",\"bytes\":1730,\"mime\":\"application/json\",\"checksum_sha256\":null},{\"path\":\"output/user-rankings.html\",\"kind\":\"deliverable\",\"from_tool\":\"sandbox.session\",\"bytes\":null,\"mime\":null,\"checksum_sha256\":null}],\"model_response_text\":\"\",\"total_tool_calls\":1,\"total_duration_ms\":150897}",
+    "materialized_input_paths": [
+      {
+        "ref_id": "ps-3-render-rankings-html-page:input:0:enriched-users",
+        "runtime_path": "/workspace/input/output/enriched-users.json",
+        "workspace_path": "output/enriched-users.json"
+      },
+      {
+        "ref_id": "ps-3-render-rankings-html-page:input:1:raw-api-dataset",
+        "runtime_path": "/workspace/input/output/_slots/ps-0-fetch-jsonplaceholder-data/raw_api_dataset.json",
+        "workspace_path": "output/_slots/ps-0-fetch-jsonplaceholder-data/raw_api_dataset.json"
+      },
+      {
+        "ref_id": "ps-3-render-rankings-html-page:input:2:related-api-dataset",
+        "runtime_path": "/workspace/input/output/_slots/ps-1-link-related-api-records/related_api_dataset.json",
+        "workspace_path": "output/_slots/ps-1-link-related-api-records/related_api_dataset.json"
+      }
+    ],
+    "compiled_step_contract_v1": {
+      "role": "ai_autonomous_worker",
+      "inputs": [
+        {
+          "slot": "report_context",
+          "bindings": [
+            {
+              "path": "output/enriched-users.json",
+              "kind_key": "table.json_rows",
+              "row_grain": {
+                "grain_type": "custom",
+                "cardinality": "many",
+                "custom_label": "rate_card_row"
+              },
+              "profile_id": "billing.table.json_rows.rate_cards.v1",
+              "artifact_id": "ps-2-compute-user-metric-outputs:output:0:enriched-users",
+              "source_slot": "report_context",
+              "source_step_id": "ps-2-compute-user-metric-outputs",
+              "entity_schema_id": "billing.rate_card",
+              "source_artifact_ids": [
+                "ps-2-compute-user-metric-outputs:output:0:enriched-users"
+              ]
+            }
+          ],
+          "required": true,
+          "row_grain": {
+            "grain_type": "custom",
+            "cardinality": "many",
+            "custom_label": "rate_card_row"
+          },
+          "required_fields": [
+            "id",
+            "name",
+            "email",
+            "company_name",
+            "post_count",
+            "avg_body_length",
+            "todo_completion_rate",
+            "quality_score"
+          ],
+          "entity_schema_id": "billing.rate_card",
+          "resolved_kind_key": "table.json_rows",
+          "resolved_profile_id": "billing.table.json_rows.rate_cards.v1",
+          "provenance_requirements": {
+            "require_source_artifact_ids": true
+          }
+        }
+      ],
+      "outputs": [],
+      "purpose": "STEP NATURE: HYBRID\n\nCONTRACT (MUST):\n* Inputs: user-deliverable file output/enriched-users.json from the prior step and transport slot report_context containing ranked users, first-20-post rows with associated comments, and summary statistics.\n* Outputs: write output/user-rankings.html as a styled HTML page containing (1) a User Rankings Table for all users ranked by quality_score descending with columns rank, name, email, post count, completion rate shown as a percentage, and quality score; (2) a Posts with Comments Table for the first 20 posts showing post title, body truncated to 100 characters, and a nested list of associated comments showing author name and comment body, or the literal text No comments. when none are attached; and (3) a Summary Statistics section showing total users, total posts fetched, total comments fetched, and average quality score across all users.\n* Acceptance checks: output/user-rankings.html exists; it contains the three required sections; the rankings table is sorted by quality_score descending; completion rates are presented as percentages; post bodies shown in the posts table are truncated to at most 100 displayed characters before any ellipsis treatment; CSS provides alternating row colors, clear headings, and a responsive table layout.\n* Constraints / non-goals: do not fetch new data in this step; do not recompute upstream metrics beyond presentation formatting; do not modify output/enriched-users.json.\n* Interfaces / invariants: use the ranked user data and summary values from report_context consistently with output/enriched-users.json; preserve user names, emails, and numeric scores from upstream artifacts.\n\nGUIDANCE (SHOULD):\n* Preferred stack/tools: HTML templating and inline or embedded CSS suitable for a standalone file.\n* Preferred patterns: render semantically structured headings and tables; use nested lists inside the comments cell; keep layout readable on narrower screens.\n* Efficiency / reliability hints: keep the HTML self-contained and avoid external asset dependencies.\n\nCREATIVE BRIEF (SHOULD when user gave explicit creative direction, MAY otherwise):\n* Look/feel/tone: clean, readable, and professional.\n* Stylistic constraints or preferences: use alternating row colors, proper section headings, and responsive table layout.\n* Optional polish (must not expand scope): subtle spacing, consistent typography, and restrained visual hierarchy.",
+      "step_id": "ps-3-render-rankings-html-page",
+      "dependencies": [
+        "ps-2-compute-user-metric-outputs"
+      ],
+      "compiler_decisions": {
+        "warnings": [],
+        "compatibility_status": "compatible"
+      }
+    },
+    "materialized_output_paths": [
+      {
+        "ref_id": "ps-3-render-rankings-html-page:output:0:user-rankings",
+        "runtime_path": "/workspace/output/user-rankings.html",
+        "workspace_path": "output/user-rankings.html"
+      },
+      {
+        "ref_id": "ps-3-render-rankings-html-page:output:1:step-result",
+        "runtime_path": "/workspace/output/step_result.json",
+        "workspace_path": "output/step_result.json"
+      }
+    ],
+    "skill_binding_expectation": {
+      "primary_skill_id": "skill.sandbox.html_report_builder",
+      "skill_usage_mode": "script_first",
+      "custom_code_scope": [
+        "assemble_report_context",
+        "generate_html_markup",
+        "write_output_file",
+        "verify_output"
+      ],
+      "optional_purposes": [
+        "validate_acceptance_checks",
+        "responsive_layout_polish"
+      ],
+      "required_purposes": [
+        "render_styled_html_page",
+        "embed_inline_or_embedded_css",
+        "produce_self_contained_output_file"
+      ],
+      "custom_code_allowed": true
+    },
+    "__rtShadowPreparing": false
+  }
+]
