@@ -125,5 +125,3 @@ Follow the artifacts in order:
 ├── deliverables/          ← final output files
 └── screenshots/           ← workspace UI during/after the run
 ```
-
-**Place your artifacts in the appropriate directories.** The plan JSON, compiled step evidence, output files (enriched-users.json, user-rankings.html), and screenshots of the run executing in the workspace.
