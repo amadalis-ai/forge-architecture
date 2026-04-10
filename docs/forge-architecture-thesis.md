@@ -37,7 +37,7 @@ These are not abstract categories. They are failure classes I observed repeatedl
 
 **Self-reported completion.** The model says "done." But the output is wrong, missing, or malformed. The system trusted the model's self-report instead of independently verifying that the declared outputs exist, match the expected schema, and pass semantic checks. In any serious engineering discipline, the producer does not get to mark its own homework.
 
-**Semantic drift.** `customer_id` in one API, `user_id` in another. Same platform, same semantics, different words. The model's intent is correct every time — it knows what it wants to do. But the inconsistency between API surfaces causes it to send the wrong field name, burn tokens on correction loops, and sometimes cascade the mismatch downstream where it becomes a silent data integrity failure.
+**Semantic drift.** For example, `customer_id` in one API surface, `user_id` in another. Same platform, same semantics, different words. The model's intent is correct every time — it knows what it wants to do. But the inconsistency between API surfaces causes it to send the wrong field name, burn tokens on correction loops, and sometimes cascade the mismatch downstream where it becomes a silent data integrity failure.
 
 **Schema overwhelm.** The model is given an OpenAPI specification with deeply nested objects. Some children are JSON, some are serialized text. Property descriptions reference constraint definitions in other parts of the schema. Accepted values are listed in a separate enum definition. The model has to hold all of these references in attention simultaneously while constructing a valid payload. On complex schemas, it cannot. Its intent is correct. The format of the information overwhelms its attention.
 
@@ -59,7 +59,7 @@ These are not claims of final scientific certainty. They are architectural assum
 
 The first discovery came from a specific, ugly, real engineering problem.
 
-The company I was working at had deeply nested API endpoints. Some child objects were JSON, others were raw text requiring different serialization. Two different platform surfaces called the same entity different things — `customer_id` in one API, `user_id` in another. Same platform, same semantics, different words.
+The company I work at has deeply nested API endpoints. Some child objects are JSON, others are raw text requiring different serialization. Two different platform surfaces call the same entity different things — for example, `customer_id` in one API, `user_id` in another. Same platform, same semantics, different words.
 
 The obvious approach was to give the model the OpenAPI specifications. Full JSON schemas with property descriptions, accepted values, constraints, and validation rules. Everything the model should need to construct a correct payload.
 

@@ -36,7 +36,7 @@ I do not say this to be provocative. I say it because it is the honest starting 
 
 These are not abstract categories. These are things I watched happen repeatedly:
 
-A model sends a payload to an API. The payload is wrong — a field name is incorrect. You correct it. The model sends the payload again with a different field wrong. You correct that. It tries a third time and gets the nesting structure wrong. Tokens burn. The model's intent was correct every time. It knew exactly what it wanted to do. But the OpenAPI schema was deeply nested, some child objects were JSON, others were serialized text, and two different API surfaces on the same platform called the same entity different things — `customer_id` in one endpoint, `user_id` in another. Same platform. Same semantics. Different words.
+A model sends a payload to an API. The payload is wrong — a field name is incorrect. You correct it. The model sends the payload again with a different field wrong. You correct that. It tries a third time and gets the nesting structure wrong. Tokens burn. The model's intent was correct every time. It knew exactly what it wanted to do. But the OpenAPI schema was deeply nested, some child objects were JSON, others were serialized text, and two different API surfaces on the same platform called the same entity different things — for example, `customer_id` in one endpoint, `user_id` in another. Same platform. Same semantics. Different words.
 
 A 300-step plan dies on step 47. Not because the model made a bad decision. Because a downstream step expected an artifact that an upstream step was supposed to produce, and nobody checked whether the output shape matched the input contract before execution started.
 
@@ -48,7 +48,7 @@ Every engineer who has actually tried to build these systems at scale knows this
 
 ## The first discovery: the model needs a different language
 
-The company I was working at had some of the most complex API endpoints I have ever seen. Deeply nested objects. Mixed serialization — some children were JSON, some were raw text that needed to be serialized or deserialized differently. Different platform surfaces used entirely different terminology for the same concepts.
+The company I work at has some of the most complex API endpoints I have ever seen. Deeply nested objects. Mixed serialization — some children are JSON, some are raw text that needs to be serialized or deserialized differently. Different platform surfaces use entirely different terminology for the same concepts.
 
 So I did the obvious thing. I gave the model the OpenAPI specifications. Full JSON schemas. Property descriptions. Accepted values. Constraints. Validation rules. Everything the model should need to construct a correct payload.
 
