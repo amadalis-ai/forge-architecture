@@ -16,13 +16,13 @@ If you have actually tried to make autonomous AI systems work reliably at scale 
 
 ## What I kept seeing
 
-I spent the last eighteen months building autonomous systems for enterprise work. Long-horizon plans. Multi-step execution. Real APIs, real data, real deliverables.
+When ChatGPT first came out, I immediately started imagining what we could do with this. Automating enterprise workflows. Long-horizon execution. Multi-step processes with real APIs, real data, real deliverables. The potential was obvious to anyone who had spent decades building systems architecture.
 
-And I kept hitting the same wall.
+So I started experimenting. I tried to make autonomous runs reliable — long executions, multi-step plans, real enterprise work. And even as the models got smarter, I kept hitting the same wall. The failures were not getting better with better models. They were structural. The infrastructure around the models was wrong.
 
-Not because the models are stupid. The models are remarkably capable. The problem is the infrastructure around them. Every framework, every harness, every orchestration pattern I tried eventually failed in the same ways — and the failures were always structural, never intellectual.
+About eighteen months ago, I set out to solve this problem for real. It was driving me crazy. I could see what needed to exist, and it did not exist anywhere. So I started building it — nights and weekends, alongside my day job.
 
-I read announcements from companies claiming they have replaced entire teams with agents. I read founders describing 95 percent success rates on complex autonomous work. I read technical posts that make reliability sound like a solved problem.
+And through all of that building, I kept reading announcements from companies claiming they have replaced entire teams with agents. I read founders describing 95 percent success rates on complex autonomous work. I read technical posts that make reliability sound like a solved problem.
 
 I do not buy most of it.
 
