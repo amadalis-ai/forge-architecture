@@ -548,23 +548,45 @@ And the Capsules are designed for headless execution. The entire lifecycle is AP
 
 ---
 
-## What this enables
+## The problem nobody talks about
 
-I do not know exactly where this goes. I am honest about that. But the range of what the system can do is wide, and the type system is extensible.
+I have spent most of this note on the compiler — how it works, what it produces, why it matters. But there is a larger problem that the compiler exists to solve, and I have not said enough about it.
 
-The twelve domain packs that exist today — billing audit, legal review, resume screening, research synthesis, finance analysis, security audit, and others — are a starting library. But the system is designed for custom packs. If you need a domain pack for insurance claims processing, or clinical trial analysis, or manufacturing quality control, you build it and register it. You have just introduced your own language — your own types, your own entity schemas, your own disambiguation rules — into the compiler.
+Building an agent is the easy part. Making it do something useful in a demo is the easy part. The hard part is everything that comes after: governance, security, observability, traceability, auditability, and the organizational reality of deploying autonomous systems in an enterprise.
 
-Consider what becomes possible:
+Think about what a company actually has to do to put an AI agent into production. The security team needs to know: what can this agent access? What networks can it reach? What data can it see? Can it exfiltrate information? The compliance team needs to know: can we audit what it did? Can we prove how it arrived at a conclusion? Can we trace a number in a report back to the source data and the computation that produced it? The legal team needs to know: if this agent summarizes case law or extracts contract clauses, can we verify the citations? Can we trace a summary back to the exact paragraphs that were fed into the model? The IT team needs to know: how do we configure this for different departments? How do we enforce different policies for different workspaces? How do we control costs? How do we monitor what is happening?
 
-**Screening five hundred resumes.** The system ingests the files, extracts structured candidate data, scores against the rubric, produces a ranked report. Encapsulate it. Next hiring cycle, run the same Capsule on new resumes. The scoring logic is proven. The extraction is proven. Only the model's judgment over new content is fresh.
+Today, the answer to most of these questions is: you build it yourself. You need an entire engineering department just to handle the governance, logging, observability, and policy enforcement around the agent — before the agent does any useful work. And every time someone builds a new agent, the CISO's team has to ask the same questions again. Is the environment correct? Is it following the guidelines? Is it calling the right endpoints? How many policies do we need?
 
-**Auditing a year of vendor contracts.** Legal review domain pack. The system extracts clauses, identifies obligations, flags non-standard terms, produces a risk register with citations. Every finding is tied to a specific clause in a specific document. Traceable. Auditable.
+This is the real problem. Not "can the model do the work?" The model can do extraordinary work. The problem is: can you prove it did the work correctly, trace how it got there, govern what it had access to, and repeat it reliably — without rebuilding the infrastructure every time?
 
-**Reconciling billing data every Friday.** Billing audit domain pack. Sealed Capsule. No model inference needed. The transformation code is frozen. The validation is frozen. New data in, reconciled output out. Costs almost nothing to run.
+### The traceability argument
 
-**Building a data dashboard from an API.** The system fetches the data, normalizes it, computes metrics, renders a styled HTML page. This is the run I showed earlier in this note. It works today.
+This is where Code-Act and the compiler together produce something that no prompt-and-tools approach can match.
 
-The point is not that any single use case is revolutionary. The point is that the compilation architecture makes each one governed, traceable, replayable, and compounding. And the type system means the compiler gets smarter as the library grows — every new domain pack, every new workflow pack, every new entity schema extends what the system can compile correctly.
+When the model thinks in code, every step of its reasoning is inspectable. It did not just tell you "the average is 47,000." It wrote a program that opened the data, filtered the rows, computed the sum, divided by the count, and printed 47,000. You can read the code. You can see the data it read. You can re-run the computation. You can trace the number in the final report all the way back through the transformation chain — which script produced it, which inputs that script consumed, which upstream step produced those inputs, and which source files those inputs were extracted from.
+
+Consider a law firm using this to review contracts. The system extracts clauses, identifies obligations, flags non-standard terms, and produces a risk register with citations. Every finding in that register is tied to a specific clause in a specific document. Not "the model said this clause is risky." Instead: here is the extraction code that parsed the document, here are the specific paragraphs it read (with line numbers and character offsets), here is the summarization code that produced the finding, and here is how the citation links back to the source text. If someone challenges the finding, you do not ask the model "are you sure?" You open the code, read the extraction logic, and verify the source.
+
+Consider an accounting firm reconciling 753 time entries against contracts and rate cards. The system produces a discrepancy report. Every number in that report — every rate delta, every overcharge amount, every cap violation — is the output of a Python script that you can read. The script shows exactly which fields were compared, which formula was applied, which entries were flagged, and why. The entire chain from source CSV to final report is a sequence of verified, logged, inspectable computations.
+
+This is not possible with a prompt-and-tools approach. If you give a model a prompt and some tools, it can tell you "I called the analysis tool and it returned these results." But it cannot show you how the tool arrived at those results. It cannot show you the intermediate computations. It cannot trace a number from the report back through the transformations to the source data. The reasoning is opaque. The model says "I did it" and you either trust it or you do not.
+
+With compiled execution, the model's work is code. Code is evidence. Evidence is traceable. And that traceability holds across 400 steps — because every step has its own contract, its own receipts, its own checksums, and its own execution log. The model never loses context because it never carries context. Fresh mind, clean contract, verified inputs, inspectable output. Step 400 is as traceable as step 1.
+
+### What becomes possible
+
+When you combine the compiler, Code-Act, capsules, governance, and traceability, the use cases open up:
+
+**Screening five hundred resumes.** The system ingests the files, extracts structured candidate data, scores against the rubric, produces a ranked report. Every score is traceable to the code that computed it, the fields that were extracted, and the source document they came from. Encapsulate it. Next hiring cycle, run the same Capsule on new resumes.
+
+**Auditing a year of vendor contracts.** The system extracts clauses, identifies obligations, flags non-standard terms, produces a risk register with citations. Every finding traces back through the extraction code to the exact paragraphs in the source documents — with line numbers. A compliance officer can follow the chain from finding to source without asking the model anything.
+
+**Reconciling billing data every Friday.** Sealed Capsule. No model inference. The transformation code is frozen. Every discrepancy in the output can be traced through the computation chain to the source rows. The finance team does not have to trust the model. They can read the code.
+
+**Large-scale research across hundreds of documents.** The system processes every document, extracts claims with citations, cross-references across sources, synthesizes findings. Every claim in the final report is linked to the specific documents, specific paragraphs, and specific extraction code that produced it. At 400 steps, the traceability is the same as at step 1.
+
+The twelve domain packs that exist today — billing audit, legal review, resume screening, research synthesis, finance analysis, security audit, and others — are a starting library. The system is designed for custom packs. If you need a domain pack for insurance claims processing, clinical trial analysis, or manufacturing quality control, you build it and register it. Every new pack extends what the compiler can compile correctly.
 
 ---
 
