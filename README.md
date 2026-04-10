@@ -4,7 +4,7 @@
 
 This repository contains the public research, proof artifacts, and execution evidence behind Forge — a compilation architecture for autonomous AI work built by [Simone Coelho](https://amadalis.ai/about).
 
-**Built from scratch.** The entire system is built from the ground up on Cloudflare primitives — Workers, Durable Objects, R2, KV, Queues, Vectorize, and Neon Postgres via Hyperdrive. No AI orchestration frameworks. No agent SDKs. No third-party workflow engines. The compilation pipeline, the executor, the validation ladder, the skill materializer, the governance layer — all original code. The only external dependency is the model API itself.
+**Built from scratch.** The entire system is built from the ground up on Cloudflare primitives — Workers, Durable Objects, R2, KV, Queues, Vectorize, Containers, and Neon Postgres via Hyperdrive. No AI orchestration frameworks. No agent SDKs. No third-party workflow engines. The compilation pipeline, the executor, the validation ladder, the skill materializer, the governance layer — all original code. The only external dependency is the model API itself.
 
 ---
 

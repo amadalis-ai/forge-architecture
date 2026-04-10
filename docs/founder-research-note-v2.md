@@ -645,7 +645,7 @@ When a step's compilation determines it needs this skill, the entire package is 
 
 **Governance as walls, not rules.** Network egress is controlled at the sandbox level with domain, subdomain, path, and method granularity — not by asking the model to avoid certain URLs, but by structurally blocking them. Budget enforcement uses projected pre-checks and runtime counters to halt execution at the boundary, not after the money is spent. Tool allowlists are both frozen into the step plan at compile time and re-enforced at runtime dispatch. These are not rules the model promises to follow. They are walls.
 
-**Built from scratch.** The entire system is built from the ground up on Cloudflare primitives — Workers, Durable Objects, R2, KV, Queues, Vectorize, and Neon Postgres via Hyperdrive. There are no AI orchestration frameworks, no agent SDKs, no third-party workflow engines. The compilation pipeline, the executor, the validation ladder, the skill materializer, the governance layer — all of it is original code. The only external dependency is the model API itself. Everything between the user's intent and the model's response is infrastructure I wrote.
+**Built from scratch.** The entire system is built from the ground up on Cloudflare primitives — Workers, Durable Objects, R2, KV, Queues, Vectorize, Containers, and Neon Postgres via Hyperdrive. There are no AI orchestration frameworks, no agent SDKs, no third-party workflow engines. The compilation pipeline, the executor, the validation ladder, the skill materializer, the governance layer — all of it is original code. The only external dependency is the model API itself. Everything between the user's intent and the model's response is infrastructure I wrote.
 
 ---
 
