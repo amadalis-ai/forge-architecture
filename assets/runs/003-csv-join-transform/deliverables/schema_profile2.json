@@ -1,0 +1,208 @@
+{
+  "files": [
+    {
+      "path": "attachments/time_entries.csv",
+      "row_count": 753,
+      "schema_validation": {
+        "status": "match",
+        "declared_columns": [
+          "time_entry_id",
+          "employee_id",
+          "contract_ref",
+          "work_date",
+          "hours_logged",
+          "billed_rate",
+          "billed_amount",
+          "invoice_id",
+          "project_code"
+        ],
+        "observed_columns": [
+          "time_entry_id",
+          "employee_id",
+          "contract_ref",
+          "work_date",
+          "hours_logged",
+          "billed_rate",
+          "billed_amount",
+          "invoice_id",
+          "project_code"
+        ],
+        "missing_columns": [],
+        "extra_columns": [],
+        "ordered_match": true
+      },
+      "null_findings": [
+        {
+          "column": "time_entry_id",
+          "null_count": 0,
+          "status": "clean",
+          "null_rate": 0.0
+        },
+        {
+          "column": "employee_id",
+          "null_count": 0,
+          "status": "clean",
+          "null_rate": 0.0
+        },
+        {
+          "column": "contract_ref",
+          "null_count": 0,
+          "status": "clean",
+          "null_rate": 0.0
+        },
+        {
+          "column": "work_date",
+          "null_count": 0,
+          "status": "clean",
+          "null_rate": 0.0
+        },
+        {
+          "column": "hours_logged",
+          "null_count": 0,
+          "status": "clean",
+          "null_rate": 0.0
+        },
+        {
+          "column": "billed_rate",
+          "null_count": 0,
+          "status": "clean",
+          "null_rate": 0.0
+        },
+        {
+          "column": "billed_amount",
+          "null_count": 0,
+          "status": "clean",
+          "null_rate": 0.0
+        },
+        {
+          "column": "invoice_id",
+          "null_count": 0,
+          "status": "clean",
+          "null_rate": 0.0
+        },
+        {
+          "column": "project_code",
+          "null_count": 0,
+          "status": "clean",
+          "null_rate": 0.0
+        }
+      ],
+      "type_mismatch_findings": [
+        {
+          "column": "work_date",
+          "expected_type": "date",
+          "status": "ok",
+          "non_null_count": 753,
+          "invalid_count": 0,
+          "sample_invalid_values": []
+        },
+        {
+          "column": "hours_logged",
+          "expected_type": "numeric",
+          "status": "ok",
+          "non_null_count": 753,
+          "invalid_count": 0,
+          "sample_invalid_values": []
+        },
+        {
+          "column": "billed_rate",
+          "expected_type": "numeric",
+          "status": "ok",
+          "non_null_count": 753,
+          "invalid_count": 0,
+          "sample_invalid_values": []
+        },
+        {
+          "column": "billed_amount",
+          "expected_type": "numeric",
+          "status": "ok",
+          "non_null_count": 753,
+          "invalid_count": 0,
+          "sample_invalid_values": []
+        }
+      ]
+    },
+    {
+      "path": "attachments/rates.csv",
+      "row_count": 7,
+      "schema_validation": {
+        "status": "match",
+        "declared_columns": [
+          "contract_id",
+          "role_code",
+          "hourly_rate",
+          "effective_date",
+          "expiration_date"
+        ],
+        "observed_columns": [
+          "contract_id",
+          "role_code",
+          "hourly_rate",
+          "effective_date",
+          "expiration_date"
+        ],
+        "missing_columns": [],
+        "extra_columns": [],
+        "ordered_match": true
+      },
+      "null_findings": [
+        {
+          "column": "contract_id",
+          "null_count": 0,
+          "status": "clean",
+          "null_rate": 0.0
+        },
+        {
+          "column": "role_code",
+          "null_count": 0,
+          "status": "clean",
+          "null_rate": 0.0
+        },
+        {
+          "column": "hourly_rate",
+          "null_count": 0,
+          "status": "clean",
+          "null_rate": 0.0
+        },
+        {
+          "column": "effective_date",
+          "null_count": 0,
+          "status": "clean",
+          "null_rate": 0.0
+        },
+        {
+          "column": "expiration_date",
+          "null_count": 0,
+          "status": "clean",
+          "null_rate": 0.0
+        }
+      ],
+      "type_mismatch_findings": [
+        {
+          "column": "hourly_rate",
+          "expected_type": "numeric",
+          "status": "ok",
+          "non_null_count": 7,
+          "invalid_count": 0,
+          "sample_invalid_values": []
+        },
+        {
+          "column": "effective_date",
+          "expected_type": "date",
+          "status": "ok",
+          "non_null_count": 7,
+          "invalid_count": 0,
+          "sample_invalid_values": []
+        },
+        {
+          "column": "expiration_date",
+          "expected_type": "date",
+          "status": "ok",
+          "non_null_count": 7,
+          "invalid_count": 0,
+          "sample_invalid_values": []
+        }
+      ]
+    }
+  ]
+}

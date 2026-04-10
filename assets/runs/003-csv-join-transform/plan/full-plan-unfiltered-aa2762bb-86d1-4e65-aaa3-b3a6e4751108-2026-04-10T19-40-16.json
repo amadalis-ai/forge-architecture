@@ -1,0 +1,625 @@
+[
+  {
+    "label": "Profile input CSVs",
+    "status": "completed",
+    "step_id": "ps-0-profile-input-csvs",
+    "attempts": 2,
+    "ended_at": 1775849753043,
+    "artifacts": [],
+    "step_hash": "sha256:38976de33c09302d0a528a7a72a4d55af33c560216b9fc5d45e942a4f403c7b1",
+    "step_kind": "hybrid_task",
+    "depends_on": [],
+    "started_at": 1775849292443,
+    "step_index": 0,
+    "kernel_hash": null,
+    "step_nature": "HYBRID",
+    "total_steps": 2,
+    "contract_hash": "sha256:38976de33c09302d0a528a7a72a4d55af33c560216b9fc5d45e942a4f403c7b1",
+    "final_backend": "sandbox.session",
+    "repair_policy": {
+      "strategy": "retry_same_contract",
+      "max_retries": 6,
+      "block_on_missing_inputs": true,
+      "immutable_output_bindings": true
+    },
+    "execution_mode": "hybrid",
+    "routing_reason": "compiled_code_contract",
+    "artifact_inputs": [],
+    "execution_hints": null,
+    "fallback_reason": null,
+    "validator_rules": {
+      "fail_on_missing_outputs": true,
+      "require_declared_outputs": true,
+      "require_input_artifact_refs": true,
+      "enforce_compiled_output_bindings": true
+    },
+    "allowed_tool_ids": [
+      "sandbox.session"
+    ],
+    "artifact_outputs": [
+      "output/schema_profile2.json",
+      "output/step_result.json",
+      "meta/mcp-tools/journal.ndjson",
+      "meta/mcp-tools/calls.tar.gz"
+    ],
+    "expected_outputs": [
+      {
+        "path": "output/schema_profile2.json",
+        "role": "schema profile",
+        "location": "workspace"
+      },
+      {
+        "path": "output/step_result.json",
+        "role": "meta",
+        "location": "sandbox"
+      },
+      {
+        "path": "meta/mcp-tools/journal.ndjson",
+        "role": "meta",
+        "location": "sandbox"
+      },
+      {
+        "path": "meta/mcp-tools/calls.tar.gz",
+        "role": "meta",
+        "location": "sandbox"
+      }
+    ],
+    "input_file_paths": [
+      "attachments/time_entries.csv",
+      "attachments/rates.csv"
+    ],
+    "retry_of_step_id": "ps-0-profile-input-csvs",
+    "step_result_json": "{\"source\":\"system\",\"status\":\"completed\",\"step_outcome_summary\":[\"Profile input CSVs finished with status=completed.\",\"Tool calls: 1.\",\"Artifacts: .sandbox/runs/run_701464a8-c0cc-4cf0-83b1-d6b9028ce408/manifests/ps-0-profile-input-csvs-attempt-2/input_manifest.json, .sandbox/runs/run_701464a8-c0cc-4cf0-83b1-d6b9028ce408/manifests/ps-0-profile-input-csvs-attempt-2/output_manifest.json, support/ps-0-profile-input-csvs/input_manifest.json.\",\"Observed resources: attachments/time_entries.csv, /workspace/input/attachments/time_entries.csv, attachments/rates.csv.\"],\"artifacts_created\":[{\"path\":\".sandbox/runs/run_701464a8-c0cc-4cf0-83b1-d6b9028ce408/manifests/ps-0-profile-input-csvs-attempt-2/input_manifest.json\",\"kind\":\"temp\",\"bytes\":1221,\"mime\":\"application/json\",\"checksum_sha256\":null},{\"path\":\".sandbox/runs/run_701464a8-c0cc-4cf0-83b1-d6b9028ce408/manifests/ps-0-profile-input-csvs-attempt-2/output_manifest.json\",\"kind\":\"temp\",\"bytes\":1422,\"mime\":\"application/json\",\"checksum_sha256\":null},{\"path\":\"support/ps-0-profile-input-csvs/input_manifest.json\",\"kind\":\"temp\",\"bytes\":1221,\"mime\":\"application/json\",\"checksum_sha256\":null},{\"path\":\"support/input_manifest.json\",\"kind\":\"temp\",\"bytes\":1221,\"mime\":\"application/json\",\"checksum_sha256\":null},{\"path\":\".sandbox/runs/run_701464a8-c0cc-4cf0-83b1-d6b9028ce408/receipts/ps-0-profile-input-csvs-attempt-2/preflight.json\",\"kind\":\"temp\",\"bytes\":null,\"mime\":null,\"checksum_sha256\":null},{\"path\":\".sandbox/runs/run_701464a8-c0cc-4cf0-83b1-d6b9028ce408/receipts/ps-0-profile-input-csvs-attempt-2/postflight.json\",\"kind\":\"temp\",\"bytes\":null,\"mime\":null,\"checksum_sha256\":null},{\"path\":\"output/schema_profile2.json\",\"kind\":\"deliverable\",\"bytes\":null,\"mime\":null,\"checksum_sha256\":null},{\"path\":\"meta/mcp-tools/journal.ndjson\",\"kind\":\"temp\",\"bytes\":null,\"mime\":null,\"checksum_sha256\":null},{\"path\":\"meta/mcp-tools/calls.tar.gz\",\"kind\":\"temp\",\"bytes\":null,\"mime\":null,\"checksum_sha256\":null}],\"observed_resources\":[{\"type\":\"workspace_file\",\"path\":\"attachments/time_entries.csv\"},{\"type\":\"workspace_file\",\"path\":\"/workspace/input/attachments/time_entries.csv\"},{\"type\":\"workspace_file\",\"path\":\"attachments/rates.csv\"},{\"type\":\"workspace_file\",\"path\":\"/workspace/input/attachments/rates.csv\"},{\"type\":\"workspace_file\",\"path\":\"support/ps-0-profile-input-csvs/input_manifest.json\"},{\"type\":\"workspace_file\",\"path\":\"/workspace/meta/support/ps-0-profile-input-csvs/input_manifest.json\"},{\"type\":\"workspace_file\",\"path\":\"support/input_manifest.json\"},{\"type\":\"workspace_file\",\"path\":\"/workspace/meta/input_manifest.json\"},{\"type\":\"log\",\"path\":\".sandbox/runs/run_701464a8-c0cc-4cf0-83b1-d6b9028ce408/manifests/ps-0-profile-input-csvs-attempt-2/input_manifest.json\"},{\"type\":\"log\",\"path\":\".sandbox/runs/run_701464a8-c0cc-4cf0-83b1-d6b9028ce408/manifests/ps-0-profile-input-csvs-attempt-2/output_manifest.json\"},{\"type\":\"workspace_file\",\"path\":\"/workspace/meta/output_manifest.json\"},{\"type\":\"workspace_file\",\"path\":\"/workspace/meta/system-receipts/preflight.json\"},{\"type\":\"log\",\"path\":\".sandbox/runs/run_701464a8-c0cc-4cf0-83b1-d6b9028ce408/receipts/ps-0-profile-input-csvs-attempt-2/preflight.json\"},{\"type\":\"workspace_file\",\"path\":\"/workspace/meta/system-receipts/postflight.json\"},{\"type\":\"log\",\"path\":\".sandbox/runs/run_701464a8-c0cc-4cf0-83b1-d6b9028ce408/receipts/ps-0-profile-input-csvs-attempt-2/postflight.json\"},{\"type\":\"workspace_file\",\"path\":\"/workspace/output/schema_profile2.json\"},{\"type\":\"workspace_file\",\"path\":\"output/schema_profile2.json\"},{\"type\":\"workspace_file\",\"path\":\"/workspace/meta/mcp-tools/journal.ndjson\"},{\"type\":\"workspace_file\",\"path\":\"meta/mcp-tools/journal.ndjson\"},{\"type\":\"workspace_file\",\"path\":\"/workspace/meta/mcp-tools/calls.tar.gz\"},{\"type\":\"workspace_file\",\"path\":\"meta/mcp-tools/calls.tar.gz\"}],\"decisions\":[\"Step acceptance criteria: output/schema_profile2.json is created as valid JSON; it contains profile results for both input CSVs; it reports 753 rows for attachments/time_entries.csv; it reports a numeric row count for attachments/rates.csv; and it explicitly records any schema mismatches, null findings, or type mismatches instead of silently correcting them.\",\"Artifacts created: .sandbox/runs/run_701464a8-c0cc-4cf0-83b1-d6b9028ce408/manifests/ps-0-profile-input-csvs-attempt-2/input_manifest.json, .sandbox/runs/run_701464a8-c0cc-4cf0-83b1-d6b9028ce408/manifests/ps-0-profile-input-csvs-attempt-2/output_manifest.json, support/ps-0-profile-input-csvs/input_manifest.json, support/input_manifest.json\",\"Observed resources: attachments/time_entries.csv, /workspace/input/attachments/time_entries.csv, attachments/rates.csv, /workspace/input/attachments/rates.csv\"],\"assumptions\":[],\"next_step_hints\":[\"Use .sandbox/runs/run_701464a8-c0cc-4cf0-83b1-d6b9028ce408/manifests/ps-0-profile-input-csvs-attempt-2/input_manifest.json, .sandbox/runs/run_701464a8-c0cc-4cf0-83b1-d6b9028ce408/manifests/ps-0-profile-input-csvs-attempt-2/output_manifest.json, support/ps-0-profile-input-csvs/input_manifest.json as downstream inputs where relevant.\",\"Prefer the concrete observed resources over guessed paths.\"],\"errors_and_recovery\":[],\"repro\":{\"tool_ids\":[\"sandbox.session\"],\"script_paths\":[],\"log_paths\":[],\"rerun_hint\":\"Re-run step ps-0-profile-input-csvs (Profile input CSVs) using sandbox.session\"}}",
+    "success_criteria": "output/schema_profile2.json is created as valid JSON; it contains profile results for both input CSVs; it reports 753 rows for attachments/time_entries.csv; it reports a numeric row count for attachments/rates.csv; and it explicitly records any schema mismatches, null findings, or type mismatches instead of silently correcting them.",
+    "execution_backend": "sandbox.session",
+    "execution_pattern": "other",
+    "observations_text": "STEP NATURE: DETERMINISTIC\n\nCONTRACT (MUST):\n* Inputs: attachments/time_entries.csv and attachments/rates.csv.\n* Outputs: Write output/schema_profile2.json as a valid JSON profile covering both CSV files. The profile MUST validate the observed headers against the declared columns, count rows for each file, and flag nulls or type mismatches without correcting source data.\n* Acceptance checks: output/schema_profile2.json exists; is valid JSON; includes findings for both attachments/time_entries.csv and attachments/rates.csv; records time_entries row count as 753; records a numeric row count for rates.csv; and includes schema-validation, null, and type-mismatch findings.\n* Constraints / non-goals: Do not modify source files. Do not clean, correct, enrich, or join data in this step. Produce only the requested profile file.\n* Interfaces / invariants: Preserve source file identity exactly. No field-level schema has been declared for this artifact. Inspect the real data you read or fetch, choose the smallest coherent set of fields that best satisfies the user's request, and use that same schema consistently for every record or object you write. The artifact shape you materialize is what downstream steps will observe and rely on, so do not let the schema drift once chosen.\n\nGUIDANCE (SHOULD):\n* Preferred stack/tools: Use deterministic CSV parsing and JSON serialization.\n* Preferred patterns: Validate headers first, then row counts, then per-column null and type analysis.\n* Efficiency / reliability hints: Fail loudly on unreadable or malformed input files; record findings rather than repairing data.\n\nCREATIVE BRIEF (SHOULD when user gave explicit creative direction, MAY otherwise):\n* Look/feel/tone: Minimal machine-readable JSON.\n* Stylistic constraints or preferences: No prose report, no visualization, no extra deliverables.\n* Optional polish (must not expand scope): Stable ordering of file sections and findings.",
+    "predicted_backend": "sandbox.session",
+    "repair_delta_json": "{\"_bounded\":true,\"_field\":\"repair_delta_json\",\"_original_bytes\":46282,\"_max_bytes\":32768}",
+    "current_attempt_id": null,
+    "execution_contract": {
+      "pattern": "other",
+      "step_nature": "HYBRID",
+      "repair_strategy": "retry_with_small_fix",
+      "timeout_ceiling_ms": 1800000,
+      "allowed_tool_call_count": 3
+    },
+    "retry_lineage_json": "{\"_bounded\":true,\"_field\":\"retry_lineage_json\",\"_original_bytes\":46782,\"_max_bytes\":16384}",
+    "input_artifact_refs": [
+      {
+        "kind": "workspace_file",
+        "path": "attachments/time_entries.csv",
+        "ref_id": "ps-0-profile-input-csvs:input:0:time-entries",
+        "logical_name": "time-entries"
+      },
+      {
+        "kind": "workspace_file",
+        "path": "attachments/rates.csv",
+        "ref_id": "ps-0-profile-input-csvs:input:1:rates",
+        "logical_name": "rates"
+      }
+    ],
+    "output_artifact_refs": [
+      {
+        "kind": "artifact",
+        "path": "output/schema_profile2.json",
+        "ref_id": "ps-0-profile-input-csvs:output:0:schema-profile2",
+        "logical_name": "schema-profile2"
+      },
+      {
+        "kind": "artifact",
+        "path": "output/step_result.json",
+        "ref_id": "ps-0-profile-input-csvs:output:1:step-result",
+        "logical_name": "step-result"
+      },
+      {
+        "kind": "artifact",
+        "path": "meta/mcp-tools/journal.ndjson",
+        "ref_id": "ps-0-profile-input-csvs:output:2:journal",
+        "logical_name": "journal"
+      },
+      {
+        "kind": "artifact",
+        "path": "meta/mcp-tools/calls.tar.gz",
+        "ref_id": "ps-0-profile-input-csvs:output:3:calls-tar",
+        "logical_name": "calls-tar"
+      }
+    ],
+    "sandbox_mcp_contract": {
+      "calls_dir": "/workspace/meta/mcp-tools/calls",
+      "transport": "sandbox_tools_proxy",
+      "journal_path": "meta/mcp-tools/journal.ndjson",
+      "python_module": "sandbox_platform",
+      "python_function": "call",
+      "proxy_url_env_var": "TOOLS_PROXY_URL",
+      "calls_archive_path": "meta/mcp-tools/calls.tar.gz",
+      "proxy_token_env_var": "TOOLS_PROXY_TOKEN",
+      "container_result_root": "/workspace/meta/mcp-tools",
+      "python_helper_env_var": "SANDBOX_BRIDGE_PYTHON",
+      "tool_policy_allowlist": [
+        "workspace.files.put"
+      ],
+      "workspace_result_root": "meta/mcp-tools"
+    },
+    "recommended_skill_ids": [],
+    "required_capabilities": [
+      "csv profiling",
+      "schema validation",
+      "null detection",
+      "type checking",
+      "json serialization"
+    ],
+    "suggested_skills_json": null,
+    "executable_contract_v2": {
+      "step_id": "ps-0-profile-input-csvs",
+      "step_kind": "hybrid_task",
+      "provenance": {
+        "finalized_at_ms": 0,
+        "dependency_policy": "declared-closure-committed-output-normalized",
+        "compiled_step_hash": "sha256:38976de33c09302d0a528a7a72a4d55af33c560216b9fc5d45e942a4f403c7b1"
+      },
+      "step_label": "Profile input CSVs",
+      "kernel_hash": null,
+      "step_inputs": [
+        {
+          "kind": "workspace_file",
+          "ref_id": "ps-0-profile-input-csvs:input:0:time-entries",
+          "must_exist": true,
+          "logical_path": "attachments/time_entries.csv",
+          "runtime_path": "/workspace/input/attachments/time_entries.csv",
+          "workspace_path": "attachments/time_entries.csv"
+        },
+        {
+          "kind": "workspace_file",
+          "ref_id": "ps-0-profile-input-csvs:input:1:rates",
+          "must_exist": true,
+          "logical_path": "attachments/rates.csv",
+          "runtime_path": "/workspace/input/attachments/rates.csv",
+          "workspace_path": "attachments/rates.csv"
+        }
+      ],
+      "step_outputs": [
+        {
+          "role": "primary",
+          "ref_id": "ps-0-profile-input-csvs:output:0:schema-profile2",
+          "location": "workspace",
+          "required": true,
+          "logical_path": "output/schema_profile2.json",
+          "runtime_path": "/workspace/output/schema_profile2.json",
+          "workspace_path": "output/schema_profile2.json"
+        }
+      ],
+      "contract_hash": "sha256:38976de33c09302d0a528a7a72a4d55af33c560216b9fc5d45e942a4f403c7b1",
+      "final_backend": "sandbox.session",
+      "repair_policy": {
+        "strategy": "retry_same_contract",
+        "max_retries": 6,
+        "block_on_missing_inputs": true,
+        "immutable_output_bindings": true
+      },
+      "execution_mode": "hybrid",
+      "routing_reason": "compiled_code_contract",
+      "support_inputs": [
+        {
+          "location": "sandbox",
+          "required": true,
+          "logical_path": "support/ps-0-profile-input-csvs/input_manifest.json",
+          "runtime_path": "/workspace/meta/support/ps-0-profile-input-csvs/input_manifest.json",
+          "support_kind": "input_manifest",
+          "workspace_path": "support/ps-0-profile-input-csvs/input_manifest.json"
+        },
+        {
+          "location": "sandbox",
+          "required": true,
+          "logical_path": "support/input_manifest.json",
+          "runtime_path": "/workspace/meta/input_manifest.json",
+          "support_kind": "input_manifest",
+          "workspace_path": "support/input_manifest.json"
+        }
+      ],
+      "fallback_reason": null,
+      "support_outputs": [
+        {
+          "role": "auxiliary",
+          "location": "sandbox",
+          "required": true,
+          "logical_path": "output/step_result.json",
+          "runtime_path": "/workspace/output/step_result.json",
+          "support_kind": "system_artifact",
+          "workspace_path": "output/step_result.json"
+        },
+        {
+          "role": "auxiliary",
+          "location": "sandbox",
+          "required": true,
+          "logical_path": "meta/mcp-tools/journal.ndjson",
+          "runtime_path": "/workspace/meta/mcp-tools/journal.ndjson",
+          "support_kind": "system_artifact",
+          "workspace_path": "meta/mcp-tools/journal.ndjson"
+        },
+        {
+          "role": "auxiliary",
+          "location": "sandbox",
+          "required": true,
+          "logical_path": "meta/mcp-tools/calls.tar.gz",
+          "runtime_path": "/workspace/meta/mcp-tools/calls.tar.gz",
+          "support_kind": "system_artifact",
+          "workspace_path": "meta/mcp-tools/calls.tar.gz"
+        }
+      ],
+      "validator_rules": {
+        "fail_on_missing_outputs": true,
+        "require_declared_outputs": true,
+        "require_input_artifact_refs": true,
+        "enforce_compiled_output_bindings": true
+      },
+      "allowed_tool_ids": [
+        "sandbox.session"
+      ],
+      "contract_version": 2,
+      "execution_policy": {
+        "pattern": "other",
+        "step_nature": "HYBRID",
+        "repair_strategy": "retry_with_small_fix",
+        "timeout_ceiling_ms": 1800000,
+        "allowed_tool_call_count": 3
+      },
+      "execution_backend": "sandbox.session",
+      "predicted_backend": "sandbox.session"
+    },
+    "continuity_handoff_json": "{\"schema_version\":1,\"step_id\":\"ps-0-profile-input-csvs\",\"step_index\":0,\"total_steps\":2,\"authoritative_outputs\":[{\"path\":\".sandbox/runs/run_701464a8-c0cc-4cf0-83b1-d6b9028ce408/manifests/ps-0-profile-input-csvs-attempt-2/input_manifest.json\",\"kind\":\"temp\",\"bytes\":1221,\"checksum_sha256\":null},{\"path\":\".sandbox/runs/run_701464a8-c0cc-4cf0-83b1-d6b9028ce408/manifests/ps-0-profile-input-csvs-attempt-2/output_manifest.json\",\"kind\":\"temp\",\"bytes\":1422,\"checksum_sha256\":null},{\"path\":\"support/ps-0-profile-input-csvs/input_manifest.json\",\"kind\":\"temp\",\"bytes\":1221,\"checksum_sha256\":null},{\"path\":\"support/input_manifest.json\",\"kind\":\"temp\",\"bytes\":1221,\"checksum_sha256\":null},{\"path\":\".sandbox/runs/run_701464a8-c0cc-4cf0-83b1-d6b9028ce408/receipts/ps-0-profile-input-csvs-attempt-2/preflight.json\",\"kind\":\"temp\",\"bytes\":null,\"checksum_sha256\":null},{\"path\":\".sandbox/runs/run_701464a8-c0cc-4cf0-83b1-d6b9028ce408/receipts/ps-0-profile-input-csvs-attempt-2/postflight.json\",\"kind\":\"temp\",\"bytes\":null,\"checksum_sha256\":null},{\"path\":\"output/schema_profile2.json\",\"kind\":\"deliverable\",\"bytes\":null,\"checksum_sha256\":null},{\"path\":\"meta/mcp-tools/journal.ndjson\",\"kind\":\"temp\",\"bytes\":null,\"checksum_sha256\":null},{\"path\":\"meta/mcp-tools/calls.tar.gz\",\"kind\":\"temp\",\"bytes\":null,\"checksum_sha256\":null}],\"input_provenance\":[{\"type\":\"workspace_file\",\"path\":\"attachments/time_entries.csv\"},{\"type\":\"workspace_file\",\"path\":\"/workspace/input/attachments/time_entries.csv\"},{\"type\":\"workspace_file\",\"path\":\"attachments/rates.csv\"},{\"type\":\"workspace_file\",\"path\":\"/workspace/input/attachments/rates.csv\"},{\"type\":\"workspace_file\",\"path\":\"support/ps-0-profile-input-csvs/input_manifest.json\"},{\"type\":\"workspace_file\",\"path\":\"/workspace/meta/support/ps-0-profile-input-csvs/input_manifest.json\"},{\"type\":\"workspace_file\",\"path\":\"support/input_manifest.json\"},{\"type\":\"workspace_file\",\"path\":\"/workspace/meta/input_manifest.json\"},{\"type\":\"log\",\"path\":\".sandbox/runs/run_701464a8-c0cc-4cf0-83b1-d6b9028ce408/manifests/ps-0-profile-input-csvs-attempt-2/input_manifest.json\"},{\"type\":\"log\",\"path\":\".sandbox/runs/run_701464a8-c0cc-4cf0-83b1-d6b9028ce408/manifests/ps-0-profile-input-csvs-attempt-2/output_manifest.json\"},{\"type\":\"workspace_file\",\"path\":\"/workspace/meta/output_manifest.json\"},{\"type\":\"workspace_file\",\"path\":\"/workspace/meta/system-receipts/preflight.json\"},{\"type\":\"log\",\"path\":\".sandbox/runs/run_701464a8-c0cc-4cf0-83b1-d6b9028ce408/receipts/ps-0-profile-input-csvs-attempt-2/preflight.json\"},{\"type\":\"workspace_file\",\"path\":\"/workspace/meta/system-receipts/postflight.json\"},{\"type\":\"log\",\"path\":\".sandbox/runs/run_701464a8-c0cc-4cf0-83b1-d6b9028ce408/receipts/ps-0-profile-input-csvs-attempt-2/postflight.json\"},{\"type\":\"workspace_file\",\"path\":\"/workspace/output/schema_profile2.json\"},{\"type\":\"workspace_file\",\"path\":\"output/schema_profile2.json\"},{\"type\":\"workspace_file\",\"path\":\"/workspace/meta/mcp-tools/journal.ndjson\"},{\"type\":\"workspace_file\",\"path\":\"meta/mcp-tools/journal.ndjson\"},{\"type\":\"workspace_file\",\"path\":\"/workspace/meta/mcp-tools/calls.tar.gz\"},{\"type\":\"workspace_file\",\"path\":\"meta/mcp-tools/calls.tar.gz\"}],\"semantic_facts\":[\"Profile input CSVs finished with status=completed.\",\"Tool calls: 1.\",\"Artifacts: .sandbox/runs/run_701464a8-c0cc-4cf0-83b1-d6b9028ce408/manifests/ps-0-profile-input-csvs-attempt-2/input_manifest.json, .sandbox/runs/run_701464a8-c0cc-4cf0-83b1-d6b9028ce408/manifests/ps-0-profile-input-csvs-attempt-2/output_manifest.json, support/ps-0-profile-input-csvs/input_manifest.json.\",\"Observed resources: attachments/time_entries.csv, /workspace/input/attachments/time_entries.csv, attachments/rates.csv.\",\"Step acceptance criteria: output/schema_profile2.json is created as valid JSON; it contains profile results for both input CSVs; it reports 753 rows for attachments/time_entries.csv; it reports a numeric row count for attachments/rates.csv; and it explicitly records any schema mismatches, null findings, or type mismatches instead of silently correcting them.\",\"Artifacts created: .sandbox/runs/run_701464a8-c0cc-4cf0-83b1-d6b9028ce408/manifests/ps-0-profile-input-csvs-attempt-2/input_manifest.json, .sandbox/runs/run_701464a8-c0cc-4cf0-83b1-d6b9028ce408/manifests/ps-0-profile-input-csvs-attempt-2/output_manifest.json, support/ps-0-profile-input-csvs/input_manifest.json, support/input_manifest.json\",\"Observed resources: attachments/time_entries.csv, /workspace/input/attachments/time_entries.csv, attachments/rates.csv, /workspace/input/attachments/rates.csv\"],\"forbidden_assumptions\":[],\"next_step_hints\":[\"Use .sandbox/runs/run_701464a8-c0cc-4cf0-83b1-d6b9028ce408/manifests/ps-0-profile-input-csvs-attempt-2/input_manifest.json, .sandbox/runs/run_701464a8-c0cc-4cf0-83b1-d6b9028ce408/manifests/ps-0-profile-input-csvs-attempt-2/output_manifest.json, support/ps-0-profile-input-csvs/input_manifest.json as downstream inputs where relevant.\",\"Prefer the concrete observed resources over guessed paths.\"],\"presentation_intent\":null}",
+    "execution_evidence_json": "{\"contract_hash\":\"sha256:38976de33c09302d0a528a7a72a4d55af33c560216b9fc5d45e942a4f403c7b1\",\"backend_selected\":\"sandbox.session\",\"backend_reason\":\"compiled_code_contract\",\"predicted_backend\":\"sandbox.session\",\"final_backend\":\"sandbox.session\",\"routing_reason\":\"compiled_code_contract\",\"fallback_reason\":null,\"kernel_hash\":null,\"edge_runtime_evidence\":null,\"edge_wall_ms\":null,\"edge_bytes_in\":null,\"edge_bytes_out\":null,\"edge_gateway_calls\":null,\"edge_cache_mode\":null,\"edge_failover_count\":null,\"tools_used\":[{\"tool_id\":\"sandbox.session\",\"ok\":true,\"output_summary\":\"{\\\"_bookkeeping_summary\\\":true,\\\"_tool\\\":\\\"sandbox.session\\\",\\\"ok\\\":true,\\\"session_id\\\":\\\"sess-mntb19mx-hhxm5ldq\\\",\\\"container_id\\\":\\\"ec27dd5994f644d7df6090cad28cad89152b6d43cc7e2eef7d50efda91d6e48d:mntb1a2b:yg6pc5\\\",\\\"profile_id\\\":\\\"sbx_demo_research_browser_v1\\\",\\\"lease_id\\\":\\\"6f52696f-98dd-4f3d-98dc-d8ab8e33eef1\\\",\\\"halt_policy\\\":\\\"halt_on_error\\\",\\\"lease_type\\\":\\\"step\\\",\\\"total_steps\\\":13,\\\"completed_steps\\\":13,\\\"total_duration_ms\\\":81555,\\\"step_preview\\\":[{\\\"step_index\\\":0,\\\"label\\\":\\\"prepare-compiled-workspace\\\",\\\"type\\\":\\\"shell\\\",\\\"ok\\\":true,\\\"exit_code\\\":0,\\\"duration_ms\\\":10616},{\\\"step_index\\\":1,\\\"label\\\":\\\"materialize-compiled-inputs\\\",\\\"type\\\":\\\"materialize\\\",\\\"ok\\\":true,\\\"exit_code\\\":0,\\\"duration_ms\\\":2219},{\\\"step_index\\\":2,\\\"label\\\":\\\"project-compiled-input-paths\\\",\\\"type\\\":\\\"shell\\\",\\\"ok\\\":true,\\\"exit_code\\\":0,\\\"duration_ms\\\":2341},{\\\"step_index\\\":3,\\\"label\\\":\\\"generate-preflight-receipt\\\",\\\"type\\\":\\\"python\\\",\\\"ok\\\":true,\\\"exit_code\\\":0,\\\"duration_ms\\\":11698},{\\\"step_index\\\":4,\\\"label\\\":\\\"persist-preflight-receipt\\\",\\\"type\\\":\\\"persist\\\",\\\"ok\\\":true,\\\"exit_code\\\":0,\\\"duration_ms\\\":1480},{\\\"step_index\\\":5,\\\"label\\\":\\\"verify-preflight-required-inputs\\\",\\\"type\\\":\\\"python\\\",\\\"ok\\\":true,\\\"exit_code\\\":0,\\\"duration_ms\\\":11000},{\\\"step_index\\\":6,\\\"label\\\":\\\"Profile CSVs and write JSON\\\",\\\"type\\\":\\\"python\\\",\\\"ok\\\":true,\\\"exit_code\\\":0,\\\"duration_ms\\\":11266},{\\\"step_index\\\":7,\\\"label\\\":\\\"generate-postflight-receipt\\\",\\\"type\\\":\\\"python\\\",\\\"ok\\\":true,\\\"exit_code\\\":0,\\\"duration_ms\\\":11310}],\\\"failed_step\\\":{\\\"step_index\\\":12,\\\"label\\\":\\\"persist-mcp-mirror\\\",\\\"type\\\":\\\"persist\\\",\\\"ok\\\":true,\\\"exit_code\\\":0,\\\"duration_ms\\\":4807},\\\"persisted_paths\\\":[\\\".sandbox/runs/run_701464a8-c0cc-4cf0-83b1-d6b9028ce408/receipts/ps-0-profile-input-csvs-attempt-2/preflight.json\\\",\\\".sandbox/runs/run_701464a8-c0cc-4cf0-83b1-d6b9028ce408/receipts/ps-0-profile-input-csvs-attempt-2/postflight.json\\\",\\\"output/schema_profile2.json\\\",\\\"meta/mcp-tools/journal.ndjson\\\",\\\"meta/mcp-tools/calls.tar.gz\\\"],\\\"persisted_count\\\":5,\\\"materialized_paths\\\":[\\\"attachments/time_entries.csv\\\",\\\"attachments/rates.csv\\\",\\\"support/ps-0-profile-input-csvs/input_manifest.json\\\",\\\"support/input_manifest.json\\\",\\\".sandbox/runs/run_701464a8-c0cc-4cf0-83b1-d6b9028ce408/manifests/ps-0-profile-input-csvs-attempt-2/input_manifest.json\\\",\\\".sandbox/runs/run_701464a8-c0cc-4cf0-83b1-d6b9028ce408/manifests/ps-0-profile-input-csvs-attempt-2/output_manifest.json\\\"],\\\"materialized_count\\\":6}\",\"duration_ms\":88686,\"observed_resource_refs\":[{\"type\":\"workspace_file\",\"path\":\"attachments/time_entries.csv\"},{\"type\":\"workspace_file\",\"path\":\"/workspace/input/attachments/time_entries.csv\"},{\"type\":\"workspace_file\",\"path\":\"attachments/rates.csv\"},{\"type\":\"workspace_file\",\"path\":\"/workspace/input/attachments/rates.csv\"},{\"type\":\"workspace_file\",\"path\":\"support/ps-0-profile-input-csvs/input_manifest.json\"},{\"type\":\"workspace_file\",\"path\":\"/workspace/meta/support/ps-0-profile-input-csvs/input_manifest.json\"},{\"type\":\"workspace_file\",\"path\":\"support/input_manifest.json\"},{\"type\":\"workspace_file\",\"path\":\"/workspace/meta/input_manifest.json\"},{\"type\":\"log\",\"path\":\".sandbox/runs/run_701464a8-c0cc-4cf0-83b1-d6b9028ce408/manifests/ps-0-profile-input-csvs-attempt-2/input_manifest.json\"},{\"type\":\"log\",\"path\":\".sandbox/runs/run_701464a8-c0cc-4cf0-83b1-d6b9028ce408/manifests/ps-0-profile-input-csvs-attempt-2/output_manifest.json\"},{\"type\":\"workspace_file\",\"path\":\"/workspace/meta/output_manifest.json\"},{\"type\":\"workspace_file\",\"path\":\"/workspace/meta/system-receipts/preflight.json\"},{\"type\":\"log\",\"path\":\".sandbox/runs/run_701464a8-c0cc-4cf0-83b1-d6b9028ce408/receipts/ps-0-profile-input-csvs-attempt-2/preflight.json\"},{\"type\":\"workspace_file\",\"path\":\"/workspace/meta/system-receipts/postflight.json\"},{\"type\":\"log\",\"path\":\".sandbox/runs/run_701464a8-c0cc-4cf0-83b1-d6b9028ce408/receipts/ps-0-profile-input-csvs-attempt-2/postflight.json\"},{\"type\":\"workspace_file\",\"path\":\"/workspace/output/schema_profile2.json\"},{\"type\":\"workspace_file\",\"path\":\"output/schema_profile2.json\"},{\"type\":\"workspace_file\",\"path\":\"/workspace/meta/mcp-tools/journal.ndjson\"},{\"type\":\"workspace_file\",\"path\":\"meta/mcp-tools/journal.ndjson\"},{\"type\":\"workspace_file\",\"path\":\"/workspace/meta/mcp-tools/calls.tar.gz\"},{\"type\":\"workspace_file\",\"path\":\"meta/mcp-tools/calls.tar.gz\"}],\"input_source_code\":\"import os, json\\nfrom pathlib import Path\\nimport pandas as pd\\n\\ninput_specs = [\\n    {\\n        \\\"path\\\": \\\"/workspace/input/attachments/time_entries.csv\\\",\\n        \\\"logical_path\\\": \\\"attachments/time_entries.csv\\\",\\n        \\\"declared_columns\\\": [\\n            \\\"time_entry_id\\\", \\\"employee_id\\\", \\\"contract_ref\\\", \\\"work_date\\\",\\n            \\\"hours_logged\\\", \\\"billed_rate\\\", \\\"billed_amount\\\", \\\"invoice_id\\\", \\\"project_code\\\"\\n        ],\\n        \\\"type_expectations\\\": {\\n            \\\"work_date\\\": \\\"date\\\",\\n            \\\"hours_logged\\\": \\\"numeric\\\",\\n            \\\"billed_rate\\\": \\\"numeric\\\",\\n            \\\"billed_amount\\\": \\\"numeric\\\",\\n        },\\n    },\\n    {\\n        \\\"path\\\": \\\"/workspace/input/attachments/rates.csv\\\",\\n        \\\"logical_path\\\": \\\"attachments/rates.csv\\\",\\n        \\\"declared_columns\\\": [\\n            \\\"contract_id\\\", \\\"role_code\\\", \\\"hourly_rate\\\", \\\"effective_date\\\", \\\"expiration_date\\\"\\n        ],\\n        \\\"type_expectations\\\": {\\n            \\\"hourly_rate\\\": \\\"numeric\\\",\\n            \\\"effective_date\\\": \\\"date\\\",\\n            \\\"expiration_date\\\": \\\"date\\\",\\n        },\\n    },\\n]\\n\\nNULL_TOKENS = {\\\"\\\", \\\"null\\\", \\\"none\\\", \\\"nan\\\", \\\"na\\\"}\\n\\ndef read_csv(path: str) -> pd.DataFrame:\\n    print(f\\\"Loading {path}...\\\", flush=True)\\n    try:\\n        return pd.read_csv(path, dtype=str, keep_default_na=False)\\n    except Exception as e:\\n        raise RuntimeError(f\\\"Failed to read CSV {path}: {e}\\\") from e\\n\\n\\ndef null_mask(series: pd.Series) -> pd.Series:\\n    s = series.astype(\\\"string\\\")\\n    stripped = s.str.strip()\\n    lowered = stripped.str.lower()\\n    return stripped.eq(\\\"\\\") | lowered.isin(NULL_TOKENS)\\n\\n\\ndef sample_invalid(values: pd.Series, limit: int = 5):\\n    vals = values.astype(\\\"string\\\").str.strip()\\n    vals = vals[vals.ne(\\\"\\\")]\\n    return [v for v in vals.head(limit).tolist()]\\n\\nprofiles = []\\nfor spec in input_specs:\\n    df = read_csv(spec[\\\"path\\\"])\\n    observed_columns = list(df.columns)\\n    row_count = int(len(df))\\n\\n    missing_columns = [c for c in spec[\\\"declared_columns\\\"] if c not in observed_columns]\\n    extra_columns = [c for c in observed_columns if c not in spec[\\\"declared_columns\\\"]]\\n    ordered_match = observed_columns == spec[\\\"declared_columns\\\"]\\n    schema_status = \\\"match\\\" if not missing_columns and not extra_columns and ordered_match else \\\"mismatch\\\"\\n\\n    schema_validation = {\\n        \\\"status\\\": schema_status,\\n        \\\"declared_columns\\\": spec[\\\"declared_columns\\\"],\\n        \\\"observed_columns\\\": observed_columns,\\n        \\\"missing_columns\\\": missing_columns,\\n        \\\"extra_columns\\\": extra_columns,\\n        \\\"ordered_match\\\": ordered_match,\\n    }\\n\\n    null_findings = []\\n    for col in observed_columns:\\n        mask = null_mask(df[col])\\n        null_count = int(mask.sum())\\n        null_findings.append({\\n            \\\"column\\\": col,\\n            \\\"null_count\\\": null_count,\\n            \\\"status\\\": \\\"has_nulls\\\" if null_count > 0 else \\\"clean\\\",\\n            \\\"null_rate\\\": round(null_count / row_count, 6) if row_count else 0.0,\\n        })\\n\\n    type_mismatch_findings = []\\n    for col, expected_type in spec[\\\"type_expectations\\\"].items():\\n        if col not in df.columns:\\n            type_mismatch_findings.append({\\n                \\\"column\\\": col,\\n                \\\"expected_type\\\": expected_type,\\n                \\\"status\\\": \\\"missing_column\\\",\\n                \\\"non_null_count\\\": None,\\n                \\\"invalid_count\\\": None,\\n                \\\"sample_invalid_values\\\": [],\\n            })\\n            continue\\n\\n        mask = null_mask(df[col])\\n        non_null = df.loc[~mask, col]\\n        if expected_type == \\\"numeric\\\":\\n            parsed = pd.to_numeric(non_null, errors=\\\"coerce\\\")\\n            invalid_mask = parsed.isna()\\n        elif expected_type == \\\"date\\\":\\n            parsed = pd.to_datetime(non_null, errors=\\\"coerce\\\")\\n            invalid_mask = parsed.isna()\\n        else:\\n            invalid_mask = pd.Series([False] * len(non_null), index=non_null.index)\\n\\n        invalid_count = int(invalid_mask.sum())\\n        type_mismatch_findings.append({\\n            \\\"column\\\": col,\\n            \\\"expected_type\\\": expected_type,\\n            \\\"status\\\": \\\"mismatch\\\" if invalid_count > 0 else \\\"ok\\\",\\n            \\\"non_null_count\\\": int(non_null.shape[0]),\\n            \\\"invalid_count\\\": invalid_count,\\n            \\\"sample_invalid_values\\\": sample_invalid(non_null[invalid_mask]),\\n        })\\n\\n    profiles.append({\\n        \\\"path\\\": spec[\\\"logical_path\\\"],\\n        \\\"row_count\\\": row_count,\\n        \\\"schema_validation\\\": schema_validation,\\n        \\\"null_findings\\\": null_findings,\\n        \\\"type_mismatch_findings\\\": type_mismatch_findings,\\n    })\\n\\nprofile = {\\\"files\\\": profiles}\\n\\nout_path = Path(\\\"/workspace/output/schema_profile2.json\\\")\\nout_path.parent.mkdir(parents=True, exist_ok=True)\\nprint(f\\\"Writing {out_path}...\\\", flush=True)\\nwith out_path.open(\\\"w\\\", encoding=\\\"utf-8\\\") as f:\\n    json.dump(profile, f, ensure_ascii=False, indent=2)\\n    f.write(\\\"\\\\n\\\")\\n\\n# verify output exists and is non-empty and valid JSON\\nsize = out_path.stat().st_size\\nassert size > 0, \\\"output/schema_profile2.json was written but is empty\\\"\\nwith out_path.open(\\\"r\\\", encoding=\\\"utf-8\\\") as f:\\n    loaded = json.load(f)\\nassert isinstance(loaded, dict), f\\\"Expected top-level JSON object, got {type(loaded).__name__}\\\"\\nassert \\\"files\\\" in loaded and len(loaded[\\\"files\\\"]) == 2, \\\"Profile must include both files\\\"\\nprint(json.dumps({\\n    \\\"verification\\\": {\\n        \\\"path\\\": str(out_path),\\n        \\\"exists\\\": out_path.exists(),\\n        \\\"size_bytes\\\": size,\\n        \\\"files_profiled\\\": [item[\\\"path\\\"] for item in loaded[\\\"files\\\"]],\\n        \\\"row_counts\\\": {item[\\\"path\\\"]: item[\\\"row_count\\\"] for item in loaded[\\\"files\\\"]},\\n    }\\n}, indent=2), flush=True)\\n\",\"input_language\":\"python\"}],\"artifacts_written\":[{\"path\":\".sandbox/runs/run_701464a8-c0cc-4cf0-83b1-d6b9028ce408/manifests/ps-0-profile-input-csvs-attempt-2/input_manifest.json\",\"kind\":\"temp\",\"from_tool\":\"sandbox.session\",\"bytes\":1221,\"mime\":\"application/json\",\"checksum_sha256\":null},{\"path\":\".sandbox/runs/run_701464a8-c0cc-4cf0-83b1-d6b9028ce408/manifests/ps-0-profile-input-csvs-attempt-2/output_manifest.json\",\"kind\":\"temp\",\"from_tool\":\"sandbox.session\",\"bytes\":1422,\"mime\":\"application/json\",\"checksum_sha256\":null},{\"path\":\"support/ps-0-profile-input-csvs/input_manifest.json\",\"kind\":\"temp\",\"from_tool\":\"sandbox.session\",\"bytes\":1221,\"mime\":\"application/json\",\"checksum_sha256\":null},{\"path\":\"support/input_manifest.json\",\"kind\":\"temp\",\"from_tool\":\"sandbox.session\",\"bytes\":1221,\"mime\":\"application/json\",\"checksum_sha256\":null},{\"path\":\".sandbox/runs/run_701464a8-c0cc-4cf0-83b1-d6b9028ce408/receipts/ps-0-profile-input-csvs-attempt-2/preflight.json\",\"kind\":\"temp\",\"from_tool\":\"sandbox.session\",\"bytes\":null,\"mime\":null,\"checksum_sha256\":null},{\"path\":\".sandbox/runs/run_701464a8-c0cc-4cf0-83b1-d6b9028ce408/receipts/ps-0-profile-input-csvs-attempt-2/postflight.json\",\"kind\":\"temp\",\"from_tool\":\"sandbox.session\",\"bytes\":null,\"mime\":null,\"checksum_sha256\":null},{\"path\":\"output/schema_profile2.json\",\"kind\":\"deliverable\",\"from_tool\":\"sandbox.session\",\"bytes\":null,\"mime\":null,\"checksum_sha256\":null},{\"path\":\"meta/mcp-tools/journal.ndjson\",\"kind\":\"temp\",\"from_tool\":\"sandbox.session\",\"bytes\":null,\"mime\":null,\"checksum_sha256\":null},{\"path\":\"meta/mcp-tools/calls.tar.gz\",\"kind\":\"temp\",\"from_tool\":\"sandbox.session\",\"bytes\":null,\"mime\":null,\"checksum_sha256\":null}],\"model_response_text\":\"\",\"total_tool_calls\":1,\"total_duration_ms\":184581}",
+    "materialized_input_paths": [
+      {
+        "ref_id": "ps-0-profile-input-csvs:input:0:time-entries",
+        "runtime_path": "/workspace/input/attachments/time_entries.csv",
+        "workspace_path": "attachments/time_entries.csv"
+      },
+      {
+        "ref_id": "ps-0-profile-input-csvs:input:1:rates",
+        "runtime_path": "/workspace/input/attachments/rates.csv",
+        "workspace_path": "attachments/rates.csv"
+      }
+    ],
+    "compiled_step_contract_v1": {
+      "role": "ai_autonomous_worker",
+      "inputs": [],
+      "outputs": [],
+      "purpose": "STEP NATURE: DETERMINISTIC\n\nCONTRACT (MUST):\n* Inputs: attachments/time_entries.csv and attachments/rates.csv.\n* Outputs: Write output/schema_profile2.json as a valid JSON profile covering both CSV files. The profile MUST validate the observed headers against the declared columns, count rows for each file, and flag nulls or type mismatches without correcting source data.\n* Acceptance checks: output/schema_profile2.json exists; is valid JSON; includes findings for both attachments/time_entries.csv and attachments/rates.csv; records time_entries row count as 753; records a numeric row count for rates.csv; and includes schema-validation, null, and type-mismatch findings.\n* Constraints / non-goals: Do not modify source files. Do not clean, correct, enrich, or join data in this step. Produce only the requested profile file.\n* Interfaces / invariants: Preserve source file identity exactly. No field-level schema has been declared for this artifact. Inspect the real data you read or fetch, choose the smallest coherent set of fields that best satisfies the user's request, and use that same schema consistently for every record or object you write. The artifact shape you materialize is what downstream steps will observe and rely on, so do not let the schema drift once chosen.\n\nGUIDANCE (SHOULD):\n* Preferred stack/tools: Use deterministic CSV parsing and JSON serialization.\n* Preferred patterns: Validate headers first, then row counts, then per-column null and type analysis.\n* Efficiency / reliability hints: Fail loudly on unreadable or malformed input files; record findings rather than repairing data.\n\nCREATIVE BRIEF (SHOULD when user gave explicit creative direction, MAY otherwise):\n* Look/feel/tone: Minimal machine-readable JSON.\n* Stylistic constraints or preferences: No prose report, no visualization, no extra deliverables.\n* Optional polish (must not expand scope): Stable ordering of file sections and findings.",
+      "step_id": "ps-0-profile-input-csvs",
+      "compiler_decisions": {
+        "warnings": [],
+        "compatibility_status": "compatible"
+      }
+    },
+    "materialized_output_paths": [
+      {
+        "ref_id": "ps-0-profile-input-csvs:output:0:schema-profile2",
+        "runtime_path": "/workspace/output/schema_profile2.json",
+        "workspace_path": "output/schema_profile2.json"
+      },
+      {
+        "ref_id": "ps-0-profile-input-csvs:output:1:step-result",
+        "runtime_path": "/workspace/output/step_result.json",
+        "workspace_path": "output/step_result.json"
+      },
+      {
+        "ref_id": "ps-0-profile-input-csvs:output:2:journal",
+        "runtime_path": "/workspace/meta/mcp-tools/journal.ndjson",
+        "workspace_path": "meta/mcp-tools/journal.ndjson"
+      },
+      {
+        "ref_id": "ps-0-profile-input-csvs:output:3:calls-tar",
+        "runtime_path": "/workspace/meta/mcp-tools/calls.tar.gz",
+        "workspace_path": "meta/mcp-tools/calls.tar.gz"
+      }
+    ],
+    "skill_binding_expectation": {
+      "skill_usage_mode": "none",
+      "custom_code_scope": [
+        "csv_parse",
+        "schema_validation",
+        "row_counting",
+        "null_and_type_checks",
+        "json_serialization",
+        "durable_file_write"
+      ],
+      "custom_code_allowed": true
+    },
+    "__rtShadowPreparing": false
+  },
+  {
+    "label": "Join entries to rates",
+    "status": "completed",
+    "step_id": "ps-1-join-entries-to-rates",
+    "attempts": 1,
+    "ended_at": 1775849874442,
+    "artifacts": [],
+    "step_hash": "sha256:d58e5f69a69e37629005484248065ad0242062a70e5406f24016365da0a2ac1e",
+    "step_kind": "code_task",
+    "depends_on": [
+      "ps-0-profile-input-csvs"
+    ],
+    "started_at": 1775849754990,
+    "step_index": 1,
+    "kernel_hash": null,
+    "step_nature": "DETERMINISTIC",
+    "total_steps": 2,
+    "contract_hash": "sha256:d58e5f69a69e37629005484248065ad0242062a70e5406f24016365da0a2ac1e",
+    "final_backend": "sandbox.session",
+    "repair_policy": {
+      "strategy": "retry_same_contract",
+      "max_retries": 6,
+      "block_on_missing_inputs": true,
+      "immutable_output_bindings": true
+    },
+    "execution_mode": "code",
+    "routing_reason": "compiled_code_contract",
+    "artifact_inputs": [],
+    "execution_hints": null,
+    "fallback_reason": null,
+    "validator_rules": {
+      "fail_on_missing_outputs": true,
+      "require_declared_outputs": true,
+      "require_input_artifact_refs": true,
+      "enforce_compiled_output_bindings": true
+    },
+    "allowed_tool_ids": [
+      "sandbox.session"
+    ],
+    "artifact_outputs": [
+      "output/joined_entries2.json",
+      "output/step_result.json"
+    ],
+    "expected_outputs": [
+      {
+        "path": "output/joined_entries2.json",
+        "role": "joined dataset",
+        "location": "workspace"
+      },
+      {
+        "path": "output/step_result.json",
+        "role": "meta",
+        "location": "sandbox"
+      }
+    ],
+    "input_file_paths": [
+      "attachments/time_entries.csv",
+      "attachments/rates.csv",
+      "output/schema_profile2.json"
+    ],
+    "success_criteria": "output/joined_entries2.json is created as valid JSON; the join uses contract_ref = contract_id; the step reads output/schema_profile2.json before joining; and every emitted joined row includes a boolean rate_match field equal to whether billed_rate matches hourly_rate.",
+    "execution_backend": "sandbox.session",
+    "execution_pattern": "single_shot_artifact_production",
+    "observations_text": "STEP NATURE: DETERMINISTIC\n\nCONTRACT (MUST):\n* Inputs: attachments/time_entries.csv, attachments/rates.csv, and output/schema_profile2.json from the prior step.\n* Outputs: Write output/joined_entries2.json as a valid JSON joined dataset produced by joining time_entries to rates on contract_ref = contract_id. For each joined row, include a boolean field rate_match computed as billed_rate == hourly_rate. Do not apply any extra matching logic beyond the specified equality join.\n* Acceptance checks: output/joined_entries2.json exists; is valid JSON; represents the joined dataset only; every output row comes from the specified join condition; and every joined row contains rate_match with boolean true or false based on billed_rate versus hourly_rate.\n* Constraints / non-goals: Do not modify source files. Do not repair mismatched rates. Do not produce reports, corrections, or extra files. Do not infer additional join predicates such as date-range filtering unless they are explicitly present in the user's instruction.\n* Interfaces / invariants: Use output/schema_profile2.json to confirm the required join columns are available before joining. Treat the output as a consolidated JSON dataset with one consistent row shape. No field-level schema has been declared for this artifact. Inspect the real data you read or fetch, choose the smallest coherent set of fields that best satisfies the user's request, and use that same schema consistently for every record or object you write. The artifact shape you materialize is what downstream steps will observe and rely on, so do not let the schema drift once chosen.\n\nGUIDANCE (SHOULD):\n* Preferred stack/tools: Use deterministic CSV parsing and JSON serialization.\n* Preferred patterns: Validate required join columns from the profile, perform the explicit equality join, then derive rate_match per joined row.\n* Efficiency / reliability hints: Fail loudly if required columns are missing or unreadable; do not silently coerce an unusable join.\n\nCREATIVE BRIEF (SHOULD when user gave explicit creative direction, MAY otherwise):\n* Look/feel/tone: Plain machine-readable JSON dataset.\n* Stylistic constraints or preferences: No narrative wrapper, no analytics summary, no extra formatting.\n* Optional polish (must not expand scope): Stable key ordering per row.",
+    "predicted_backend": "sandbox.session",
+    "current_attempt_id": "attempt_706323b4-8f04-472e-95b8-49db01005120",
+    "execution_contract": {
+      "pattern": "single_shot_artifact_production",
+      "step_nature": "DETERMINISTIC",
+      "repair_strategy": "replace_prior_script_on_primary_output_failure",
+      "timeout_ceiling_ms": 1800000,
+      "allowed_tool_call_count": 3
+    },
+    "input_artifact_refs": [
+      {
+        "kind": "workspace_file",
+        "path": "attachments/time_entries.csv",
+        "ref_id": "ps-1-join-entries-to-rates:input:0:time-entries",
+        "logical_name": "time-entries"
+      },
+      {
+        "kind": "workspace_file",
+        "path": "attachments/rates.csv",
+        "ref_id": "ps-1-join-entries-to-rates:input:1:rates",
+        "logical_name": "rates"
+      },
+      {
+        "kind": "workspace_file",
+        "path": "output/schema_profile2.json",
+        "ref_id": "ps-1-join-entries-to-rates:input:2:schema-profile2",
+        "logical_name": "schema-profile2"
+      }
+    ],
+    "output_artifact_refs": [
+      {
+        "kind": "artifact",
+        "path": "output/joined_entries2.json",
+        "ref_id": "ps-1-join-entries-to-rates:output:0:joined-entries2",
+        "logical_name": "joined-entries2"
+      },
+      {
+        "kind": "artifact",
+        "path": "output/step_result.json",
+        "ref_id": "ps-1-join-entries-to-rates:output:1:step-result",
+        "logical_name": "step-result"
+      }
+    ],
+    "sandbox_mcp_contract": null,
+    "recommended_skill_ids": [
+      "skill.system.sandbox",
+      "skill.data.transform"
+    ],
+    "required_capabilities": [
+      "csv join",
+      "schema-aware transformation",
+      "boolean derivation",
+      "json serialization"
+    ],
+    "suggested_skills_json": null,
+    "executable_contract_v2": {
+      "step_id": "ps-1-join-entries-to-rates",
+      "step_kind": "code_task",
+      "provenance": {
+        "finalized_at_ms": 0,
+        "dependency_policy": "declared-closure-committed-output-normalized",
+        "compiled_step_hash": "sha256:d58e5f69a69e37629005484248065ad0242062a70e5406f24016365da0a2ac1e"
+      },
+      "step_label": "Join entries to rates",
+      "kernel_hash": null,
+      "step_inputs": [
+        {
+          "kind": "workspace_file",
+          "ref_id": "ps-1-join-entries-to-rates:input:0:time-entries",
+          "must_exist": true,
+          "logical_path": "attachments/time_entries.csv",
+          "runtime_path": "/workspace/input/attachments/time_entries.csv",
+          "workspace_path": "attachments/time_entries.csv"
+        },
+        {
+          "kind": "workspace_file",
+          "ref_id": "ps-1-join-entries-to-rates:input:1:rates",
+          "must_exist": true,
+          "logical_path": "attachments/rates.csv",
+          "runtime_path": "/workspace/input/attachments/rates.csv",
+          "workspace_path": "attachments/rates.csv"
+        },
+        {
+          "kind": "workspace_file",
+          "ref_id": "ps-1-join-entries-to-rates:input:2:schema-profile2",
+          "must_exist": true,
+          "logical_path": "output/schema_profile2.json",
+          "runtime_path": "/workspace/input/output/schema_profile2.json",
+          "workspace_path": "output/schema_profile2.json"
+        }
+      ],
+      "step_outputs": [
+        {
+          "role": "primary",
+          "ref_id": "ps-1-join-entries-to-rates:output:0:joined-entries2",
+          "location": "workspace",
+          "required": true,
+          "logical_path": "output/joined_entries2.json",
+          "runtime_path": "/workspace/output/joined_entries2.json",
+          "workspace_path": "output/joined_entries2.json"
+        }
+      ],
+      "contract_hash": "sha256:d58e5f69a69e37629005484248065ad0242062a70e5406f24016365da0a2ac1e",
+      "final_backend": "sandbox.session",
+      "repair_policy": {
+        "strategy": "retry_same_contract",
+        "max_retries": 6,
+        "block_on_missing_inputs": true,
+        "immutable_output_bindings": true
+      },
+      "execution_mode": "code",
+      "routing_reason": "compiled_code_contract",
+      "support_inputs": [
+        {
+          "location": "sandbox",
+          "required": true,
+          "logical_path": "support/ps-1-join-entries-to-rates/input_manifest.json",
+          "runtime_path": "/workspace/meta/support/ps-1-join-entries-to-rates/input_manifest.json",
+          "support_kind": "input_manifest",
+          "workspace_path": "support/ps-1-join-entries-to-rates/input_manifest.json"
+        },
+        {
+          "location": "sandbox",
+          "required": true,
+          "logical_path": "support/input_manifest.json",
+          "runtime_path": "/workspace/meta/input_manifest.json",
+          "support_kind": "input_manifest",
+          "workspace_path": "support/input_manifest.json"
+        }
+      ],
+      "fallback_reason": null,
+      "support_outputs": [
+        {
+          "role": "auxiliary",
+          "location": "sandbox",
+          "required": true,
+          "logical_path": "output/step_result.json",
+          "runtime_path": "/workspace/output/step_result.json",
+          "support_kind": "system_artifact",
+          "workspace_path": "output/step_result.json"
+        }
+      ],
+      "validator_rules": {
+        "fail_on_missing_outputs": true,
+        "require_declared_outputs": true,
+        "require_input_artifact_refs": true,
+        "enforce_compiled_output_bindings": true
+      },
+      "allowed_tool_ids": [
+        "sandbox.session"
+      ],
+      "contract_version": 2,
+      "execution_policy": {
+        "pattern": "single_shot_artifact_production",
+        "step_nature": "DETERMINISTIC",
+        "repair_strategy": "replace_prior_script_on_primary_output_failure",
+        "timeout_ceiling_ms": 1800000,
+        "allowed_tool_call_count": 3
+      },
+      "execution_backend": "sandbox.session",
+      "predicted_backend": "sandbox.session"
+    },
+    "materialized_input_paths": [
+      {
+        "ref_id": "ps-1-join-entries-to-rates:input:0:time-entries",
+        "runtime_path": "/workspace/input/attachments/time_entries.csv",
+        "workspace_path": "attachments/time_entries.csv"
+      },
+      {
+        "ref_id": "ps-1-join-entries-to-rates:input:1:rates",
+        "runtime_path": "/workspace/input/attachments/rates.csv",
+        "workspace_path": "attachments/rates.csv"
+      },
+      {
+        "ref_id": "ps-1-join-entries-to-rates:input:2:schema-profile2",
+        "runtime_path": "/workspace/input/output/schema_profile2.json",
+        "workspace_path": "output/schema_profile2.json"
+      }
+    ],
+    "compiled_step_contract_v1": {
+      "role": "ai_autonomous_worker",
+      "inputs": [],
+      "outputs": [],
+      "purpose": "STEP NATURE: DETERMINISTIC\n\nCONTRACT (MUST):\n* Inputs: attachments/time_entries.csv, attachments/rates.csv, and output/schema_profile2.json from the prior step.\n* Outputs: Write output/joined_entries2.json as a valid JSON joined dataset produced by joining time_entries to rates on contract_ref = contract_id. For each joined row, include a boolean field rate_match computed as billed_rate == hourly_rate. Do not apply any extra matching logic beyond the specified equality join.\n* Acceptance checks: output/joined_entries2.json exists; is valid JSON; represents the joined dataset only; every output row comes from the specified join condition; and every joined row contains rate_match with boolean true or false based on billed_rate versus hourly_rate.\n* Constraints / non-goals: Do not modify source files. Do not repair mismatched rates. Do not produce reports, corrections, or extra files. Do not infer additional join predicates such as date-range filtering unless they are explicitly present in the user's instruction.\n* Interfaces / invariants: Use output/schema_profile2.json to confirm the required join columns are available before joining. Treat the output as a consolidated JSON dataset with one consistent row shape. No field-level schema has been declared for this artifact. Inspect the real data you read or fetch, choose the smallest coherent set of fields that best satisfies the user's request, and use that same schema consistently for every record or object you write. The artifact shape you materialize is what downstream steps will observe and rely on, so do not let the schema drift once chosen.\n\nGUIDANCE (SHOULD):\n* Preferred stack/tools: Use deterministic CSV parsing and JSON serialization.\n* Preferred patterns: Validate required join columns from the profile, perform the explicit equality join, then derive rate_match per joined row.\n* Efficiency / reliability hints: Fail loudly if required columns are missing or unreadable; do not silently coerce an unusable join.\n\nCREATIVE BRIEF (SHOULD when user gave explicit creative direction, MAY otherwise):\n* Look/feel/tone: Plain machine-readable JSON dataset.\n* Stylistic constraints or preferences: No narrative wrapper, no analytics summary, no extra formatting.\n* Optional polish (must not expand scope): Stable key ordering per row.",
+      "step_id": "ps-1-join-entries-to-rates",
+      "dependencies": [
+        "ps-0-profile-input-csvs"
+      ],
+      "compiler_decisions": {
+        "warnings": [],
+        "compatibility_status": "compatible"
+      }
+    },
+    "materialized_output_paths": [
+      {
+        "ref_id": "ps-1-join-entries-to-rates:output:0:joined-entries2",
+        "runtime_path": "/workspace/output/joined_entries2.json",
+        "workspace_path": "output/joined_entries2.json"
+      },
+      {
+        "ref_id": "ps-1-join-entries-to-rates:output:1:step-result",
+        "runtime_path": "/workspace/output/step_result.json",
+        "workspace_path": "output/step_result.json"
+      }
+    ],
+    "skill_binding_expectation": {
+      "primary_skill_id": "skill.system.sandbox",
+      "skill_usage_mode": "script_preferred",
+      "custom_code_scope": [
+        "CSV parsing",
+        "equality join",
+        "rate_match derivation",
+        "JSON serialization",
+        "output validation"
+      ],
+      "optional_purposes": [
+        "stable_key_ordering",
+        "row_count_check"
+      ],
+      "required_purposes": [
+        "read_inputs",
+        "parse_csv",
+        "join_rows",
+        "write_json_output",
+        "validate_schema_columns"
+      ],
+      "custom_code_allowed": true
+    },
+    "__rtShadowPreparing": false
+  }
+]

@@ -1,0 +1,74 @@
+[
+  {
+    "invoice_id": "INV-2026-001",
+    "correction_amount": 400.0,
+    "reason_code": "RATE_OVERCHARGE",
+    "evidence_refs": [
+      "TE-DISC-001"
+    ],
+    "status": "rejected",
+    "approval_required": false,
+    "rejection_reason": "exceeds_max_correction",
+    "invoice_status": "open"
+  },
+  {
+    "invoice_id": "INV-2026-002",
+    "correction_amount": 370.0,
+    "reason_code": "AMOUNT_MISMATCH",
+    "evidence_refs": [
+      "TE-DISC-003"
+    ],
+    "status": "rejected",
+    "approval_required": false,
+    "rejection_reason": "exceeds_max_correction",
+    "invoice_status": "open"
+  },
+  {
+    "invoice_id": "INV-2026-002",
+    "correction_amount": 1000.0,
+    "reason_code": "RATE_OVERCHARGE",
+    "evidence_refs": [
+      "TE-DISC-010"
+    ],
+    "status": "rejected",
+    "approval_required": false,
+    "rejection_reason": "exceeds_max_correction",
+    "invoice_status": "open"
+  },
+  {
+    "invoice_id": "INV-2026-004",
+    "correction_amount": 400.0,
+    "reason_code": "RATE_OVERCHARGE",
+    "evidence_refs": [
+      "TE-DISC-009"
+    ],
+    "status": "rejected",
+    "approval_required": false,
+    "rejection_reason": "invoice_locked",
+    "invoice_status": "paid_locked"
+  },
+  {
+    "invoice_id": "INV-2026-005",
+    "correction_amount": 300.0,
+    "reason_code": "AMOUNT_MISMATCH",
+    "evidence_refs": [
+      "TE-DISC-004"
+    ],
+    "status": "rejected",
+    "approval_required": false,
+    "rejection_reason": "exceeds_max_correction",
+    "invoice_status": "open"
+  },
+  {
+    "invoice_id": "INV-2026-006",
+    "correction_amount": 360.0,
+    "reason_code": "RATE_OVERCHARGE",
+    "evidence_refs": [
+      "TE-DISC-002"
+    ],
+    "status": "rejected",
+    "approval_required": false,
+    "rejection_reason": "exceeds_max_correction",
+    "invoice_status": "open"
+  }
+]

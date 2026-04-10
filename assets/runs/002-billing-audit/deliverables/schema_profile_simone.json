@@ -1,0 +1,281 @@
+[
+  {
+    "filename": "attachments/time_entries.csv",
+    "row_count": 753,
+    "columns": [
+      {
+        "name": "time_entry_id",
+        "inferred_type": "string",
+        "null_count": 0,
+        "distinct_count": 753
+      },
+      {
+        "name": "employee_id",
+        "inferred_type": "string",
+        "null_count": 0,
+        "distinct_count": 7
+      },
+      {
+        "name": "contract_ref",
+        "inferred_type": "string",
+        "null_count": 0,
+        "distinct_count": 4
+      },
+      {
+        "name": "work_date",
+        "inferred_type": "datetime",
+        "null_count": 0,
+        "distinct_count": 47
+      },
+      {
+        "name": "hours_logged",
+        "inferred_type": "integer",
+        "null_count": 0,
+        "distinct_count": 10
+      },
+      {
+        "name": "billed_rate",
+        "inferred_type": "integer",
+        "null_count": 0,
+        "distinct_count": 9
+      },
+      {
+        "name": "billed_amount",
+        "inferred_type": "integer",
+        "null_count": 0,
+        "distinct_count": 40
+      },
+      {
+        "name": "invoice_id",
+        "inferred_type": "string",
+        "null_count": 0,
+        "distinct_count": 6
+      },
+      {
+        "name": "project_code",
+        "inferred_type": "string",
+        "null_count": 0,
+        "distinct_count": 14
+      }
+    ],
+    "distinct_values": {
+      "contract_ref": [
+        "CTR-001",
+        "CTR-002",
+        "CTR-003",
+        "CTR-004"
+      ],
+      "employee_id": [
+        "EMP-010",
+        "EMP-011",
+        "EMP-012",
+        "EMP-020",
+        "EMP-021",
+        "EMP-030",
+        "EMP-031"
+      ],
+      "invoice_id": [
+        "INV-2026-001",
+        "INV-2026-002",
+        "INV-2026-003",
+        "INV-2026-004",
+        "INV-2026-005",
+        "INV-2026-006"
+      ]
+    }
+  },
+  {
+    "filename": "attachments/contracts.csv",
+    "row_count": 7,
+    "columns": [
+      {
+        "name": "contract_id",
+        "inferred_type": "string",
+        "null_count": 0,
+        "distinct_count": 4
+      },
+      {
+        "name": "customer_id",
+        "inferred_type": "string",
+        "null_count": 0,
+        "distinct_count": 3
+      },
+      {
+        "name": "employee_id",
+        "inferred_type": "string",
+        "null_count": 0,
+        "distinct_count": 7
+      },
+      {
+        "name": "contract_status",
+        "inferred_type": "string",
+        "null_count": 0,
+        "distinct_count": 2
+      },
+      {
+        "name": "billing_type",
+        "inferred_type": "string",
+        "null_count": 0,
+        "distinct_count": 1
+      },
+      {
+        "name": "effective_date",
+        "inferred_type": "datetime",
+        "null_count": 0,
+        "distinct_count": 4
+      },
+      {
+        "name": "expiration_date",
+        "inferred_type": "datetime",
+        "null_count": 0,
+        "distinct_count": 4
+      },
+      {
+        "name": "monthly_hours_cap",
+        "inferred_type": "integer",
+        "null_count": 0,
+        "distinct_count": 4
+      },
+      {
+        "name": "currency",
+        "inferred_type": "string",
+        "null_count": 0,
+        "distinct_count": 1
+      }
+    ],
+    "distinct_values": {
+      "employee_id": [
+        "EMP-010",
+        "EMP-011",
+        "EMP-012",
+        "EMP-020",
+        "EMP-021",
+        "EMP-030",
+        "EMP-031"
+      ],
+      "contract_status": [
+        "active",
+        "expired"
+      ],
+      "billing_type": [
+        "time_materials"
+      ],
+      "currency": [
+        "USD"
+      ]
+    }
+  },
+  {
+    "filename": "attachments/rates.csv",
+    "row_count": 7,
+    "columns": [
+      {
+        "name": "contract_id",
+        "inferred_type": "string",
+        "null_count": 0,
+        "distinct_count": 4
+      },
+      {
+        "name": "role_code",
+        "inferred_type": "string",
+        "null_count": 0,
+        "distinct_count": 4
+      },
+      {
+        "name": "hourly_rate",
+        "inferred_type": "integer",
+        "null_count": 0,
+        "distinct_count": 6
+      },
+      {
+        "name": "effective_date",
+        "inferred_type": "datetime",
+        "null_count": 0,
+        "distinct_count": 4
+      },
+      {
+        "name": "expiration_date",
+        "inferred_type": "datetime",
+        "null_count": 0,
+        "distinct_count": 4
+      }
+    ],
+    "distinct_values": {
+      "role_code": [
+        "analyst",
+        "consultant",
+        "junior_engineer",
+        "senior_engineer"
+      ]
+    }
+  },
+  {
+    "filename": "attachments/invoices.csv",
+    "row_count": 6,
+    "columns": [
+      {
+        "name": "invoice_id",
+        "inferred_type": "string",
+        "null_count": 0,
+        "distinct_count": 6
+      },
+      {
+        "name": "invoice_status",
+        "inferred_type": "string",
+        "null_count": 0,
+        "distinct_count": 2
+      },
+      {
+        "name": "customer_id",
+        "inferred_type": "string",
+        "null_count": 0,
+        "distinct_count": 3
+      },
+      {
+        "name": "invoice_total",
+        "inferred_type": "integer",
+        "null_count": 0,
+        "distinct_count": 6
+      },
+      {
+        "name": "period_start",
+        "inferred_type": "string",
+        "null_count": 0,
+        "distinct_count": 2
+      },
+      {
+        "name": "period_end",
+        "inferred_type": "string",
+        "null_count": 0,
+        "distinct_count": 2
+      }
+    ],
+    "distinct_values": {
+      "invoice_id": [
+        "INV-2026-001",
+        "INV-2026-002",
+        "INV-2026-003",
+        "INV-2026-004",
+        "INV-2026-005",
+        "INV-2026-006"
+      ],
+      "invoice_status": [
+        "open",
+        "paid_locked"
+      ]
+    }
+  },
+  {
+    "filename": "attachments/finance_policy.md",
+    "row_count": 5,
+    "columns": [
+      {
+        "name": "content",
+        "inferred_type": "string",
+        "null_count": 0,
+        "distinct_count": 1
+      }
+    ],
+    "distinct_values": {}
+  }
+]

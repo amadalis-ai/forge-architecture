@@ -1,0 +1,118 @@
+{
+  "totals_by_type": {
+    "RATE_OVERCHARGE": 4,
+    "RATE_UNDERCHARGE": 0,
+    "AMOUNT_MISMATCH": 2,
+    "EXPIRED_CONTRACT": 2,
+    "CAP_OVERRUN": 751,
+    "LOCKED_INVOICE": 128,
+    "UNMATCHED_ENTRY": 4,
+    "RATE_NOT_IN_CARD": 0
+  },
+  "total_exceptions": 891,
+  "totals_by_invoice_status": {
+    "unknown": 753
+  },
+  "by_type": {
+    "RATE_OVERCHARGE": {
+      "count": 4,
+      "total_dollar_impact": 2160,
+      "affected_invoices": [
+        "INV-2026-001",
+        "INV-2026-002",
+        "INV-2026-004",
+        "INV-2026-006"
+      ],
+      "affected_employees": [
+        "EMP-010",
+        "EMP-020",
+        "EMP-031"
+      ]
+    },
+    "RATE_UNDERCHARGE": {
+      "count": 0,
+      "total_dollar_impact": 0,
+      "affected_invoices": [],
+      "affected_employees": []
+    },
+    "AMOUNT_MISMATCH": {
+      "count": 2,
+      "total_dollar_impact": 670,
+      "affected_invoices": [
+        "INV-2026-002",
+        "INV-2026-005"
+      ],
+      "affected_employees": [
+        "EMP-020",
+        "EMP-021"
+      ]
+    },
+    "EXPIRED_CONTRACT": {
+      "count": 2,
+      "total_dollar_impact": 0,
+      "affected_invoices": [
+        "INV-2026-001",
+        "INV-2026-004"
+      ],
+      "affected_employees": [
+        "EMP-012"
+      ]
+    },
+    "CAP_OVERRUN": {
+      "count": 751,
+      "total_dollar_impact": 0,
+      "affected_invoices": [
+        "INV-2026-001",
+        "INV-2026-002",
+        "INV-2026-003",
+        "INV-2026-004",
+        "INV-2026-005",
+        "INV-2026-006"
+      ],
+      "affected_employees": [
+        "EMP-010",
+        "EMP-011",
+        "EMP-020",
+        "EMP-021",
+        "EMP-030",
+        "EMP-031"
+      ]
+    },
+    "LOCKED_INVOICE": {
+      "count": 128,
+      "total_dollar_impact": 0,
+      "affected_invoices": [
+        "INV-2026-004"
+      ],
+      "affected_employees": [
+        "EMP-010",
+        "EMP-011",
+        "EMP-012"
+      ]
+    },
+    "UNMATCHED_ENTRY": {
+      "count": 4,
+      "total_dollar_impact": 0,
+      "affected_invoices": [
+        "INV-2026-001",
+        "INV-2026-002",
+        "INV-2026-004",
+        "INV-2026-006"
+      ],
+      "affected_employees": [
+        "EMP-010",
+        "EMP-020",
+        "EMP-031"
+      ]
+    },
+    "RATE_NOT_IN_CARD": {
+      "count": 0,
+      "total_dollar_impact": 0,
+      "affected_invoices": [],
+      "affected_employees": []
+    }
+  },
+  "grand_total_discrepancies": 753,
+  "grand_total_dollar_impact": 2830,
+  "total_entries_audited": 753
+}
