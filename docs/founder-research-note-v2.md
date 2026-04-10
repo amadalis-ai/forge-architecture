@@ -576,7 +576,11 @@ With compiled execution, the model's work is code. Code is evidence. Evidence is
 
 ### What becomes possible
 
-When you combine the compiler, Code-Act, capsules, governance, and traceability, the use cases open up:
+When you combine the compiler, Code-Act, capsules, governance, and traceability, the use cases go far beyond document analysis. The system is not limited to files in and reports out. It is a general-purpose execution architecture for any multi-step autonomous work that needs to be governed, traced, and repeatable.
+
+The key insight is the construction analogy. A compiled plan is a blueprint. Each step is a specialist — the plumber, the electrician, the roofer. The plumber does not need to know what the electrician is doing. The roofer does not need to know how the walls were built. The roofer only needs to know that the walls will be there when it is time to put the roof on — and the compiler guarantees that, because the contracts between steps were verified before execution started.
+
+That is the difference between this system and every platform that tries to have one model do everything in one long session. Here, each step is a specialist with a contract, a fresh mind, and the freedom to solve its part of the problem however it sees fit — as long as the output satisfies the contract. The model adapts. It writes its own tools. It invents whatever approach makes sense. But it operates within structural constraints that guarantee the downstream steps will receive what they need.
 
 **Screening five hundred resumes.** The system ingests the files, extracts structured candidate data, scores against the rubric, produces a ranked report. Every score is traceable to the code that computed it, the fields that were extracted, and the source document they came from. Encapsulate it. Next hiring cycle, run the same Capsule on new resumes.
 
@@ -586,7 +590,17 @@ When you combine the compiler, Code-Act, capsules, governance, and traceability,
 
 **Large-scale research across hundreds of documents.** The system processes every document, extracts claims with citations, cross-references across sources, synthesizes findings. Every claim in the final report is linked to the specific documents, specific paragraphs, and specific extraction code that produced it. At 400 steps, the traceability is the same as at step 1.
 
-The twelve domain packs that exist today — billing audit, legal review, resume screening, research synthesis, finance analysis, security audit, and others — are a starting library. The system is designed for custom packs. If you need a domain pack for insurance claims processing, clinical trial analysis, or manufacturing quality control, you build it and register it. Every new pack extends what the compiler can compile correctly.
+**Building a 500-page website.** The plan compiles the full structure — navigation, pages, components, content, styling. Each page is a step. The step that builds page 47 does not need to know how page 12 was built. It needs to know that the navigation component and the theme assets will be there — and the compiler guarantees they will be, because those are contracted outputs of earlier steps. The model generates the code for each page fresh, adapting to the content, but within the structural constraints of the compiled architecture. You do not lose track at page 200 because no single model is carrying the context of pages 1 through 199.
+
+**Customer onboarding workflows.** Imagine a process that configures an application for a new customer — theming, branding, data loading, permission setup, integration configuration, validation checks. Some of it is repetitive and can be sealed Capsules that run identically for every customer. Some of it requires the model to adapt — querying data mid-workflow, adjusting configuration based on what it finds, rewriting the approach when a step encounters something unexpected. The compiled plan provides the structure. The executor provides the adaptation. The governance provides the guardrails.
+
+**Support ticket triage with human-in-the-loop.** The system can determine mid-execution that a step requires human approval — and the plan was compiled with that gate built in. The model cannot evade it. There is only one gatekeeper, and the gatekeeper is the platform — the operating system that runs the compiled program. If the plan says step 5 requires human review before step 6 can start, then step 6 does not start until a human approves. This is not a prompt instruction the model might ignore. It is a structural gate in the compiled execution graph.
+
+**Repetitive operational processes.** Any process that happens on a schedule — weekly data transformation, monthly compliance checks, quarterly reporting — can be compiled once, proven once, and encapsulated. The sealed Capsule runs deterministically with new data. The organization builds a library of compiled programs that get cheaper to run over time. A non-technical person described what they wanted. The system compiled it. Now it runs.
+
+The point is not the use cases themselves. The point is that the architecture makes each one governed, traceable, and repeatable — whether it is a 4-step data pipeline or a 400-step enterprise process. The model has complete freedom to adapt and invent within each step. But the structure around it guarantees that the contracts are met, the governance is enforced, the human-in-the-loop gates cannot be bypassed, and every computation is traceable from deliverable back to source.
+
+The twelve domain packs that exist today — billing audit, legal review, resume screening, research synthesis, finance analysis, security audit, and others — are a starting library. The system is designed for custom packs. If you need a domain pack for insurance claims processing, customer onboarding, or manufacturing quality control, you build it and register it. Every new pack extends what the compiler can compile correctly.
 
 ---
 
