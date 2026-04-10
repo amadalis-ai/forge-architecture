@@ -1137,6 +1137,89 @@ Execution profiles are frozen per run via the `ExecutionProfileResolverService`.
 
 Governance cannot drift mid-execution. The profile that governed step 1 is the same profile that governs step 50. Audit consistency is guaranteed by immutability, not by logging.
 
+## 10.5 Human-in-the-loop as structural gates
+
+The compilation pipeline supports human-in-the-loop gates as structural elements in the execution graph — not as prompt instructions the model might choose to ignore. If the compiled plan declares that step 5 requires human approval before step 6 can start, then step 6 does not start until a human approves. The model cannot evade this because the gate is enforced by the runtime, not by the model's cooperation. There is only one gatekeeper, and it is the platform — the operating system that runs the compiled program.
+
+This matters for compliance, legal review, financial corrections, deployment approvals, and any process where a human must sign off before autonomous work proceeds. The gate is compiled into the plan. It is not optional at execution time.
+
+## 10.6 The enterprise reality
+
+Building an agent is the easy part. Making it do something useful in a demo is the easy part. The hard part is everything that comes after.
+
+Consider what a company actually has to do to put an AI agent into production:
+
+- The **security team** needs to know: what can this agent access? What networks can it reach? What data can it see? Can it exfiltrate information?
+- The **compliance team** needs to know: can we audit what it did? Can we prove how it arrived at a conclusion? Can we trace a number in a report back to the source data and the computation that produced it?
+- The **legal team** needs to know: if this agent summarizes case law or extracts contract clauses, can we verify the citations? Can we trace a summary back to the exact paragraphs that were fed into the model?
+- The **IT team** needs to know: how do we configure this for different departments? How do we enforce different policies for different workspaces? How do we control costs? How do we monitor what is happening?
+
+Today, the answer to most of these questions is: you build it yourself. You need an entire engineering department to handle the governance, logging, observability, and policy enforcement around the agent — before the agent does any useful work. And every time someone builds a new agent, the CISO's team has to ask the same questions again.
+
+The compilation architecture answers these questions structurally:
+
+- **What can the agent access?** — Egress rules at domain/path/method granularity, frozen into the execution profile.
+- **Can we audit what it did?** — Every step has preflight receipts, postflight receipts, SHA-256 checksums, execution evidence, contract hashes. The entire compiled plan is a durable, inspectable artifact.
+- **Can we trace a conclusion?** — The model thinks in code. Every computation is inspectable. Every number traces from report through transformation code through source data.
+- **How do we configure per department?** — Workspaces with separate execution profiles, model bindings, skill policies, validation rules, and governance.
+- **How do we control costs?** — Budget enforcement with projected pre-checks, step wall-clock timeouts, tool-call budgets, and runtime cost counters.
+
+An auditor can trace from user intent through compiled plan through step execution through artifact production. There are no gaps. The model does not get to tell the system the work is done — the operating system independently verifies that contracts were fulfilled.
+
+## 10.7 The traceability argument
+
+This is where Code-Act and the compiler together produce something that no prompt-and-tools approach can match.
+
+When the model thinks in code, every step of its reasoning is inspectable. It did not tell you "the average is 47,000." It wrote a program that opened the data, filtered the rows, computed the sum, divided by the count, and printed 47,000. You can read the code. You can see the data it read. You can re-run the computation. You can trace the number in the final report all the way back through the transformation chain — which script produced it, which inputs that script consumed, which upstream step produced those inputs, and which source files those inputs were extracted from.
+
+Consider a law firm reviewing contracts. The system extracts clauses, identifies obligations, flags non-standard terms, produces a risk register with citations. Every finding is tied to a specific clause in a specific document — not "the model said this clause is risky." Instead: here is the extraction code that parsed the document, here are the specific paragraphs it read (with line numbers and character offsets), here is the summarization code that produced the finding, and here is how the citation links back to the source text. If someone challenges the finding, you do not ask the model "are you sure?" You open the code, read the extraction logic, and verify the source.
+
+Consider an accounting firm reconciling 753 time entries against contracts and rate cards. Every number in the discrepancy report — every rate delta, every overcharge amount, every cap violation — is the output of a Python script you can read. The script shows exactly which fields were compared, which formula was applied, which entries were flagged, and why. The chain from source CSV to final report is a sequence of verified, logged, inspectable computations.
+
+This is not possible with a prompt-and-tools approach. If you give a model a prompt and tools, it can tell you "I called the analysis tool and it returned these results." But it cannot show you how the tool arrived at those results. It cannot trace a number from the report back through the transformations to the source data. The reasoning is opaque.
+
+With compiled execution, the model's work is code. Code is evidence. Evidence is traceable. And that traceability holds across 400 steps — because every step has its own contract, its own receipts, its own checksums, and its own execution log.
+
+---
+
+# Part X-b — What This Architecture Enables
+
+The system is not limited to files in and reports out. It is a general-purpose execution architecture for any multi-step autonomous work that needs to be governed, traced, and repeatable.
+
+## The construction analogy
+
+A compiled plan is a blueprint. Each step is a specialist. The plumber does not need to know what the electrician is doing. The roofer does not need to know how the walls were built. The roofer only needs to know that the walls will be there when it is time to put the roof on — and the compiler guarantees that, because the contracts between steps were verified before execution started.
+
+Each step is a specialist with a contract, a fresh mind, and the freedom to solve its part of the problem however it sees fit — writing its own code, inventing its own approach, adapting to what it finds. But it operates within structural constraints that guarantee the downstream steps will receive what they need.
+
+This is the difference between this system and every platform that tries to have one model do everything in one long session. The model has complete freedom to adapt and invent within each step. The structure around it guarantees that contracts are met, governance is enforced, human-in-the-loop gates cannot be bypassed, and every computation is traceable from deliverable back to source.
+
+## Document analysis and audit
+
+**Screening five hundred resumes.** The system ingests the files, extracts structured candidate data, scores against the rubric, produces a ranked report. Every score traces to the code that computed it, the fields that were extracted, and the source document they came from. Encapsulate it. Next hiring cycle, run the same Capsule.
+
+**Auditing a year of vendor contracts.** The system extracts clauses, identifies obligations, flags non-standard terms, produces a risk register with citations traceable to exact paragraphs with line numbers. A compliance officer follows the chain from finding to source without asking the model anything.
+
+**Reconciling billing data every Friday.** Sealed Capsule. No model inference. The transformation code is frozen. Every discrepancy traces through the computation chain to the source rows. The finance team reads the code, not the model's self-report.
+
+**Large-scale research across hundreds of documents.** Every claim in the final report is linked to the specific documents, specific paragraphs, and specific extraction code that produced it. At 400 steps, the traceability is the same as at step 1.
+
+## Building and construction
+
+**Building a 500-page website.** The plan compiles the full structure — navigation, pages, components, content, styling. Each page is a step. Page 47 does not carry the context of pages 1 through 46. The compiler guarantees that navigation components and theme assets will be there, because those are contracted outputs of earlier steps. The model generates the code for each page fresh, adapting to the content, but within the structural constraints of the compiled architecture.
+
+**Customer onboarding workflows.** Configuring an application for a new customer — theming, branding, data loading, permission setup, integration configuration. Some of it is repetitive and can be sealed Capsules that run identically for every customer. Some of it requires the model to adapt — querying data mid-workflow, adjusting configuration based on what it finds. The compiled plan provides the structure. The executor provides the adaptation. The governance provides the guardrails.
+
+## Operational processes
+
+**Support ticket triage with human-in-the-loop.** The system determines mid-execution that a step requires human approval — and the plan was compiled with that gate built in. The model cannot evade it. The platform enforces the gate. Step 6 does not start until a human approves step 5.
+
+**Repetitive scheduled processes.** Weekly data transformation, monthly compliance checks, quarterly reporting. Compile once, prove once, encapsulate. The sealed Capsule runs deterministically with new data. A non-technical person described it. The system compiled it. Now it runs on schedule, governed by the same contracts, for a fraction of the original cost.
+
+## Extensibility
+
+The twelve domain packs that exist today are a starting library. The system is designed for custom packs. If an organization needs a domain pack for insurance claims processing, customer onboarding, or manufacturing quality control, they build it and register it — introducing their own types, entity schemas, and disambiguation rules into the compiler. Every new pack extends what the system can compile correctly.
+
 ---
 
 # Part XI — What Is Proven, What Is Not
@@ -1166,6 +1249,9 @@ Governance cannot drift mid-execution. The profile that governed step 1 is the s
 - Egress control at domain/subdomain/path/method granularity
 - Budget enforcement with projected pre-checks and runtime counters
 - Tool allowlists frozen at compile time and re-enforced at runtime
+- Human-in-the-loop gates as structural elements in the execution graph
+- Full computation traceability from deliverable through transformation code to source data
+- End-to-end audit trail: user intent → compiled plan → step contracts → execution evidence → verified artifacts
 
 ## Designed and in development
 
