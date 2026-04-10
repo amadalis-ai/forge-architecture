@@ -1,0 +1,36 @@
+/* ============================================================================
+   COMPLIANCE THEME
+   Formal, print-optimized. Dark blue/teal palette with serif headings.
+   Best for: Legal documents, regulatory reports, due diligence, audit findings.
+   ============================================================================ */
+
+:root {
+  /* Primary palette */
+  --color-primary: #34495E;
+  --color-secondary: #2980B9;
+  --color-accent: #16A085;
+
+  /* Text */
+  --color-text: #2C3E50;
+  --color-text-light: #7F8C8D;
+
+  /* Backgrounds */
+  --color-bg: #FFFFFF;
+  --color-bg-alt: #F9F9F9;
+  --color-border: #BDC3C7;
+
+  /* Semantic colors */
+  --color-success: #27AE60;
+  --color-warning: #E67E22;
+  --color-danger: #C0392B;
+
+  /* Typography */
+  --font-heading: Georgia, 'Times New Roman', serif;
+  --font-body: Calibri, Helvetica, Arial, sans-serif;
+  --font-mono: 'Courier New', Courier, monospace;
+
+  /* Layout */
+  --spacing-section: 40px;
+  --border-radius: 2px;
+  --max-width: 880px;
+}

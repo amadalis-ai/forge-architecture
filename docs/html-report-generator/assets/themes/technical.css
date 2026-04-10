@@ -1,0 +1,36 @@
+/* ============================================================================
+   TECHNICAL THEME
+   Dense, modern, code-friendly. Slate/cyan palette with sans-serif headings.
+   Best for: Engineering docs, architecture reviews, technical audits.
+   ============================================================================ */
+
+:root {
+  /* Primary palette */
+  --color-primary: #263238;
+  --color-secondary: #00BCD4;
+  --color-accent: #7C4DFF;
+
+  /* Text */
+  --color-text: #212121;
+  --color-text-light: #757575;
+
+  /* Backgrounds */
+  --color-bg: #FFFFFF;
+  --color-bg-alt: #FAFAFA;
+  --color-border: #E0E0E0;
+
+  /* Semantic colors */
+  --color-success: #4CAF50;
+  --color-warning: #FF9800;
+  --color-danger: #F44336;
+
+  /* Typography */
+  --font-heading: Helvetica, Arial, sans-serif;
+  --font-body: Helvetica, Arial, sans-serif;
+  --font-mono: 'JetBrains Mono', 'Fira Code', 'Courier New', monospace;
+
+  /* Layout */
+  --spacing-section: 32px;
+  --border-radius: 3px;
+  --max-width: 920px;
+}

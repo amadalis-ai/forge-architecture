@@ -1,0 +1,63 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "HTML Report Generator v2 — Content JSON",
+  "description": "Schema for the content.json file consumed by render_report.py",
+  "type": "object",
+  "required": ["metadata", "sections"],
+  "properties": {
+    "template": {
+      "type": "string",
+      "enum": ["standard", "executive-brief", "dashboard", "comparison", "newsletter"],
+      "description": "Explicit layout template override. If omitted, auto-inferred from content."
+    },
+    "theme": {
+      "type": "string",
+      "description": "Theme name (must match a file in assets/themes/). Default: executive."
+    },
+    "brand": {
+      "type": "string",
+      "description": "Path to brand config JSON file (optional)."
+    },
+    "metadata": {
+      "type": "object",
+      "required": ["title"],
+      "properties": {
+        "title": { "type": "string" },
+        "subtitle": { "type": "string" },
+        "date": { "type": "string", "format": "date" },
+        "author": { "type": "string" },
+        "confidentiality": { "type": "string" },
+        "version": { "type": "string" }
+      }
+    },
+    "cover": {
+      "type": "object",
+      "description": "If present, triggers cover page in executive-brief template.",
+      "properties": {
+        "headline": { "type": "string" },
+        "tagline": { "type": "string" }
+      }
+    },
+    "sections": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["type"],
+        "properties": {
+          "type": {
+            "type": "string",
+            "enum": [
+              "section", "executive_summary", "table", "status_list",
+              "metrics_row", "chart", "callout", "comparison",
+              "divider", "page_break"
+            ]
+          }
+        }
+      }
+    },
+    "footer": {
+      "type": "string",
+      "description": "Footer text displayed on all pages."
+    }
+  }
+}

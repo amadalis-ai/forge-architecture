@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>{{ metadata.title }}</title>
+  <style>
+{{ theme_css }}
+{{ base_css }}
+{{ brand_css }}
+  </style>
+  {% if chartjs_code %}
+  <script>{{ chartjs_code }}</script>
+  {% endif %}
+</head>
+<body>
+
+  {# ── HEADER ── #}
+  <header class="report-header">
+    {% if brand_logo_html %}
+    {{ brand_logo_html }}
+    {% endif %}
+    <h1>{{ metadata.title }}</h1>
+    {% if metadata.subtitle %}
+    <p class="subtitle">{{ metadata.subtitle }}</p>
+    {% endif %}
+    <p class="meta">
+      {{ meta_line }}
+      {% if metadata.confidentiality %}
+      <span class="confidentiality">{{ metadata.confidentiality }}</span>
+      {% endif %}
+    </p>
+  </header>
+
+  {# ── TABLE OF CONTENTS ── #}
+  <nav class="toc" id="toc"></nav>
+
+  {# ── MAIN CONTENT ── #}
+  <main class="report-body">
+    {{ sections_html }}
+  </main>
+
+  {# ── FOOTER ── #}
+  {% if footer_text %}
+  <footer class="report-footer">
+    <p>{{ footer_text }}</p>
+  </footer>
+  {% endif %}
+
+  {# ── TOC GENERATOR ── #}
+  <script>
+    (function() {
+      var toc = document.getElementById('toc');
+      var headings = document.querySelectorAll('main h1, main h2, main h3');
+      if (headings.length < 2) { toc.style.display = 'none'; return; }
+      var html = '<h2>Table of Contents</h2><ul>';
+      for (var i = 0; i < headings.length; i++) {
+        var h = headings[i];
+        var id = 'section-' + i;
+        h.id = id;
+        var cls = h.tagName === 'H1' ? '' : h.tagName === 'H2' ? 'toc-l2' : 'toc-l3';
+        html += '<li class="' + cls + '"><a href="#' + id + '">' + h.textContent + '</a></li>';
+      }
+      html += '</ul>';
+      toc.innerHTML = html;
+    })();
+  </script>
+
+  {# ── CHART RENDER SCRIPTS ── #}
+  {% if chart_scripts %}
+  <script>
+{{ chart_scripts }}
+  </script>
+  {% endif %}
+
+</body>
+</html>

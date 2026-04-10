@@ -1,0 +1,648 @@
+# Compiling Autonomous Work
+
+**Simone Coelho**
+Founder, Amadalis
+April 2026
+
+---
+
+If you are expecting this to be another post about how AI agents are going to change everything, you can stop here. There are thousands of those. This is not one of them.
+
+This is a technical note about a specific architectural problem I could not solve with any existing approach, and what I ended up building instead. It covers real failure modes, real engineering decisions, and real execution artifacts from a running system. There is no demo to sign up for. There is no waitlist pitch at the end.
+
+If you have actually tried to make autonomous AI systems work reliably at scale — not demo-scale, not single-shot tasks, but real multi-step work over hundreds of steps — then what follows might be the first thing you have read that matches what you have actually experienced.
+
+---
+
+## What I kept seeing
+
+I spent the last eighteen months building autonomous systems for enterprise work. Long-horizon plans. Multi-step execution. Real APIs, real data, real deliverables.
+
+And I kept hitting the same wall.
+
+Not because the models are stupid. The models are remarkably capable. The problem is the infrastructure around them. Every framework, every harness, every orchestration pattern I tried eventually failed in the same ways — and the failures were always structural, never intellectual.
+
+I read announcements from companies claiming they have replaced entire teams with agents. I read founders describing 95 percent success rates on complex autonomous work. I read technical posts that make reliability sound like a solved problem.
+
+I do not buy most of it.
+
+Some teams are better than others, absolutely. Some have genuinely pushed the boundary. But the gap between what is claimed in public and what I have observed in practice is wide. After eighteen months of building, testing, failing, and rebuilding, I believe the majority of those claims are overstated.
+
+Either I am missing something that everyone else has figured out, or a lot of people have not actually run these systems at the scale and duration they describe.
+
+I do not say this to be provocative. I say it because it is the honest starting point for everything that follows. If the reliability problem were actually solved, I would not have spent a year building what I built.
+
+### What the failures actually look like
+
+These are not abstract categories. These are things I watched happen repeatedly:
+
+A model sends a payload to an API. The payload is wrong — a field name is incorrect. You correct it. The model sends the payload again with a different field wrong. You correct that. It tries a third time and gets the nesting structure wrong. Tokens burn. The model's intent was correct every time. It knew exactly what it wanted to do. But the OpenAPI schema was deeply nested, some child objects were JSON, others were serialized text, and two different API surfaces on the same platform called the same entity different things — `customer_id` in one endpoint, `user_id` in another. Same platform. Same semantics. Different words.
+
+A 300-step plan dies on step 47. Not because the model made a bad decision. Because a downstream step expected an artifact that an upstream step was supposed to produce, and nobody checked whether the output shape matched the input contract before execution started.
+
+Long-running sessions where step 20 carries the accumulated fog of steps 1 through 19 — every retry, every dead end, every intermediate tool output — and the model's reasoning gets measurably less precise because it is drowning in its own history.
+
+Every engineer who has actually tried to build these systems at scale knows this feeling. The model is not the problem. The architecture is.
+
+---
+
+## The first discovery: the model needs a different language
+
+The company I was working at had some of the most complex API endpoints I have ever seen. Deeply nested objects. Mixed serialization — some children were JSON, some were raw text that needed to be serialized or deserialized differently. Different platform surfaces used entirely different terminology for the same concepts.
+
+So I did the obvious thing. I gave the model the OpenAPI specifications. Full JSON schemas. Property descriptions. Accepted values. Constraints. Validation rules. Everything the model should need to construct a correct payload.
+
+It failed anyway.
+
+Not occasionally. Reliably. On complex nested objects, the model would lose track. The accepted values were described in one place, the property constraints in another, the format requirements in a third location within the same schema document. The model had to hold all of those references in attention simultaneously while constructing the payload, and it could not. Its intent was always correct. The information was always there. But the format of the information overwhelmed it.
+
+This was my first real insight, and it has nothing to do with prompt engineering.
+
+### The menu taker
+
+I realized two things at once.
+
+First: the model needs information to be self-describing at the point of use. Not "see the documentation for accepted values." Not "refer to the constraint definition in section 4.2." Every property must carry its own accepted values, its own constraints, its own format — right where the model reads it. Instead of a schema that says `status: string` with a reference to an enum definition elsewhere, the model sees `status: {ENUM: active|paused|archived}`. Everything inline. Nothing to look up.
+
+Second — and this is the piece that changed everything — the model should never have to construct an API call at all.
+
+I built a serializer engine. It takes any valid JSON schema — an OpenAPI spec, a Swagger file, whatever the customer has — and translates it into a self-describing template. The template is the menu. The model is the customer placing an order.
+
+The model fills in the template. It picks from the enumerations. It provides the values it wants to send. Then the filled template goes back through the serializer, and out the other side comes the correct API payload — properly nested, properly serialized, right field names, right structure.
+
+The model never touches the raw API. It never worries about nesting depth, serialization formats, or schema structure. It says what it wants. The infrastructure translates.
+
+```
+OpenAPI / JSON Schema
+       |
+  [ Serializer ]
+       |
+  Self-describing template (the menu)
+       |
+  Model fills the template (places an order)
+       |
+  [ Serializer ]
+       |
+  Valid API payload
+```
+
+### What the template language actually looks like
+
+This extends far beyond API calls. The same protocol drives the planner itself. Here is a fragment of the template that the planning model receives — this is what it fills in to produce a compiled step:
+
+```json
+{
+  "label": "{imperative verb phrase}",
+  "objective": "{MUST/SHOULD/MAY objective template string}",
+  "expected_outputs": [{
+    "path": "{Class A user-deliverable path with recognized extension}",
+    "role": "{artifact role}"
+  }],
+  "success_criteria": "{machine-checkable outcome}",
+  "abstract_inputs": [{
+    "slot": "{FILL|string}",
+    "required": "{FILL|boolean}",
+    "entity_schema_id": "{FILL|string}",
+    "accepted_kind_keys": ["{OPTIONAL|string}"],
+    "provenance_policy": "{OPTIONAL_ENUM|none|preferred|required}"
+  }],
+  "abstract_outputs": [{
+    "slot": "{FILL|string}",
+    "entity_schema_id": "{FILL|string}",
+    "preferred_kind_keys": ["{OPTIONAL|string}"]
+  }],
+  "artifact_contracts": {
+    "{expected_outputs[].path}": {
+      "format": "{ENUM|json|csv|parquet|html|md|txt|pdf|yaml|tsv|other}",
+      "required_top_level_type": "{OPTIONAL_ENUM|array|object|table}"
+    }
+  }
+}
+```
+
+Look at the pattern. Every field tells the model exactly what to put there. `{FILL|string}` means "you provide a string." `{ENUM|json|csv|parquet|html|md}` means "pick one of these." `{OPTIONAL_ENUM|none|preferred|required}` means "pick one, or skip it." The model never has to guess what a field accepts. It never has to look elsewhere to find the constraints. The menu is self-contained.
+
+This was the game changer. With this protocol, the model generates contracts for plans that span a hundred steps with a thousand sub-steps — with perfect fidelity. The model was never the bottleneck for generation. The way we were talking to it was.
+
+Everyone in the industry describes the inversion abstractly: "let the AI focus on intent, not mechanics." I built the actual mechanism. A bidirectional translator between any JSON schema and a model-consumable template language. Menu in, order out, payload delivered.
+
+---
+
+## The second discovery: correctness needs structure
+
+Solving the generation problem exposed a new one.
+
+The model could now produce the right shape. It could fill complex templates with perfect structural fidelity. But who checks that the values are correct? That the `customer_id` field maps to what the downstream API actually expects? That business rules are enforced — rate limits, required fields, conditional constraints? That the semantic drift between two platforms' vocabulary is handled before it causes a silent failure three steps downstream?
+
+You cannot ask the model to be careful. Careful is not a system property. Careful is a hope.
+
+### The validation ladder
+
+I built a validation pipeline — not instructions to the model, but a multi-stage system that mechanically and semantically checks every output before it moves forward:
+
+- **Structural parsing**: Is this valid JSON? Does it match the expected shape?
+- **Synonym resolution**: Does `customer_id` here mean `user_id` there? Map them.
+- **Default injection**: Are missing optional fields populated with safe defaults?
+- **Business rules**: Does this rate exceed the contract cap? Is this date in the valid range?
+- **Schema contracts**: Does this object satisfy the full type contract?
+- **Domain validation**: Does this make sense in the context of this specific business domain?
+
+Each stage catches a different class of error. Each error is caught before it reaches the next step — not discovered at runtime when money and time have already been spent.
+
+### From validation to semantic mapping
+
+Then something clicked. If the validation layer understands that `customer_id` and `user_id` are semantically the same entity, that is not just error correction. That is a translation layer.
+
+I can take two entirely different platform schemas — say Shopify and Stripe — and map between them through the ladder. The same system that catches field name mismatches also bridges semantic gaps between different APIs. The validation pipeline became a semantic translation layer, and the translation layer became the foundation for cross-platform interoperability.
+
+Each layer I built exposed the next problem. Each solution revealed the next gap. I was not following a theory. I was following the failures.
+
+---
+
+## The third discovery: the system needs a type system for work
+
+The validation ladder could catch errors. The semantic layer could map fields between platforms. But as I started building longer plans — plans with 10, 20, 50 steps — a deeper problem emerged.
+
+When a user says "audit the billing," what does that actually mean to the system? What data types are involved? Time entries? Rate cards? Invoice line items? What is the workflow — are we comparing two sources, or scoring one? What vocabulary applies? What are the disambiguation boundaries — is this a billing audit or a financial analysis or a security audit?
+
+Without answers, the planner is guessing. And a planner that guesses is an interpreter.
+
+### Domain packs
+
+I built domain packs. A domain pack is a standard library for a business domain. It tells the system everything it needs to know about a class of work:
+
+```json
+{
+  "domain_pack_id": "billing-audit",
+  "purpose": "Reconcile time, rates, contracts, or invoice lines.
+    Determine what should be billed, what was billed incorrectly,
+    or where billing discrepancies exist.",
+  "entity_schemas": [
+    "billing.time_entry",
+    "billing.rate_card",
+    "billing.invoice_line_item",
+    "billing.discrepancy_row",
+    "billing.billing_summary"
+  ],
+  "triggers": [
+    "billing audit", "invoice discrepancies",
+    "timesheet reconciliation", "billable hours"
+  ],
+  "disambiguation": [
+    "Use billing-audit when matching time, rates, contracts,
+      or invoice lines. Use finance-analysis when the mission
+      is about ledger entries, budgeting, or financial performance.",
+    "If the user mentions 'audit' in a controls/compliance context,
+      use security-audit instead."
+  ]
+}
+```
+
+That object is not documentation. It is the system's type library for billing work. When the planner sees "audit these timesheets against the rate cards," it does not guess. It loads the billing-audit pack and knows the entity types, the vocabulary, and the disambiguation rules that separate this from finance-analysis or security-audit.
+
+### Workflow packs
+
+Domain packs say what the data is. Workflow packs say how the work flows.
+
+```json
+{
+  "workflow_pack_id": "reconcile-compare",
+  "purpose": "Compare two or more compatible inputs to identify
+    matches, mismatches, discrepancies, or missing records.",
+  "typical_slots": {
+    "inputs": ["normalized_rows", "joined_rows"],
+    "outputs": ["findings", "scores", "report_artifact"]
+  },
+  "triggers": [
+    "compare two sources", "find discrepancies",
+    "reconcile datasets", "cross-reference and flag mismatches"
+  ],
+  "disambiguation": [
+    "reconcile-compare requires two or more input sources.
+      analyze-score-rank operates on one source.",
+    "reconcile-compare emits discrepancy findings.
+      normalize-transform emits reshaped data without
+      comparison semantics."
+  ]
+}
+```
+
+The disambiguation rules are the critical part. The system knows that "reconcile" is not the same as "normalize." It knows "compare" requires two or more inputs. It knows the difference between scoring one source and comparing two. These are the type distinctions that prevent a plan from wiring incompatible steps together.
+
+Today there are 12 domain packs, 12 workflow packs, 24 artifact kinds, 15 cross-step slots, and 5 policy profiles. It is a type system for autonomous work. It is early — 12 domains, not 200. But it is the same move that every programming language eventually makes: you cannot compile without types.
+
+---
+
+## The thesis
+
+By this point, I had built:
+
+- A language the model can consume with perfect fidelity (imprinting templates)
+- A bidirectional serializer that translates between any JSON schema and that language
+- A validation ladder that catches errors before they propagate
+- A semantic layer that maps between different platform vocabularies
+- A type system for business domains and workflows
+
+I started noticing what I had actually been building.
+
+A language for expressing intent. A system that validates output against formal contracts. A semantic layer that resolves meaning across representations. A type system. A pipeline that checks everything before execution starts.
+
+I had been building a compiler. Not metaphorically. Structurally.
+
+### The interpreter pattern
+
+Most agent systems today work like interpreters. The model receives a task. It decides what to do. It reaches for a tool. It observes what happened. It decides again. The architecture is open-loop and runtime-heavy.
+
+Every compiler engineer knows that shape. The problem is discovered late. Contracts are implicit. Resolution happens on the fly. Failures are paid for at execution time.
+
+### The compiler pattern
+
+What I built does what compilers do:
+
+- **Parse structure**: decompose the objective into steps, dependencies, and success criteria — before any tool is called
+- **Resolve symbols**: discover capabilities against a real universe of skills and tools — if it does not exist, it cannot appear in the plan
+- **Type-check contracts**: validate input and output declarations between steps — if step 3 expects an artifact that step 2 does not produce, catch it now
+- **Emit an executable**: freeze the plan into immutable step contracts with deterministic IDs, manifests, and SHA-256 hashes
+- **Execute in isolation**: each step runs in a governed environment with only its contracted inputs and allowed capabilities
+- **Verify output**: receipts, checksums, schema inference, and independent review — the model does not mark its own homework
+
+### Fresh mind per step
+
+This is the most important architectural consequence.
+
+Interpreter-style systems drag the same model through the entire run. By step 20, the model is carrying every retry, every dead end, every intermediate output from the previous 19 steps. It is drowning in its own cognitive debt.
+
+In this system, each step begins clean. It receives its compiled contract, its verified inputs, and its allowed capabilities. It does not receive the history of the run. It does not know what happened before it. It does not carry forward any accumulated noise.
+
+Step 300 is as sharp as step 1 — because for the executor, it is step 1.
+
+### The model thinks in code
+
+Most agent platforms work by giving the model a set of pre-built tools and letting it pick which ones to call. The model becomes a dispatcher — it selects from a fixed menu of functions that someone else wrote.
+
+That is not what happens here.
+
+In this system, the model writes code. Not tool calls. Not function selections. Actual programs. When a step needs to compute billing discrepancies, the model does not call a `compute_discrepancies()` tool. It writes a Python script that opens the data files, joins the records, applies the comparison logic, computes the discrepancies, and writes the result. The script runs in a sandbox. The computation produces the answer.
+
+This is the difference between an AI that tells you things and an AI that does things and proves what it did.
+
+If a model tells me "the average value is 47,000," I have to trust that statement. It could be hallucinated. It could be a plausible-sounding number the model confabulated from pattern matching. I have no way to verify it without independently re-running the work.
+
+If the model writes ten lines of code that reads the dataset, sums the values, divides by the count, and prints the result — and that code runs and produces 47,000 — then the answer is tied to computation, not to prediction. The code is inspectable. The execution is logged. The result is verifiable. Prose can sound right while being wrong. Code either runs or it does not.
+
+But here is the critical relationship: letting a model write arbitrary code without structure is dangerous. Without contracts, there is no guarantee that the code produces what the next step expects. Without isolation, the code can access things it should not. Without verification, a script that runs successfully but produces garbage will cascade that garbage downstream.
+
+The compiler is what makes Code-Act safe. The contract defines what the code must produce. The sandbox governs what it can access. The postflight receipt verifies what it actually produced. The model is free to invent whatever solution it wants — any algorithm, any approach, any library — as long as the output satisfies the contract. Maximum creativity within structural governance.
+
+That is the relationship between the compiler and the executor. The compiler provides the constraints. The model provides the intelligence. The code provides the proof.
+
+---
+
+## What I can show today
+
+I care a lot about separating theory from evidence. Here is a real compiled run.
+
+### The anatomy
+
+A 4-step plan: fetch API data, assemble a relationship graph, compute user metrics, render a ranking page in HTML. Each plan step was decomposed into 8 to 14 compiled sub-steps. The model writes the business logic — one sub-step. The other 7 to 9 are compiler-generated harness: workspace preparation, input materialization, preflight validation, the actual work, postflight validation, output verification, and persistence.
+
+The compiled step contract:
+
+```json
+{
+  "contract_hash": "sha256:e2ddab22...1490dd4c0b",
+  "allowed_tool_ids": ["sandbox.session"],
+  "execution_backend": "sandbox.session",
+  "routing_reason": "governed_routing_mode:sandbox_first",
+  "repair_policy": {
+    "strategy": "retry_same_contract",
+    "max_retries": 6,
+    "immutable_output_bindings": true
+  }
+}
+```
+
+The contract hash seals the entire specification. The repair policy is part of the contract — not an afterthought bolted on at runtime.
+
+### Artifact wiring
+
+Step 0 declares what it will produce. Step 1 declares what it needs to consume. The compiler resolves these before any code runs.
+
+```json
+// Step 0 declares its output:
+"output_artifact_refs": [{
+  "path": "output/_slots/ps-0-fetch-api-datasets/raw_api_data.json",
+  "ref_id": "ps-0-fetch-api-datasets:output:3:raw-api-data"
+}]
+
+// Step 1 declares it as an input:
+"input_artifact_refs": [{
+  "path": "output/_slots/ps-0-fetch-api-datasets/raw_api_data.json",
+  "ref_id": "ps-1-assemble-relationship-graph:input:0:raw-api-data"
+}]
+
+// Step 3 consumes three upstream outputs:
+"input_artifact_refs": [
+  { "ref_id": "ps-3:input:0:enriched-users" },
+  { "ref_id": "ps-3:input:1:raw-api-data" },
+  { "ref_id": "ps-3:input:2:related-data-graph" }
+]
+```
+
+This is not a prompt chain. It is a build graph. The artifacts have stable addresses. The wiring is resolved before step 1 executes. If step 0 does not produce what step 1 expects, step 1 never starts.
+
+### The receipts
+
+After each step, the system independently verifies the model's output:
+
+```json
+{
+  "step_id": "ps-0-fetch-api-datasets",
+  "outputs": [{
+    "exists": true,
+    "size_bytes": 117067,
+    "sha256": "5ce4986d121f06dc418bcb6565640c54...",
+    "parse_validation": { "ok": true },
+    "schema_summary": {
+      "top_level_keys": ["source","users","users_by_id","collections"],
+      "row_count_hint": 10,
+      "candidate_key_hints": [{
+        "columns": ["id"],
+        "distinct_count": 10,
+        "observed_unique_in_sample": true
+      }]
+    }
+  }]
+}
+```
+
+The system hashes the output. It validates that it parses. It infers the schema — column names, row counts, candidate keys. This schema summary flows downstream to the next step, so the next model has type information about its inputs without anyone having to declare it manually.
+
+The model does not get to say "I did it." The system checks.
+
+### What happens when something breaks
+
+Two real failures from this same run:
+
+**Infrastructure failure.** The sandbox returned HTTP 500. The system tried a fresh handle on the same container — also failed. So it provisioned an entirely new container and replayed the identical compiled code. The model never knew. The business logic was unchanged. Only the infrastructure was replaced.
+
+**Logic failure.** The model's own validation caught an extra field (`rank`) that the contract did not specify. The system retried under the same immutable contract. The second model invocation generated different code that passed its own checks. The contract did not change. Only the implementation changed.
+
+This is the compiler-runtime separation in practice. The contract is the specification. The model is the implementation. If the implementation fails, you re-compile fresh code under the same specification. You do not debug the failure — you replace the implementation.
+
+---
+
+## Execution profiles: different models for different jobs
+
+Step 0 downloads data from an API. That does not need a frontier reasoning model — it needs a fast, cheap model that can write a fetch script. Step 3 renders a styled HTML report — that wants a creative model. Step 2 does quantitative analysis — that wants strong analytical reasoning. The planner itself should think deeply. The intent resolver and skill resolver can be cheap and fast.
+
+The system does not leave these decisions to chance. Every run is governed by an execution profile — a configuration envelope that controls which model is called at every phase of the pipeline, what prompt it receives, what reasoning strategy it uses, what validation rules apply, and what budgets are enforced. Here is what the planner phase bindings look like in a real profile:
+
+```json
+{
+  "planner_phase_bindings": {
+    "pass_a": {
+      "model_binding_ref": "anthropic:claude-opus-4-6",
+      "runtime_overrides": {
+        "temperature": 0.7,
+        "use_extended_thinking": true,
+        "thinking_budget_tokens": 4096
+      }
+    },
+    "pass_b": {
+      "model_binding_ref": "anthropic:claude-sonnet-4-6",
+      "runtime_overrides": { "temperature": 0.3 }
+    },
+    "pass_c": {
+      "model_binding_ref": "anthropic:claude-sonnet-4-6",
+      "runtime_overrides": { "temperature": 0.2 }
+    }
+  },
+  "executor_by_backend": {
+    "sandbox.session": {
+      "model_binding_ref": "anthropic:claude-opus-4-6",
+      "runtime_overrides": {
+        "use_extended_thinking": true,
+        "thinking_budget_tokens": 4096
+      }
+    },
+    "edge_isolate": {
+      "model_binding_ref": "anthropic:claude-sonnet-4-6",
+      "runtime_overrides": { "temperature": 0.0 }
+    }
+  }
+}
+```
+
+Pass A — the initial plan — uses a frontier model with extended thinking. Pass B and C — intent and skill resolution — use a faster, cheaper model. The sandbox executor gets the frontier model. Edge-isolate steps get deterministic settings.
+
+I think about this the way I used to think about configuring a Borland C++ Builder project. Per-compilation-unit settings. Optimization level, target architecture, debug symbols — different for different parts of the build. Not because you want complexity, but because different parts of the work have different requirements.
+
+The profile also controls validation strictness (block, report, or skip at each pipeline phase), skill policy (which skills are required, preferred, or denied), budgets (max steps, timeouts, tool-call limits), and reasoning parameters (extended thinking budgets, reasoning effort levels, provider-specific settings that are automatically filtered by provider).
+
+The entire profile is frozen into an immutable snapshot before the run starts. What governed step 1 is exactly what governs step 50. Governance cannot drift mid-execution. And this extends to workspace-level configuration — a legal workspace can use a different profile than a data analysis workspace. Different planner prompts, different model mixes, different governance rules, different skill bindings. Everything lives within a workspace.
+
+---
+
+## Inside the sandbox: what actually executes
+
+I have described the compiler. But what does the compiler produce? What actually runs?
+
+The compiler generates a dispatch package — a complete executable specification for each plan step. That dispatch package is sent to a sandbox where an executor model decomposes it into concrete sub-steps and runs them. Let me walk through what that looks like.
+
+### The pipeline inside each step
+
+When the executor receives a compiled step contract, it does not just run the model's code. It runs a structured pipeline:
+
+1. **Prepare workspace** — create the directory structure (`/workspace/input`, `/workspace/work`, `/workspace/output`, `/workspace/meta`)
+2. **Materialize inputs** — copy the upstream step's verified outputs into the sandbox filesystem at the paths declared in the contract
+3. **Project input paths** — symlink upstream artifacts to the exact read paths the model's code expects
+4. **Generate preflight receipt** — hash all inputs, infer schema summaries, write a receipt proving what went in
+5. **Verify required inputs** — check that every declared required input actually exists on disk
+6. **Execute the business logic** — *this is the only sub-step the model writes* — the actual Python script that does the work
+7. **Generate postflight receipt** — hash all outputs, validate they parse correctly, infer schema summaries, write a receipt proving what came out
+8. **Verify expected outputs** — check that every declared output file exists and is non-empty
+9. **Persist outputs** — save the sandbox outputs to durable workspace storage for downstream consumption
+
+The model writes sub-step 6. The compiler generates the other eight. That harness is what makes the execution governed — the model's creativity is wrapped in infrastructure that validates what went in and verifies what came out.
+
+### What a compiled sub-step looks like
+
+Here is the actual business logic sub-step from the first plan step — the model-generated code that fetches data from an API:
+
+```json
+{
+  "sequence": 5,
+  "label": "Fetch JSONPlaceholder datasets and write raw_api_data",
+  "type": "python",
+  "code": "import json\nfrom pathlib import Path\nfrom urllib.request import Request, urlopen\n...\nusers = fetch_json('/users')\nfor u in users:\n    uid = u['id']\n    posts = fetch_json(f'/users/{uid}/posts')\n    todos = fetch_json(f'/users/{uid}/todos')\n    albums = fetch_json(f'/users/{uid}/albums')\n    raw['users_by_id'][str(uid)] = {...}\n...\nwith out_path.open('w') as f:\n    json.dump(raw, f, indent=2)\nif not out_path.exists():\n    raise RuntimeError('Primary output missing')",
+  "exit_code": 0,
+  "duration_ms": 10227,
+  "ok": true
+}
+```
+
+The model wrote a complete Python script that calls 35+ API endpoints, structures the data, writes the result, and self-validates. The output path (`/workspace/output/_slots/ps-0-fetch-api-datasets/raw_api_data.json`) was not chosen by the model — it was injected by the compiler. The model cannot write to a different location. The contract owns the paths.
+
+And after this sub-step finishes, sub-steps 7 through 9 run automatically — the compiler-generated harness hashes the output, verifies it parses as valid JSON, infers the schema, and persists it for the next step. The model did not have to remember to do any of that. The infrastructure handled it.
+
+### The attempt record
+
+Every execution of a step is recorded as an attempt with full forensics:
+
+```json
+{
+  "attempt_id": "attempt_5130295a-5722-43ea-acf8-088e89009017",
+  "attempt_number": 1,
+  "status": "committed",
+  "started_at": "2026-04-09T05:37:10.681Z",
+  "finished_at": "2026-04-09T05:41:51.447Z",
+  "duration_ms": 280766,
+  "sandbox_id": "sbx:demo:...:1t03v:5dukc2",
+  "total_steps": 10,
+  "completed_steps": 10,
+  "persisted_paths": [
+    "output/_slots/ps-0-fetch-api-datasets/raw_api_data.json",
+    "meta/mcp-tools/journal.ndjson"
+  ]
+}
+```
+
+Each compiled step typically starts without assuming reuse of a prior step's container, but the sandbox runtime can retain and reuse a warm container within the same step for continuations or repair iterations. The `persisted_paths` are the artifacts that survived into workspace storage — everything else should be treated as ephemeral container state. The runtime also persists an MCP/tool journal (`journal.ndjson`) plus receipts and execution evidence for forensic replay.
+
+---
+
+## Capsules: work that compounds
+
+This is where the compiler story becomes an economics story.
+
+When a plan executes successfully, the result is not just output files. The result is a complete record of the compilation: the step graph, the code the model wrote for each sub-step, the input and output manifests, the skill bindings, the validation results, and the exact contracts that governed the run.
+
+That record can be extracted into a Capsule — a self-contained, reusable execution unit. And Capsules come in two forms.
+
+### Sealed Capsules: fully deterministic
+
+Some work is structurally repetitive. The same process, different data, on a schedule. Convert this week's timesheet exports to canonical billing format. Download the API snapshot and compute the enriched metrics. Transform inbound records into the normalized schema.
+
+For this class of work, the sealed Capsule runs without any model inference at all. The executor runs the compiled programs on the new data. The validator checks the outputs. The results are persisted. No tokens spent on planning. No tokens spent on code generation. No tokens spent on capability discovery.
+
+An operation that cost a full planning run the first time costs almost nothing on every subsequent execution. The intelligence was amortized at compile time. The code was proven. The contracts were validated. Now it just runs.
+
+### Structural Capsules: fresh reasoning within a frozen architecture
+
+Some work requires judgment that depends on content. Analyzing a resume requires code — parsing, field extraction, scoring formula computation — but it also requires the model to reason over the actual substance of the resume, weigh qualifications against criteria, and make decisions that cannot be pre-programmed.
+
+This is where structural Capsules are headed. The compiled step graph is preserved — the structure, the contracts, the validation requirements, the model assignments. But the generated code for selected steps is cleared. The model executes fresh within the frozen architecture, reasoning over the new content, writing new code as needed, producing outputs that conform to the same contracts.
+
+Everything that was deterministic stays deterministic. Everything that requires thinking gets fresh thinking. And you did not pay for a new plan.
+
+Today, strict replay — the sealed Capsule — is implemented and running. Structural Capsules with selective fresh reasoning are designed and in development. I mention both because the architectural distinction matters even though only one mode is proven today.
+
+### What this actually means
+
+Think about what just happened. A non-technical user — not a developer, not an engineer — described what they wanted in natural language. The system compiled it, executed it, and proved it worked. Then they encapsulate it. Now it runs reliably, repeatably, governed by the same contracts, for a fraction of the cost.
+
+This person just wrote a program. Without knowing how to code. Without configuring a workflow builder. They described an objective, and the compiler produced a reusable program from it.
+
+And the Capsules are designed for headless execution. The entire lifecycle is API-driven. Any system that can make HTTP requests can dispatch a Capsule run — no UI required. A webhook receives an event, extracts the parameters, dispatches a Capsule. Deterministic, governed, auditable automation — triggered by events, executed by proven compiled plans.
+
+---
+
+## What this enables
+
+I do not know exactly where this goes. I am honest about that. But the range of what the system can do is wide, and the type system is extensible.
+
+The twelve domain packs that exist today — billing audit, legal review, resume screening, research synthesis, finance analysis, security audit, and others — are a starting library. But the system is designed for custom packs. If you need a domain pack for insurance claims processing, or clinical trial analysis, or manufacturing quality control, you build it and register it. You have just introduced your own language — your own types, your own entity schemas, your own disambiguation rules — into the compiler.
+
+Consider what becomes possible:
+
+**Screening five hundred resumes.** The system ingests the files, extracts structured candidate data, scores against the rubric, produces a ranked report. Encapsulate it. Next hiring cycle, run the same Capsule on new resumes. The scoring logic is proven. The extraction is proven. Only the model's judgment over new content is fresh.
+
+**Auditing a year of vendor contracts.** Legal review domain pack. The system extracts clauses, identifies obligations, flags non-standard terms, produces a risk register with citations. Every finding is tied to a specific clause in a specific document. Traceable. Auditable.
+
+**Reconciling billing data every Friday.** Billing audit domain pack. Sealed Capsule. No model inference needed. The transformation code is frozen. The validation is frozen. New data in, reconciled output out. Costs almost nothing to run.
+
+**Building a data dashboard from an API.** The system fetches the data, normalizes it, computes metrics, renders a styled HTML page. This is the run I showed earlier in this note. It works today.
+
+The point is not that any single use case is revolutionary. The point is that the compilation architecture makes each one governed, traceable, replayable, and compounding. And the type system means the compiler gets smarter as the library grows — every new domain pack, every new workflow pack, every new entity schema extends what the system can compile correctly.
+
+---
+
+## What lives around the pipeline
+
+The compilation pipeline is the thesis, but a pipeline alone does not make a system. Three components matter equally:
+
+**Skills as linked libraries.** Skills are not prompt snippets. They are versioned packages. Here is the actual directory listing of the HTML report generator skill:
+
+```
+html-report-generator/
+├── SKILL.md                         # behavioral instructions
+├── REFERENCE_BIBLE.md               # technical reference
+├── scripts/
+│   ├── render_report.py             # rendering pipeline
+│   ├── validate_report.py           # output validation
+│   └── html_to_pdf.py               # format conversion
+├── assets/
+│   ├── base.css                     # base styles
+│   ├── lib/chart.min.js             # charting library
+│   ├── templates/                   # 5 report templates
+│   │   ├── standard.html
+│   │   ├── executive-brief.html
+│   │   ├── dashboard.html
+│   │   ├── comparison.html
+│   │   └── newsletter.html
+│   ├── themes/                      # 5 visual themes
+│   │   ├── modern.css
+│   │   ├── executive.css
+│   │   ├── minimal.css
+│   │   ├── compliance.css
+│   │   └── technical.css
+│   └── theme-manifest.json
+└── references/
+    ├── content-schema.json          # output schema contract
+    └── theme-contract.md            # theme requirements
+```
+
+When a step's compilation determines it needs this skill, the entire package is materialized from storage into the sandbox at `/skills/html-report-generator/`. The model calls `render_report.py` as a subprocess with the right inputs. It does not need to know how to build HTML reports from scratch. It calls the rendering pipeline and gets verified output. This is library linking — the skill loads at step initialization and the model uses what was linked, not what it imagines exists.
+
+**A governed workspace and file system.** The model sees a file system during execution. The user sees a durable workspace. They are bridged by a materialization layer with provenance tracking — human-uploaded files and agent-produced files tracked separately, with full lineage from origin to deliverable.
+
+**Governance as walls, not rules.** Network egress is controlled at the sandbox level with domain, subdomain, path, and method granularity — not by asking the model to avoid certain URLs, but by structurally blocking them. Budget enforcement uses projected pre-checks and runtime counters to halt execution at the boundary, not after the money is spent. Tool allowlists are both frozen into the step plan at compile time and re-enforced at runtime dispatch. These are not rules the model promises to follow. They are walls.
+
+---
+
+## What I have not solved
+
+The semantic type system is at the beginning of its evolution. Twelve domain packs. Not two hundred.
+
+The compiler has bugs. I have gone six months without finding one, then discovered another in a corner case I never anticipated. That is the nature of compilers. You are never done.
+
+Model quality variance is real and I do not fully understand it. The same nominal model can feel materially different across providers, configurations, and moments in time. I am not claiming to know why. I am claiming that the architecture must be designed to survive it.
+
+This is not a finished product. It is a running system with real evidence and honest boundaries. The things I have shown in this note are proven. The things I have not shown are not.
+
+---
+
+## What I want this note to do
+
+I want a small number of technical readers to stop and think about four things:
+
+Maybe the dominant agent architecture — interpret, act, observe, decide — is not the final shape.
+
+Maybe model capability is only half the story, and the other half is the infrastructure that wraps around it.
+
+Maybe the way we communicate information to models — the format, the structure, the language — matters as much as how smart the models are.
+
+Maybe autonomous work needs the same progression that every other serious computing discipline eventually needed: from interpretation to compilation.
+
+I am not publishing this to win a branding exercise. I am not publishing it to launch a product. I am publishing it because I want the right people to see the structure.
+
+If you have built agent systems and felt the pain of runtime ambiguity, silent contract mismatches, capability hallucination, or context decay, then you already understand why I ended up here. And if you come from compilers, operating systems, enterprise integration, or data infrastructure, I suspect the shape of this argument feels familiar.
+
+That is the audience I want to reach first. Not people looking for a magic demo. People who can see what happens when autonomous work stops being interpreted and starts being compiled.
+
+---
+
+*The full architecture thesis, proof artifacts, and supporting technical documentation are available at [link]. This note is the front door. The building is behind it.*
+
+*Simone Coelho is the founder of Amadalis. He has been building systems architecture for over two decades, starting with a Pascal compiler at fifteen and a college thesis on compiler design. He can be reached at [contact].*

@@ -1,0 +1,36 @@
+/* ============================================================================
+   MODERN THEME
+   Vibrant, contemporary, friendly. Indigo/pink palette with system UI fonts.
+   Best for: Customer-facing summaries, product updates, team reports.
+   ============================================================================ */
+
+:root {
+  /* Primary palette */
+  --color-primary: #6366F1;
+  --color-secondary: #EC4899;
+  --color-accent: #14B8A6;
+
+  /* Text */
+  --color-text: #1E293B;
+  --color-text-light: #64748B;
+
+  /* Backgrounds */
+  --color-bg: #FFFFFF;
+  --color-bg-alt: #F8FAFC;
+  --color-border: #E2E8F0;
+
+  /* Semantic colors */
+  --color-success: #22C55E;
+  --color-warning: #F59E0B;
+  --color-danger: #EF4444;
+
+  /* Typography */
+  --font-heading: Inter, system-ui, -apple-system, 'Segoe UI', sans-serif;
+  --font-body: Inter, system-ui, -apple-system, 'Segoe UI', sans-serif;
+  --font-mono: 'JetBrains Mono', 'Fira Code', 'Courier New', monospace;
+
+  /* Layout */
+  --spacing-section: 36px;
+  --border-radius: 8px;
+  --max-width: 900px;
+}

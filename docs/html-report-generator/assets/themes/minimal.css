@@ -1,0 +1,36 @@
+/* ============================================================================
+   MINIMAL THEME
+   Monochrome, maximal whitespace, sharp typography.
+   Best for: Design-conscious audiences, clean presentations, data-forward docs.
+   ============================================================================ */
+
+:root {
+  /* Primary palette */
+  --color-primary: #1A1A1A;
+  --color-secondary: #666666;
+  --color-accent: #1A1A1A;
+
+  /* Text */
+  --color-text: #1A1A1A;
+  --color-text-light: #888888;
+
+  /* Backgrounds */
+  --color-bg: #FFFFFF;
+  --color-bg-alt: #FAFAFA;
+  --color-border: #E5E5E5;
+
+  /* Semantic colors */
+  --color-success: #22C55E;
+  --color-warning: #EAB308;
+  --color-danger: #DC2626;
+
+  /* Typography */
+  --font-heading: system-ui, -apple-system, 'Segoe UI', sans-serif;
+  --font-body: system-ui, -apple-system, 'Segoe UI', sans-serif;
+  --font-mono: 'SF Mono', 'Fira Code', 'Courier New', monospace;
+
+  /* Layout */
+  --spacing-section: 48px;
+  --border-radius: 0px;
+  --max-width: 860px;
+}

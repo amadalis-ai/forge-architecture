@@ -1,0 +1,40 @@
+{
+  "default_theme": "executive",
+  "themes": [
+    {
+      "id": "executive",
+      "name": "Executive",
+      "description": "Conservative, authoritative. Navy/gold palette with serif headings. Best for C-suite reports, board presentations, client deliverables.",
+      "source": "platform",
+      "character": "formal"
+    },
+    {
+      "id": "technical",
+      "name": "Technical",
+      "description": "Dense, modern, code-friendly. Slate/cyan palette with sans-serif headings. Best for engineering docs, architecture reviews, technical audits.",
+      "source": "platform",
+      "character": "professional"
+    },
+    {
+      "id": "compliance",
+      "name": "Compliance",
+      "description": "Formal, print-optimized. Dark blue/teal palette with serif headings. Best for legal documents, regulatory reports, due diligence, audit findings.",
+      "source": "platform",
+      "character": "formal"
+    },
+    {
+      "id": "modern",
+      "name": "Modern",
+      "description": "Vibrant, contemporary, friendly. Indigo/pink palette with system UI fonts. Best for customer-facing summaries, product updates, team reports, and friendly communications.",
+      "source": "platform",
+      "character": "casual"
+    },
+    {
+      "id": "minimal",
+      "name": "Minimal",
+      "description": "Monochrome, maximal whitespace, sharp typography. Best for design-conscious audiences, clean presentations, data-forward documents.",
+      "source": "platform",
+      "character": "neutral"
+    }
+  ]
+}

@@ -1,0 +1,15 @@
+token.md
+*.token
+.env
+
+# Internal working files (not for public repo)
+SESSION_LEDGER.md
+docs/architect-questions.md
+docs/architect-answers.md
+docs/architecture-thesis-outline.md
+docs/founder-note-v2-outline.md
+docs/publication-blueprint.md
+docs/founder-research-note.md
+docs/founder-research-note.html
+index.html
+prev-content/forge-architectural-thesis.docx

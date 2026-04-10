@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>{{ metadata.title }}</title>
+  <style>
+{{ theme_css }}
+{{ base_css }}
+{{ brand_css }}
+
+/* Newsletter-specific layout overrides */
+.newsletter-hero {
+  background: var(--color-primary, #1B2A4A);
+  color: #FFFFFF;
+  padding: 40px 40px 32px;
+  margin: -40px -50px 28px;
+  text-align: center;
+}
+.newsletter-hero .logo {
+  max-height: 50px;
+  margin-bottom: 16px;
+}
+.newsletter-hero h1 {
+  font-family: var(--font-heading, Georgia, serif);
+  font-size: 28pt;
+  color: #FFFFFF;
+  margin: 0 0 8px 0;
+}
+.newsletter-hero .subtitle {
+  color: rgba(255,255,255,0.8);
+  font-size: 13pt;
+}
+.newsletter-hero .meta {
+  color: rgba(255,255,255,0.6);
+  font-size: 10pt;
+  margin-top: 12px;
+}
+.newsletter-layout {
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  gap: 32px;
+}
+.newsletter-main {
+  min-width: 0; /* prevent grid blowout */
+}
+.newsletter-sidebar {
+  min-width: 0;
+}
+.newsletter-sidebar-card {
+  background: var(--color-bg-alt, #F5F5F0);
+  border: 1px solid var(--color-border, #E0E0E0);
+  border-radius: var(--border-radius, 4px);
+  padding: 16px;
+  margin-bottom: 16px;
+}
+.newsletter-sidebar-card h3 {
+  font-family: var(--font-heading, Georgia, serif);
+  font-size: 12pt;
+  color: var(--color-primary, #1B2A4A);
+  margin: 0 0 8px 0;
+  padding-bottom: 6px;
+  border-bottom: 2px solid var(--color-secondary, #C9A962);
+}
+@media (max-width: 768px) {
+  .newsletter-layout { grid-template-columns: 1fr; }
+  .newsletter-hero { margin: -20px -16px 20px; padding: 28px 20px 24px; }
+  .newsletter-hero h1 { font-size: 20pt; }
+}
+@media print {
+  .newsletter-hero { background: var(--color-primary, #1B2A4A) !important; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+  .newsletter-layout { grid-template-columns: 2fr 1fr; }
+}
+  </style>
+  {% if chartjs_code %}
+  <script>{{ chartjs_code }}</script>
+  {% endif %}
+</head>
+<body>
+
+  {# ── HERO HEADER ── #}
+  <div class="newsletter-hero">
+    {% if brand_logo_html %}{{ brand_logo_html }}{% endif %}
+    <h1>{{ metadata.title }}</h1>
+    {% if metadata.subtitle %}
+    <p class="subtitle">{{ metadata.subtitle }}</p>
+    {% endif %}
+    <p class="meta">
+      {{ meta_line }}
+      {% if metadata.confidentiality %} | {{ metadata.confidentiality }}{% endif %}
+    </p>
+  </div>
+
+  {# ── TWO-COLUMN LAYOUT ── #}
+  <div class="newsletter-layout">
+
+    {# ── MAIN COLUMN ── #}
+    <div class="newsletter-main">
+      {# Executive summary at top if present #}
+      {% if executive_summary_html %}
+      {{ executive_summary_html }}
+      {% endif %}
+
+      <main class="report-body">
+        {{ sections_html }}
+      </main>
+    </div>
+
+    {# ── SIDEBAR ── #}
+    {% if sidebar_html %}
+    <aside class="newsletter-sidebar">
+      {{ sidebar_html }}
+    </aside>
+    {% endif %}
+
+  </div>
+
+  {# ── FOOTER ── #}
+  {% if footer_text %}
+  <footer class="report-footer">
+    <p>{{ footer_text }}</p>
+  </footer>
+  {% endif %}
+
+  {# ── CHART RENDER SCRIPTS ── #}
+  {% if chart_scripts %}
+  <script>
+{{ chart_scripts }}
+  </script>
+  {% endif %}
+
+</body>
+</html>

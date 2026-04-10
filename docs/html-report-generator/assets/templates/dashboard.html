@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>{{ metadata.title }}</title>
+  <style>
+{{ theme_css }}
+{{ base_css }}
+{{ brand_css }}
+
+/* Dashboard-specific layout overrides */
+.dashboard-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-bottom: 3px solid var(--color-secondary, #C9A962);
+  padding-bottom: 16px;
+  margin-bottom: 24px;
+}
+.dashboard-header h1 {
+  font-family: var(--font-heading, Georgia, serif);
+  font-size: 22pt;
+  color: var(--color-primary, #1B2A4A);
+  margin: 0;
+}
+.dashboard-header .meta {
+  text-align: right;
+  font-size: 10pt;
+  color: var(--color-text-light, #666666);
+}
+.dashboard-kpi-strip {
+  margin-bottom: 28px;
+}
+.dashboard-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 24px;
+  margin-bottom: 24px;
+}
+.dashboard-grid-item {
+  border: 1px solid var(--color-border, #E0E0E0);
+  border-radius: var(--border-radius, 4px);
+  padding: 16px;
+  background: var(--color-bg, #FFFFFF);
+}
+.dashboard-full-width {
+  grid-column: 1 / -1;
+}
+@media (max-width: 768px) {
+  .dashboard-grid { grid-template-columns: 1fr; }
+  .dashboard-header { flex-direction: column; text-align: center; }
+  .dashboard-header .meta { text-align: center; margin-top: 8px; }
+}
+@media print {
+  .dashboard-grid-item { page-break-inside: avoid; }
+}
+  </style>
+  {% if chartjs_code %}
+  <script>{{ chartjs_code }}</script>
+  {% endif %}
+</head>
+<body>
+
+  {# ── DASHBOARD HEADER ── #}
+  <div class="dashboard-header">
+    <div>
+      {% if brand_logo_html %}{{ brand_logo_html }}{% endif %}
+      <h1>{{ metadata.title }}</h1>
+      {% if metadata.subtitle %}<p class="subtitle">{{ metadata.subtitle }}</p>{% endif %}
+    </div>
+    <div class="meta">
+      <div>{{ meta_line }}</div>
+      {% if metadata.confidentiality %}
+      <span class="confidentiality">{{ metadata.confidentiality }}</span>
+      {% endif %}
+    </div>
+  </div>
+
+  {# ── KPI STRIP (metrics_row sections rendered here first) ── #}
+  {% if kpi_strip_html %}
+  <div class="dashboard-kpi-strip">
+    {{ kpi_strip_html }}
+  </div>
+  {% endif %}
+
+  {# ── DASHBOARD GRID (charts + tables in 2-col grid) ── #}
+  {% if grid_items_html %}
+  <div class="dashboard-grid">
+    {{ grid_items_html }}
+  </div>
+  {% endif %}
+
+  {# ── REMAINING SECTIONS (full width, below grid) ── #}
+  <main class="report-body">
+    {{ sections_html }}
+  </main>
+
+  {# ── FOOTER ── #}
+  {% if footer_text %}
+  <footer class="report-footer">
+    <p>{{ footer_text }}</p>
+  </footer>
+  {% endif %}
+
+  {# ── CHART RENDER SCRIPTS ── #}
+  {% if chart_scripts %}
+  <script>
+{{ chart_scripts }}
+  </script>
+  {% endif %}
+
+</body>
+</html>

@@ -1,0 +1,2565 @@
+{
+  "schema_version": "autonomy.seed.packs.v2.enriched",
+  "generated_at": "2026-03-30",
+  "purpose": "Enriched autonomy seed packs for semantic intent matching in operator four-pass architecture. Includes structural seed data plus rich semantic descriptions, example goals, disambiguation guidance, synonym vocabulary, workflow trigger patterns, and policy situational guidance for direct prompt injection into the Intent Resolver.",
+  "naming_conventions": {
+    "kind_key": "<family>.<representation>[.<subtype>]",
+    "entity_schema_id": "<domain>.<entity>",
+    "profile_id": "<scope>.<kind_key>.<semantic_name>.v<major>",
+    "domain_pack_id": "kebab-case",
+    "workflow_pack_id": "kebab-case",
+    "policy_profile_id": "kebab-case.v<major>",
+    "adapter_id": "adapter.<from_profile>.__to__.<to_profile>.v<major>"
+  },
+  "cross_step_slots": [
+    {
+      "slot": "source_manifest",
+      "description": "List of source artifacts, urls, or connector handles to acquire or load"
+    },
+    {
+      "slot": "raw_files",
+      "description": "Downloaded or loaded files before extraction"
+    },
+    {
+      "slot": "batch_manifest",
+      "description": "Canonical manifest describing a batch of files/items to process"
+    },
+    {
+      "slot": "document_spans",
+      "description": "Extracted document spans with citations/evidence references"
+    },
+    {
+      "slot": "normalized_rows",
+      "description": "Normalized row-oriented structured data"
+    },
+    {
+      "slot": "joined_rows",
+      "description": "Joined rows from multiple upstream datasets"
+    },
+    {
+      "slot": "aggregated_rows",
+      "description": "Grouped or summarized row sets"
+    },
+    {
+      "slot": "findings",
+      "description": "Structured analytical findings"
+    },
+    {
+      "slot": "scores",
+      "description": "Scored/ranked records"
+    },
+    {
+      "slot": "report_artifact",
+      "description": "Human-readable report deliverable"
+    },
+    {
+      "slot": "site_spec",
+      "description": "Structured website/application spec"
+    },
+    {
+      "slot": "site_bundle",
+      "description": "Rendered deployable website bundle"
+    },
+    {
+      "slot": "deployment_receipt",
+      "description": "Deployment result metadata"
+    },
+    {
+      "slot": "validation_results",
+      "description": "Validation or QA outputs"
+    },
+    {
+      "slot": "change_set",
+      "description": "Code patch or file edit set"
+    }
+  ],
+  "artifact_kinds": [
+    {
+      "kind_key": "file.binary",
+      "description": "Opaque binary file"
+    },
+    {
+      "kind_key": "file.text",
+      "description": "Opaque text file"
+    },
+    {
+      "kind_key": "file.archive.zip",
+      "description": "Zip archive"
+    },
+    {
+      "kind_key": "file.batch_manifest",
+      "description": "Manifest describing a batch of files/items"
+    },
+    {
+      "kind_key": "object.json",
+      "description": "Single JSON object"
+    },
+    {
+      "kind_key": "object.yaml",
+      "description": "Single YAML object"
+    },
+    {
+      "kind_key": "table.csv",
+      "description": "CSV table"
+    },
+    {
+      "kind_key": "table.tsv",
+      "description": "TSV table"
+    },
+    {
+      "kind_key": "table.json_rows",
+      "description": "Row-oriented JSON array"
+    },
+    {
+      "kind_key": "table.parquet",
+      "description": "Parquet dataset"
+    },
+    {
+      "kind_key": "dataset.joined_rows",
+      "description": "Joined row dataset"
+    },
+    {
+      "kind_key": "dataset.aggregated_rows",
+      "description": "Aggregated dataset"
+    },
+    {
+      "kind_key": "report.markdown",
+      "description": "Markdown report"
+    },
+    {
+      "kind_key": "report.html",
+      "description": "HTML report"
+    },
+    {
+      "kind_key": "report.pdf",
+      "description": "PDF report"
+    },
+    {
+      "kind_key": "web.page.html",
+      "description": "Single HTML page"
+    },
+    {
+      "kind_key": "web.bundle.static",
+      "description": "Static website bundle ready for deploy"
+    },
+    {
+      "kind_key": "web.asset_manifest",
+      "description": "Manifest of web assets"
+    },
+    {
+      "kind_key": "deployment.receipt",
+      "description": "Deployment result metadata"
+    },
+    {
+      "kind_key": "code.patch.unified_diff",
+      "description": "Unified diff patch"
+    },
+    {
+      "kind_key": "code.bundle.project",
+      "description": "Project bundle / source tree snapshot"
+    },
+    {
+      "kind_key": "validation.results",
+      "description": "Validation / QA results"
+    },
+    {
+      "kind_key": "evidence.json_rows",
+      "description": "Evidence rows with provenance"
+    },
+    {
+      "kind_key": "citations.list",
+      "description": "List of citation references"
+    }
+  ],
+  "policy_profiles": [
+    {
+      "policy_profile_id": "strict.fail-closed.v1",
+      "rules": [
+        "consumer-required fields must all be present",
+        "no implicit normalization",
+        "mismatch blocks execution",
+        "provenance requirements enforced exactly"
+      ],
+      "description": "Maximum strictness. The consumer contract must be satisfied exactly: required fields, required structure, and required provenance must all be present. No implicit normalization or semantic inference is allowed. Any mismatch blocks execution.",
+      "situational_triggers": [
+        "compliance-critical work where data integrity is non-negotiable",
+        "financial or legal outputs that may be audited externally",
+        "missions where incorrect data is worse than missing data",
+        "regulatory or board-level reporting with strict contract expectations"
+      ]
+    },
+    {
+      "policy_profile_id": "strict.allow-normalizers.v1",
+      "rules": [
+        "explicit adapters may be inserted automatically",
+        "no implicit semantic inference beyond declared adapters",
+        "producer/consumer mismatch still blocks if no adapter exists"
+      ],
+      "description": "Strict semantics with explicit flexibility. Producer/consumer contracts must still be respected, but the compiler may insert declared adapters or normalizers when an exact match is unavailable. No hidden inference beyond the registered adapters.",
+      "situational_triggers": [
+        "multi-source workflows where formats differ but semantic normalization is expected",
+        "billing, resume, or CRM pipelines that start with heterogeneous raw inputs",
+        "cases where exact consumer structure is required but explicit canonicalization is acceptable",
+        "missions where fail-closed is too rigid but silent coercion would still be unsafe"
+      ]
+    },
+    {
+      "policy_profile_id": "generic.inference-allowed.v1",
+      "rules": [
+        "compiler may bind generic profiles when semantic specificity is absent",
+        "must annotate binding as inferred",
+        "domain-specific profiles still preferred"
+      ],
+      "description": "Best-effort flexibility. The system may bind generic profiles and tolerate weaker semantic specificity when the mission is exploratory, draft-oriented, or intentionally flexible. Domain-specific profiles are still preferred when available.",
+      "situational_triggers": [
+        "exploratory analysis where approximate structure is acceptable",
+        "prototype or draft workflows before production hardening",
+        "loosely structured or heterogeneous inputs where the user asked for best-effort handling",
+        "early-stage website/report generation where exact domain semantics are not yet locked"
+      ]
+    },
+    {
+      "policy_profile_id": "provenance.required.v1",
+      "rules": [
+        "source_artifact_ids required",
+        "citation_ids/evidence_card_ids required where profile declares them",
+        "runtime blocks publish if provenance missing"
+      ],
+      "description": "Publishing or downstream consumption requires explicit provenance. Source artifact IDs, citations, or evidence references must be present wherever the selected profiles declare them. Missing provenance blocks completion.",
+      "situational_triggers": [
+        "research, legal, or audit outputs where claims must be traceable to evidence",
+        "board-ready or externally reviewable findings packages",
+        "missions where downstream users must validate how conclusions were derived",
+        "artifact chains that will be re-consumed by later steps under strict traceability"
+      ]
+    },
+    {
+      "policy_profile_id": "deploy.human-review-required.v1",
+      "rules": [
+        "deployment or external-side-effect steps require explicit approval before execution",
+        "non-deploy work may proceed"
+      ],
+      "description": "Any deployment, publication, or external side effect requires explicit human approval before execution. Build and validation work may continue, but the final publish step must stop at the approval boundary.",
+      "situational_triggers": [
+        "deploying a website, report, or artifact to an external platform",
+        "publishing a build or package outside the workspace boundary",
+        "creating customer-visible or public-facing outputs",
+        "any step with external side effects where governance requires a human gate"
+      ]
+    }
+  ],
+  "workflow_packs": [
+    {
+      "workflow_pack_id": "file-acquisition",
+      "purpose": "Use this workflow when the step must fetch, download, enumerate, or stage source material before downstream processing. It is about acquiring or staging inputs, not interpreting them.",
+      "typical_slots": {
+        "inputs": [
+          "source_manifest"
+        ],
+        "outputs": [
+          "raw_files",
+          "batch_manifest"
+        ]
+      },
+      "canonical_profiles": [
+        "generic.object.json.source_manifest.v1",
+        "generic.file.batch_manifest.batch_manifest.v1",
+        "generic.object.json.file_download_request.v1",
+        "generic.object.json.file_download_result.v1"
+      ],
+      "example_step_purposes": [
+        "Download the source files from the provided URLs and stage them for downstream processing.",
+        "Enumerate the requested files and create a source manifest for later steps.",
+        "Fetch the referenced documents and persist a batch manifest with their locations.",
+        "Collect the raw input sources into a staged set that later steps can consume."
+      ],
+      "trigger_patterns": [
+        "fetch source files",
+        "download and stage inputs",
+        "enumerate sources",
+        "build source manifest",
+        "stage raw files"
+      ],
+      "disambiguation_notes": [
+        "file-acquisition is about obtaining or staging inputs. ingest-materialize begins after the files or URLs are already available and converts them into extracted or typed artifacts.",
+        "Use file-acquisition when the primary output is a manifest or staged raw files, not normalized rows or findings."
+      ]
+    },
+    {
+      "workflow_pack_id": "file-batch-load",
+      "purpose": "Use this workflow when many local or durable files need to be loaded into a canonical manifest or processing batch before extraction or scoring.",
+      "typical_slots": {
+        "inputs": [
+          "source_manifest"
+        ],
+        "outputs": [
+          "batch_manifest",
+          "raw_files"
+        ]
+      },
+      "canonical_profiles": [
+        "generic.file.batch_manifest.batch_manifest.v1",
+        "generic.table.json_rows.file_inventory_rows.v1"
+      ],
+      "example_step_purposes": [
+        "Load the uploaded resumes into a canonical batch manifest for downstream extraction.",
+        "Enumerate all input files and produce a structured file inventory with metadata.",
+        "Create a processing batch from the staged documents and record their canonical references.",
+        "Turn the uploaded file set into a machine-readable batch manifest."
+      ],
+      "trigger_patterns": [
+        "batch load files",
+        "create file manifest",
+        "enumerate uploaded documents",
+        "load many files into one batch",
+        "build processing inventory"
+      ],
+      "disambiguation_notes": [
+        "file-batch-load is for creating a canonical manifest over many files. file-acquisition is for fetching or staging the files in the first place.",
+        "file-batch-load emits manifests or document references, not extracted spans or scored outputs."
+      ]
+    },
+    {
+      "workflow_pack_id": "ingest-materialize",
+      "purpose": "Use this workflow when raw files, URLs, or staged inputs must be converted into extracted spans, parsed objects, or typed rows that other steps can consume reliably.",
+      "typical_slots": {
+        "inputs": [
+          "raw_files",
+          "batch_manifest"
+        ],
+        "outputs": [
+          "document_spans",
+          "normalized_rows"
+        ]
+      },
+      "canonical_profiles": [
+        "generic.table.json_rows.document_spans.v1",
+        "generic.table.json_rows.normalized_rows.v1"
+      ],
+      "example_step_purposes": [
+        "Extract document spans and citations from the staged contracts.",
+        "Parse the raw JSON export into typed rows for downstream analysis.",
+        "Materialize uploaded PDFs into extracted text spans and document metadata.",
+        "Convert the staged source files into typed records the next step can score."
+      ],
+      "trigger_patterns": [
+        "extract spans from documents",
+        "parse raw export into typed rows",
+        "materialize inputs",
+        "convert staged files into records",
+        "ingest raw files"
+      ],
+      "disambiguation_notes": [
+        "ingest-materialize begins after files are already available and produces typed or extracted artifacts. normalize-transform reshapes already-ingested structured artifacts into a canonical or alternative form.",
+        "Use ingest-materialize when the key action is extraction/parsing from raw source material, not joining or aggregating structured datasets."
+      ]
+    },
+    {
+      "workflow_pack_id": "normalize-transform",
+      "purpose": "Use this workflow when the step must canonicalize fields, reshape structures, map enums, or convert one structured representation into another compatible one.",
+      "typical_slots": {
+        "inputs": [
+          "normalized_rows"
+        ],
+        "outputs": [
+          "normalized_rows",
+          "joined_rows",
+          "aggregated_rows"
+        ]
+      },
+      "canonical_profiles": [
+        "generic.table.json_rows.normalized_rows.v1",
+        "generic.dataset.joined_rows.joined_rows.v1",
+        "generic.dataset.aggregated_rows.aggregated_rows.v1"
+      ],
+      "example_step_purposes": [
+        "Normalize the raw time-entry export into canonical billing.time_entry rows.",
+        "Convert the extracted resume attributes into a standardized candidate profile schema.",
+        "Reshape the CRM export into a clean rowset with normalized status values.",
+        "Map heterogeneous source fields into one canonical schema for downstream comparison."
+      ],
+      "trigger_patterns": [
+        "normalize rows",
+        "reshape into canonical schema",
+        "map fields and enums",
+        "convert structured data",
+        "transform into normalized rows"
+      ],
+      "disambiguation_notes": [
+        "normalize-transform changes shape or conventions of structured data. reconcile-compare requires two or more compatible sources and emits matches or discrepancies.",
+        "normalize-transform should not be used when the primary output is a score, ranking, or report artifact."
+      ]
+    },
+    {
+      "workflow_pack_id": "reconcile-compare",
+      "purpose": "Use this workflow when two or more compatible inputs must be compared to identify matches, mismatches, discrepancies, or missing records.",
+      "typical_slots": {
+        "inputs": [
+          "normalized_rows",
+          "joined_rows"
+        ],
+        "outputs": [
+          "findings",
+          "scores",
+          "report_artifact"
+        ]
+      },
+      "canonical_profiles": [
+        "billing.table.json_rows.discrepancy_rows.v1",
+        "finance.table.json_rows.variance_rows.v1"
+      ],
+      "example_step_purposes": [
+        "Compare normalized time entries to invoice lines and identify discrepancies.",
+        "Cross-reference the candidate profiles against the job requirements and flag mismatches.",
+        "Match records from source A against source B and emit rows present in one but not the other.",
+        "Reconcile the exported ledger entries against the budget allocations."
+      ],
+      "trigger_patterns": [
+        "compare two sources",
+        "find discrepancies",
+        "reconcile datasets",
+        "match records across",
+        "cross-reference and flag mismatches"
+      ],
+      "disambiguation_notes": [
+        "reconcile-compare requires two or more input sources to compare. analyze-score-rank operates on one source (or one already-joined source) and scores or orders it.",
+        "reconcile-compare emits discrepancy or match findings. normalize-transform emits reshaped data without comparison semantics."
+      ]
+    },
+    {
+      "workflow_pack_id": "analyze-score-rank",
+      "purpose": "Use this workflow when the step evaluates rows or documents against criteria and produces scores, ranks, classifications, or prioritized findings.",
+      "typical_slots": {
+        "inputs": [
+          "document_spans",
+          "normalized_rows"
+        ],
+        "outputs": [
+          "findings",
+          "scores"
+        ]
+      },
+      "canonical_profiles": [
+        "generic.table.json_rows.scored_rows.v1",
+        "resume.table.json_rows.resume_audit_rows.v1"
+      ],
+      "example_step_purposes": [
+        "Score normalized candidate profiles against the hiring rubric and rank the top matches.",
+        "Classify the security findings by severity and prioritize remediation items.",
+        "Rank customers by revenue concentration and flag the highest-risk accounts.",
+        "Evaluate contracts against the risk rubric and order them by exposure."
+      ],
+      "trigger_patterns": [
+        "score against criteria",
+        "rank results",
+        "classify and prioritize",
+        "evaluate records",
+        "produce ordered findings"
+      ],
+      "disambiguation_notes": [
+        "analyze-score-rank assumes the inputs are already prepared or normalized enough to evaluate. normalize-transform should happen first when schema or field conventions are still unstable.",
+        "analyze-score-rank works on one logical source or one prepared joined source. reconcile-compare is for comparing multiple sources to each other."
+      ]
+    },
+    {
+      "workflow_pack_id": "research-fetch-summarize",
+      "purpose": "Use this workflow when the step must fetch sources, extract claims/evidence, and produce grounded summaries or finding rows from research material.",
+      "typical_slots": {
+        "inputs": [
+          "source_manifest"
+        ],
+        "outputs": [
+          "document_spans",
+          "findings",
+          "report_artifact"
+        ]
+      },
+      "canonical_profiles": [
+        "research.table.json_rows.claims.v1",
+        "research.table.json_rows.evidence_rows.v1",
+        "research.report.markdown.summary.v1"
+      ],
+      "example_step_purposes": [
+        "Fetch the cited sources, extract supporting claims, and summarize the evidence.",
+        "Collect documentation pages and produce a grounded summary of the supported integration pattern.",
+        "Pull public sources on the vendor and distill key claims with provenance.",
+        "Gather market evidence and synthesize a concise findings summary."
+      ],
+      "trigger_patterns": [
+        "fetch sources and summarize",
+        "extract claims and evidence",
+        "grounded research summary",
+        "pull documentation and synthesize",
+        "collect evidence across sources"
+      ],
+      "disambiguation_notes": [
+        "research-fetch-summarize is for evidence acquisition and synthesis from sources. render-report is for turning already-produced findings into a human-facing deliverable.",
+        "Use research-fetch-summarize when provenance and source comparison are core to the step."
+      ]
+    },
+    {
+      "workflow_pack_id": "render-report",
+      "purpose": "Use this workflow when findings, rows, scores, or summaries must be turned into a human-readable report artifact such as Markdown, HTML, PDF, slides, or a styled document.",
+      "typical_slots": {
+        "inputs": [
+          "findings",
+          "normalized_rows"
+        ],
+        "outputs": [
+          "report_artifact"
+        ]
+      },
+      "canonical_profiles": [
+        "generic.report.markdown.summary.v1",
+        "generic.report.html.summary.v1",
+        "generic.report.pdf.summary.v1"
+      ],
+      "example_step_purposes": [
+        "Generate a board-ready HTML report from the investigation findings and charts.",
+        "Render the discrepancy rows into a concise audit summary document.",
+        "Compose a candidate ranking report from scored profiles and rubric notes.",
+        "Turn the legal clause findings into a readable risk register report."
+      ],
+      "trigger_patterns": [
+        "generate report artifact",
+        "render findings into report",
+        "compose deliverable",
+        "build human-readable summary",
+        "format final brief"
+      ],
+      "disambiguation_notes": [
+        "render-report is for presentation and composition of already-produced findings or data. It should usually come after analysis, scoring, or reconciliation.",
+        "Use website-build or render-website when the output is a site or deployable web bundle rather than a conventional report artifact."
+      ]
+    },
+    {
+      "workflow_pack_id": "render-website",
+      "purpose": "Use this workflow when a site specification or structured content package must be converted into a static website or deployable web bundle.",
+      "typical_slots": {
+        "inputs": [
+          "site_spec"
+        ],
+        "outputs": [
+          "site_bundle",
+          "validation_results"
+        ]
+      },
+      "canonical_profiles": [
+        "web.object.json.site_spec.v1",
+        "web.web.bundle.static.site_bundle.v1",
+        "web.object.json.validation_results.v1"
+      ],
+      "example_step_purposes": [
+        "Render the site specification into a deployable static website bundle.",
+        "Build the multi-page website from the approved page spec and content blocks.",
+        "Convert the architecture brief spec into an interactive static site.",
+        "Generate the final website artifacts ready for preview and deployment."
+      ],
+      "trigger_patterns": [
+        "render site bundle",
+        "build website from spec",
+        "generate deployable web bundle",
+        "convert site spec to static site",
+        "produce website artifacts"
+      ],
+      "disambiguation_notes": [
+        "render-website assumes a site spec or equivalent structured website contract already exists. website-build as a domain may include planning, content prep, and deployment around this workflow.",
+        "render-website is not the same as render-report; its output is a website or web bundle with routes/components, not a conventional report artifact."
+      ]
+    },
+    {
+      "workflow_pack_id": "code-modification",
+      "purpose": "Use this workflow when the step must apply source-code edits or patches and validate the resulting changes through build, lint, or test checks.",
+      "typical_slots": {
+        "inputs": [
+          "change_set"
+        ],
+        "outputs": [
+          "change_set",
+          "validation_results"
+        ]
+      },
+      "canonical_profiles": [
+        "code.code.patch.unified_diff.change_set.v1",
+        "code.object.json.validation_results.v1"
+      ],
+      "example_step_purposes": [
+        "Apply the requested code changes and produce a validated patch set.",
+        "Modify the handler implementation and verify the project still builds.",
+        "Patch the source files to add the new route and run validation checks.",
+        "Make the file edits and capture the resulting change set with validation results."
+      ],
+      "trigger_patterns": [
+        "apply code changes",
+        "generate patch and validate",
+        "edit source files safely",
+        "modify code and test",
+        "produce change set"
+      ],
+      "disambiguation_notes": [
+        "code-modification is for persistent code edits and validation. normalize-transform or analyze-score-rank should not be used when the primary output is changed source code.",
+        "If the task is generating a website bundle from a specification, render-website or website-build is usually a better fit than code-modification."
+      ]
+    },
+    {
+      "workflow_pack_id": "deploy-publish",
+      "purpose": "Use this workflow when a prepared artifact or bundle must be published, deployed, uploaded, or otherwise made externally available.",
+      "typical_slots": {
+        "inputs": [
+          "site_bundle",
+          "report_artifact"
+        ],
+        "outputs": [
+          "deployment_receipt"
+        ]
+      },
+      "canonical_profiles": [
+        "web.object.json.deployment_receipt.v1",
+        "generic.object.json.publish_receipt.v1"
+      ],
+      "example_step_purposes": [
+        "Deploy the validated static bundle to Cloudflare Pages and capture the deployment receipt.",
+        "Publish the generated report artifact to the configured hosting target.",
+        "Upload the packaged site bundle and return the resulting deployment URL.",
+        "Create a production deployment from the prepared bundle after approval."
+      ],
+      "trigger_patterns": [
+        "deploy prepared artifact",
+        "publish bundle",
+        "create deployment",
+        "upload and host",
+        "return deployment receipt"
+      ],
+      "disambiguation_notes": [
+        "deploy-publish assumes the bundle or artifact is already built and validated. render-website or render-report should produce the artifact first.",
+        "deploy-publish often requires a stricter or approval-gated policy profile than upstream build steps."
+      ]
+    },
+    {
+      "workflow_pack_id": "investigation-parallel",
+      "purpose": "Use this workflow when the work should be decomposed into parallel or specialist subtasks and later synthesized into one coherent result.",
+      "typical_slots": {
+        "inputs": [
+          "source_manifest",
+          "raw_files",
+          "findings"
+        ],
+        "outputs": [
+          "findings",
+          "report_artifact"
+        ]
+      },
+      "canonical_profiles": [
+        "generic.table.json_rows.findings.v1",
+        "generic.report.markdown.summary.v1"
+      ],
+      "example_step_purposes": [
+        "Split the mission into research, document analysis, and validation subtasks that can run in parallel.",
+        "Dispatch specialist work items and synthesize the resulting findings.",
+        "Decompose the investigation into bounded sub-analyses for faster completion.",
+        "Coordinate multiple independent evidence-gathering tasks and merge the outputs."
+      ],
+      "trigger_patterns": [
+        "parallel specialist work",
+        "decompose into subtasks",
+        "dispatch and synthesize",
+        "run independent analyses",
+        "coordinate multiple work streams"
+      ],
+      "disambiguation_notes": [
+        "investigation-parallel is for orchestration, not for the content of a specific domain step. It should be used when parallelism or specialist separation is the main strategy.",
+        "Do not use investigation-parallel for straightforward single-agent operator tasks that can be completed sequentially."
+      ]
+    }
+  ],
+  "domain_packs": [
+    {
+      "domain_pack_id": "research-synthesis",
+      "purpose": "Use this domain when the goal is to gather external or internal evidence, compare claims across sources, and synthesize grounded findings into a memo, brief, matrix, or recommendation. It is for evidence-led reasoning, not for raw scraping alone and not for pure document extraction without synthesis.",
+      "entity_schemas": [
+        "research.source_record",
+        "research.claim",
+        "research.evidence_row",
+        "research.summary_report"
+      ],
+      "planner_triggers": [
+        "research",
+        "look up",
+        "compare sources",
+        "summarize sources",
+        "fact check",
+        "web fetch",
+        "find evidence"
+      ],
+      "canonical_profiles": [
+        "generic.object.json.source_manifest.v1",
+        "generic.file.batch_manifest.batch_manifest.v1",
+        "generic.table.json_rows.document_spans.v1",
+        "research.table.json_rows.claims.v1",
+        "research.table.json_rows.evidence_rows.v1",
+        "research.report.markdown.summary.v1",
+        "research.report.html.summary.v1"
+      ],
+      "default_workflow_packs": [
+        "file-acquisition",
+        "ingest-materialize",
+        "research-fetch-summarize",
+        "render-report"
+      ],
+      "example_user_goals": [
+        "Research the competitive landscape for AI website builders and summarize the real tradeoffs with sources.",
+        "Look up recent changes to Cloudflare Pages deployment guidance and explain what matters for our architecture.",
+        "Find evidence for and against this market claim and tell me what is actually supported.",
+        "Compare these three vendors using external sources and produce a recommendation memo.",
+        "Summarize what reputable sources say about passkey adoption and where the evidence is weak.",
+        "Investigate whether this integration pattern is actually supported by the platform documentation.",
+        "Gather sources on the legal and technical risks of deploying AI-generated websites at scale.",
+        "Pull together a grounded brief on how other agent platforms manage long-running execution."
+      ],
+      "disambiguation_notes": [
+        "Use research-synthesis when the mission requires external or multi-source evidence gathering and a grounded synthesis. Use investigation-core when the task is a broader multi-step orchestration pattern without a dominant research/evidence objective.",
+        "Use research-synthesis when the output should explain what sources support, contradict, or leave unresolved. Use legal-review when the primary material is contracts, policies, or legal text that must be analyzed as legal artifacts.",
+        "Use research-synthesis when the user is asking what is true in the world. Use data-merge-transform when the user already has structured data and needs joins, reshaping, or calculations."
+      ],
+      "synonym_vocabulary": [
+        "research",
+        "look up",
+        "find evidence",
+        "grounded summary",
+        "fact check",
+        "verify claim",
+        "source comparison",
+        "corroborate",
+        "cross-check",
+        "due diligence",
+        "market scan",
+        "landscape"
+      ]
+    },
+    {
+      "domain_pack_id": "investigation-core",
+      "purpose": "Use this domain when the mission is a broad, multi-step investigation that may span documents, datasets, research, validation, or synthesis, but does not belong primarily to one narrower domain. It is the generic investigation umbrella for planner-driven, findings-oriented work.",
+      "entity_schemas": [
+        "generic.finding",
+        "generic.evidence_ref",
+        "generic.summary_report"
+      ],
+      "planner_triggers": [
+        "investigate",
+        "analyze across",
+        "compare documents",
+        "multi-step analysis",
+        "specialist workers"
+      ],
+      "canonical_profiles": [
+        "generic.object.json.source_manifest.v1",
+        "generic.table.json_rows.findings.v1",
+        "generic.report.markdown.summary.v1",
+        "generic.report.html.summary.v1"
+      ],
+      "default_workflow_packs": [
+        "investigation-parallel",
+        "render-report"
+      ],
+      "example_user_goals": [
+        "Investigate why this workflow keeps failing and produce a root-cause summary with next actions.",
+        "Analyze this package of docs, exports, and notes and tell me what the major issues are.",
+        "Run a comprehensive investigation into how this system behaves end to end and summarize the gaps.",
+        "Take all these findings from different sources and build a coherent investigation report.",
+        "Figure out what happened across these artifacts and reconstruct the sequence of events.",
+        "Investigate this architecture proposal and surface the main risks, open questions, and recommended fixes.",
+        "Review this mixed set of evidence and produce a board-ready briefing.",
+        "Perform a structured investigation into this product failure and identify what needs to change."
+      ],
+      "disambiguation_notes": [
+        "Use investigation-core when the task is a general multi-step investigation without a strong single-domain center. Use research-synthesis when external evidence gathering is the dominant activity.",
+        "Use investigation-core when the main value is orchestration and synthesis across mixed evidence types. Use legal-review, billing-audit, or finance-analysis when the mission is clearly anchored in one of those domains.",
+        "If the user mainly wants a website, report, or code artifact built, use website-build or code-modification instead of investigation-core."
+      ],
+      "synonym_vocabulary": [
+        "investigate",
+        "deep dive",
+        "root cause",
+        "findings",
+        "gap analysis",
+        "evidence package",
+        "what happened",
+        "reconstruct",
+        "synthesis",
+        "multi-step analysis",
+        "board briefing",
+        "issue triage"
+      ]
+    },
+    {
+      "domain_pack_id": "resume-audit",
+      "purpose": "Use this domain when the task is to batch-load resumes or CVs, extract structured candidate information, compare candidates against a rubric or role description, and produce rankings, audit tables, or hiring summaries.",
+      "entity_schemas": [
+        "resume.candidate_document",
+        "resume.candidate_profile",
+        "resume.resume_audit_row",
+        "resume.job_requirement"
+      ],
+      "planner_triggers": [
+        "resume audit",
+        "screen resumes",
+        "rank candidates",
+        "batch load cv files",
+        "candidate scoring"
+      ],
+      "canonical_profiles": [
+        "generic.file.batch_manifest.batch_manifest.v1",
+        "generic.table.json_rows.document_spans.v1",
+        "resume.table.json_rows.candidate_profiles.v1",
+        "resume.table.json_rows.resume_audit_rows.v1",
+        "resume.report.html.audit_summary.v1"
+      ],
+      "default_workflow_packs": [
+        "file-batch-load",
+        "ingest-materialize",
+        "analyze-score-rank",
+        "render-report"
+      ],
+      "domain_notes": [
+        "PII may be present; apply redaction/privacy policy where required."
+      ],
+      "example_user_goals": [
+        "Audit these resumes against the job description and rank the top candidates.",
+        "Batch process these CVs and tell me which applicants fit the role best.",
+        "Score all candidate resumes against this rubric and produce a shortlist.",
+        "Load these uploaded resumes, extract the key facts, and compare them to the role requirements.",
+        "Find the strongest candidates from this resume batch and explain why.",
+        "Review these applicants for a senior backend role and produce a hiring report.",
+        "Compare these resumes against our must-have criteria and flag weak matches.",
+        "Turn this folder of resumes into a ranked candidate report with strengths and gaps."
+      ],
+      "disambiguation_notes": [
+        "Use resume-audit when the inputs are candidate resumes, CVs, or applicant profiles and the mission is evaluation or ranking. Use research-synthesis when the task is researching people or companies from external sources rather than scoring resumes.",
+        "Use resume-audit when the work requires batch file loading and candidate extraction. Use data-merge-transform only when the task is structural reshaping of already-typed candidate data without evaluation semantics.",
+        "If the user wants legal/compliance review of hiring documentation, use legal-review or investigation-core depending on the dominant need."
+      ],
+      "synonym_vocabulary": [
+        "resume",
+        "CV",
+        "candidate profile",
+        "applicant",
+        "screening",
+        "shortlist",
+        "hiring rubric",
+        "must-haves",
+        "fit score",
+        "candidate ranking",
+        "talent review",
+        "resume batch"
+      ]
+    },
+    {
+      "domain_pack_id": "billing-audit",
+      "purpose": "Use this domain when the mission is to reconcile time, rates, contracts, or invoice lines and determine what should be billed, what was billed incorrectly, or where billing discrepancies exist. It is specifically about billable work, rates, invoices, and T&M/SOW alignment.",
+      "entity_schemas": [
+        "billing.time_entry",
+        "billing.rate_card",
+        "billing.invoice_line_item",
+        "billing.discrepancy_row",
+        "billing.billing_summary"
+      ],
+      "planner_triggers": [
+        "billing audit",
+        "invoice discrepancies",
+        "timesheet reconciliation",
+        "what to invoice",
+        "billable hours"
+      ],
+      "canonical_profiles": [
+        "billing.table.json_rows.time_entries.v1",
+        "billing.table.json_rows.rate_cards.v1",
+        "billing.table.json_rows.invoice_line_items.v1",
+        "billing.table.json_rows.discrepancy_rows.v1",
+        "billing.report.html.audit_summary.v1"
+      ],
+      "default_workflow_packs": [
+        "file-acquisition",
+        "normalize-transform",
+        "reconcile-compare",
+        "render-report"
+      ],
+      "example_user_goals": [
+        "Audit these timesheets against the rate cards and tell me what to invoice.",
+        "Figure out how much we owe the contractors based on these time entries.",
+        "These invoices don't add up — find the billing errors.",
+        "Reconcile our time tracking exports with the client invoices.",
+        "Match the hours logged against what was actually billed and flag discrepancies.",
+        "Create an invoice-ready summary from these timesheet CSVs and the rate schedule.",
+        "Which time entries are missing from the invoice? Cross-reference both files.",
+        "Compare the billable hours report to the actual invoice lines."
+      ],
+      "disambiguation_notes": [
+        "Use billing-audit when the mission involves matching time, rates, contracts, or invoice lines to determine billable amounts or discrepancies. Use finance-analysis when the mission is about ledger entries, budgeting, close processes, or financial performance.",
+        "Use billing-audit when there are two or more billing-related sources to reconcile (timesheets vs invoices, rate cards vs billed lines). Use data-merge-transform when the task is only structural reshaping without billing semantics.",
+        "If the user mentions audit in a controls/compliance context rather than billable work, use security-audit or investigation-core instead."
+      ],
+      "synonym_vocabulary": [
+        "timesheets",
+        "time entries",
+        "hours logged",
+        "billable time",
+        "T&M",
+        "rate cards",
+        "fee schedules",
+        "bill rates",
+        "charge rates",
+        "invoice lines",
+        "billing lines",
+        "line items",
+        "reconciliation",
+        "cross-reference",
+        "discrepancies",
+        "variances",
+        "SOW"
+      ]
+    },
+    {
+      "domain_pack_id": "finance-analysis",
+      "purpose": "Use this domain for accounting and finance analysis: ledger entries, balances, budgets, variances, spend, revenue reporting, and close-style summaries. It is for financial interpretation and reporting, not operational billing reconciliation.",
+      "entity_schemas": [
+        "finance.ledger_entry",
+        "finance.account_balance",
+        "finance.budget_line",
+        "finance.variance_row"
+      ],
+      "planner_triggers": [
+        "finance report",
+        "variance analysis",
+        "ledger analysis",
+        "budget vs actuals",
+        "month close"
+      ],
+      "canonical_profiles": [
+        "finance.table.json_rows.ledger_entries.v1",
+        "finance.table.json_rows.variance_rows.v1",
+        "finance.report.markdown.close_summary.v1",
+        "finance.report.html.close_summary.v1"
+      ],
+      "default_workflow_packs": [
+        "file-acquisition",
+        "normalize-transform",
+        "analyze-score-rank",
+        "render-report"
+      ],
+      "example_user_goals": [
+        "Summarize these ledger exports and explain the biggest variances this month.",
+        "Compare actuals versus budget and tell me where we are over or under.",
+        "Analyze this month-close package and surface unusual account movements.",
+        "Create a financial summary from these balance and variance files.",
+        "Show me the major spend drivers by cost center from this export.",
+        "Explain the revenue and margin trend in these finance datasets.",
+        "Build a close-ready variance report from the posted entries and budget lines.",
+        "Identify unusual journal patterns in this ledger extract."
+      ],
+      "disambiguation_notes": [
+        "Use finance-analysis when the mission is about accounting, budget, variance, balances, or financial performance. Use billing-audit when the mission is specifically about billable hours, invoices, and rate reconciliation.",
+        "Use finance-analysis when financial reporting or interpretation is the output. Use data-merge-transform when the job is only to normalize or join finance files without producing finance-specific findings.",
+        "If the request is about contract clauses, legal obligations, or policy interpretation, use legal-review rather than finance-analysis."
+      ],
+      "synonym_vocabulary": [
+        "ledger",
+        "actuals",
+        "budget",
+        "variance",
+        "month close",
+        "trial balance",
+        "journal entries",
+        "P&L",
+        "balance sheet",
+        "cost center",
+        "margin",
+        "financial summary",
+        "spend analysis"
+      ]
+    },
+    {
+      "domain_pack_id": "legal-review",
+      "purpose": "Use this domain when the task is to analyze contracts, policies, legal text, obligations, liabilities, or clause-level risk. Outputs are evidence-grounded legal summaries, clause findings, obligation tables, and risk registers.",
+      "entity_schemas": [
+        "legal.document_summary",
+        "legal.clause_finding",
+        "legal.obligation_row",
+        "legal.risk_finding"
+      ],
+      "planner_triggers": [
+        "contract review",
+        "legal review",
+        "redlines",
+        "obligations",
+        "termination clause",
+        "indemnity"
+      ],
+      "canonical_profiles": [
+        "generic.table.json_rows.document_spans.v1",
+        "legal.table.json_rows.clause_findings.v1",
+        "legal.table.json_rows.obligation_rows.v1",
+        "legal.report.markdown.evidence_summary.v1",
+        "legal.report.html.risk_register.v1"
+      ],
+      "default_workflow_packs": [
+        "file-batch-load",
+        "ingest-materialize",
+        "analyze-score-rank",
+        "render-report"
+      ],
+      "example_user_goals": [
+        "Review these contracts for indemnity, liability caps, and termination risk.",
+        "Extract the key obligations from this agreement and summarize the risks.",
+        "Compare these vendor contracts and flag non-standard clauses.",
+        "Tell me what this policy requires and where the obligations fall on us.",
+        "Create a legal risk register from these agreements with evidence.",
+        "Identify clauses in this NDA that differ from our standard terms.",
+        "Summarize the governing law, termination, and data obligations in these contracts.",
+        "Audit these legal documents for risky or unusual terms."
+      ],
+      "disambiguation_notes": [
+        "Use legal-review when the primary source material is contracts, policies, NDAs, MSAs, SOWs, or other legal text. Use research-synthesis when the task is collecting external sources about laws, regulations, or cases.",
+        "Use legal-review when the output should be clause findings, obligation rows, or legal risk summaries. Use investigation-core when the task is a broad mixed-evidence investigation not centered on legal artifacts.",
+        "Use legal-review rather than billing-audit when a contract is being analyzed for legal meaning, even if billing clauses are present."
+      ],
+      "synonym_vocabulary": [
+        "contract review",
+        "clause analysis",
+        "obligations",
+        "indemnity",
+        "limitation of liability",
+        "termination",
+        "governing law",
+        "jurisdiction",
+        "MSA",
+        "SOW",
+        "NDA",
+        "legal summary",
+        "risk register"
+      ]
+    },
+    {
+      "domain_pack_id": "website-build",
+      "purpose": "Use this domain when the task is to create, transform, or package a website or self-styled HTML deliverable. This includes landing pages, report microsites, static bundles, and deployable multi-page sites from structured specs and source content.",
+      "entity_schemas": [
+        "web.site_spec",
+        "web.page_spec",
+        "web.component_spec",
+        "web.asset_manifest",
+        "web.deployment_receipt"
+      ],
+      "planner_triggers": [
+        "build website",
+        "landing page",
+        "multi-page site",
+        "interactive html report",
+        "deploy to pages"
+      ],
+      "canonical_profiles": [
+        "web.object.json.site_spec.v1",
+        "web.table.json_rows.page_specs.v1",
+        "web.web.bundle.static.site_bundle.v1",
+        "web.object.json.deployment_receipt.v1"
+      ],
+      "default_workflow_packs": [
+        "normalize-transform",
+        "render-website",
+        "deploy-publish"
+      ],
+      "example_user_goals": [
+        "Build me a simple three-page website with Home, About, and Contact.",
+        "Turn these architecture notes into an interactive HTML brief with navigation.",
+        "Create a polished landing page for this product and save the deployable bundle.",
+        "Generate a client-ready microsite from these findings and charts.",
+        "Build a static site from this content spec and prepare it for deployment.",
+        "Create a branded HTML report experience for this board presentation.",
+        "Take this site spec and render a deployable website bundle.",
+        "Build a website for this initiative using our standard template and components."
+      ],
+      "disambiguation_notes": [
+        "Use website-build when the output is a site, page, static bundle, or interactive HTML deliverable. Use render-report when the mission is to convert findings into a conventional report artifact without website semantics.",
+        "Use website-build when navigation, routes, components, or deployment are part of the task. Use code-modification when the task is changing an existing application codebase rather than generating a site from a spec.",
+        "If the task is primarily content research before building the site, pair website-build with research-synthesis rather than replacing one with the other."
+      ],
+      "synonym_vocabulary": [
+        "website",
+        "site",
+        "landing page",
+        "microsite",
+        "static bundle",
+        "HTML brief",
+        "multi-page site",
+        "deployable site",
+        "site spec",
+        "web pages",
+        "interactive report",
+        "Pages deployment"
+      ]
+    },
+    {
+      "domain_pack_id": "code-modification",
+      "purpose": "Use this domain when the mission is to change source code safely: apply patches, modify files, validate builds/tests, or package code changes. It is for controlled editing of existing code or bounded generation of code artifacts.",
+      "entity_schemas": [
+        "code.file_edit_request",
+        "code.change_set",
+        "code.validation_result"
+      ],
+      "planner_triggers": [
+        "modify code",
+        "edit file",
+        "patch project",
+        "fix build",
+        "refactor code"
+      ],
+      "canonical_profiles": [
+        "code.object.json.edit_request.v1",
+        "code.code.patch.unified_diff.change_set.v1",
+        "code.object.json.validation_results.v1"
+      ],
+      "default_workflow_packs": [
+        "code-modification"
+      ],
+      "example_user_goals": [
+        "Update this React component to support a new prop and keep tests passing.",
+        "Apply these changes to the codebase and give me a clean patch.",
+        "Modify this handler to fix the bug and validate the build.",
+        "Refactor this file safely and show me the resulting diff.",
+        "Generate the code changes needed to support this new workflow.",
+        "Patch this project to add a new route and validate that it still builds.",
+        "Make the file edits described here and package the updated project.",
+        "Apply a surgical change to this code and verify it didn't break anything."
+      ],
+      "disambiguation_notes": [
+        "Use code-modification when the main output is changed code, a patch, or validation results. Use website-build when the task is producing a deployable website or HTML deliverable rather than editing an existing codebase.",
+        "Use code-modification when correctness is tied to build/test/lint validation. Use data-merge-transform when the goal is data processing rather than persistent source-code edits.",
+        "If the task is a broad investigation into why software fails across logs/docs/metrics, use investigation-core or research-synthesis first, then code-modification for the fix."
+      ],
+      "synonym_vocabulary": [
+        "patch",
+        "diff",
+        "refactor",
+        "edit code",
+        "fix bug",
+        "update component",
+        "source change",
+        "code change set",
+        "validate build",
+        "apply changes",
+        "surgical edit",
+        "test pass"
+      ]
+    },
+    {
+      "domain_pack_id": "data-merge-transform",
+      "purpose": "Use this domain when the task is to normalize, reshape, join, aggregate, or otherwise transform structured data across one or more heterogeneous sources without a stronger business-specific domain taking precedence.",
+      "entity_schemas": [
+        "data.source_manifest",
+        "data.normalized_row",
+        "data.joined_row",
+        "data.aggregated_row"
+      ],
+      "planner_triggers": [
+        "merge data",
+        "transform dataset",
+        "normalize files",
+        "join exports",
+        "convert schema"
+      ],
+      "canonical_profiles": [
+        "generic.table.json_rows.normalized_rows.v1",
+        "generic.dataset.joined_rows.joined_rows.v1",
+        "generic.dataset.aggregated_rows.aggregated_rows.v1",
+        "generic.report.markdown.summary.v1"
+      ],
+      "default_workflow_packs": [
+        "file-acquisition",
+        "normalize-transform",
+        "render-report"
+      ],
+      "example_user_goals": [
+        "Normalize these exports into one clean schema and join them together.",
+        "Merge these CSVs and produce aggregated metrics by month.",
+        "Reshape these JSON files into row-based tables we can analyze.",
+        "Join these two datasets on the best available key and summarize the results.",
+        "Convert this messy export into canonical structured rows.",
+        "Build a clean merged dataset from these heterogeneous sources.",
+        "Aggregate these records by week and product category.",
+        "Create one normalized table from these multiple source files."
+      ],
+      "disambiguation_notes": [
+        "Use data-merge-transform when the work is primarily structural: normalize, join, reshape, aggregate. Use billing-audit, finance-analysis, or sales-crm when the mission includes domain-specific reconciliation or interpretation.",
+        "Use data-merge-transform when output semantics are generic datasets or transformed rows. Use analyze-score-rank when the output is scores, rankings, or evaluative findings.",
+        "Use data-merge-transform instead of website-build or render-report when no human-facing presentation artifact is the primary goal."
+      ],
+      "synonym_vocabulary": [
+        "normalize",
+        "reshape",
+        "transform",
+        "join",
+        "merge",
+        "aggregate",
+        "canonical schema",
+        "rowset",
+        "dataset",
+        "crosswalk",
+        "map fields",
+        "clean export",
+        "harmonize"
+      ]
+    },
+    {
+      "domain_pack_id": "sales-crm",
+      "purpose": "Use this domain when the mission centers on CRM entities such as accounts, opportunities, contracts, and pipeline state. It is for account/opportunity/contract analysis and pipeline reporting rather than generic data reshaping.",
+      "entity_schemas": [
+        "crm.account",
+        "crm.opportunity",
+        "crm.contract_ref",
+        "crm.pipeline_summary"
+      ],
+      "planner_triggers": [
+        "salesforce",
+        "crm audit",
+        "pipeline report",
+        "account health",
+        "renewal analysis"
+      ],
+      "canonical_profiles": [
+        "crm.table.json_rows.accounts.v1",
+        "crm.table.json_rows.opportunities.v1",
+        "crm.report.markdown.pipeline_summary.v1"
+      ],
+      "default_workflow_packs": [
+        "file-acquisition",
+        "normalize-transform",
+        "render-report"
+      ],
+      "example_user_goals": [
+        "Summarize the active opportunities and their contract exposure by account.",
+        "Analyze our pipeline by stage and identify the biggest deals at risk.",
+        "Compare accounts, opportunities, and contract references to produce a CRM summary.",
+        "Create a customer and pipeline overview from these CRM exports.",
+        "Tell me which opportunities are linked to contracts expiring this quarter.",
+        "Produce a pipeline summary by owner, stage, and close date.",
+        "Audit these CRM exports for missing contract references and broken account links.",
+        "Build a summary of account health and opportunity concentration from CRM data."
+      ],
+      "disambiguation_notes": [
+        "Use sales-crm when the key entities are accounts, opportunities, contracts, owners, and stages. Use billing-audit when the main entities are invoices, time entries, or rate cards.",
+        "Use sales-crm when the output is pipeline or account analysis. Use data-merge-transform when CRM data is merely one source in a larger structural transform with no CRM-specific interpretation.",
+        "If the task becomes financial forecasting or revenue recognition analysis, finance-analysis may be the better dominant domain."
+      ],
+      "synonym_vocabulary": [
+        "CRM",
+        "accounts",
+        "opportunities",
+        "pipeline",
+        "stage",
+        "deal",
+        "contract ref",
+        "account health",
+        "owner",
+        "close date",
+        "ARR",
+        "sales summary",
+        "funnel"
+      ]
+    },
+    {
+      "domain_pack_id": "psa-capacity",
+      "purpose": "Use this domain when the mission is about staffing, allocations, utilization, capacity, forecasted availability, or bench/overload risk in professional services or project delivery contexts.",
+      "entity_schemas": [
+        "psa.assignment",
+        "psa.capacity_row",
+        "psa.utilization_row",
+        "psa.forecast_row"
+      ],
+      "planner_triggers": [
+        "capacity report",
+        "utilization",
+        "staffing forecast",
+        "bench report",
+        "hours by employee"
+      ],
+      "canonical_profiles": [
+        "psa.table.json_rows.assignments.v1",
+        "psa.table.json_rows.capacity_rows.v1",
+        "psa.table.json_rows.utilization_rows.v1",
+        "psa.report.html.capacity_summary.v1"
+      ],
+      "default_workflow_packs": [
+        "normalize-transform",
+        "analyze-score-rank",
+        "render-report"
+      ],
+      "example_user_goals": [
+        "Create a capacity report for next month by role and team.",
+        "Show me utilization by employee and highlight who is over-allocated.",
+        "Compare staffing assignments against capacity and flag gaps.",
+        "Build a forecast of available hours by week for the consulting team.",
+        "Tell me which projects are driving utilization and where we have bench risk.",
+        "Produce a role-based allocation report from these staffing exports.",
+        "Analyze capacity versus billable hours for our professional services team.",
+        "Generate a utilization and forecast summary from assignments and timesheets."
+      ],
+      "disambiguation_notes": [
+        "Use psa-capacity when the task is about staffing, utilization, allocations, and availability. Use billing-audit when the task is about what should be invoiced or reconciled against invoices.",
+        "Use psa-capacity when the output is capacity/utilization/forecast reporting. Use finance-analysis when the output is accounting or budget performance rather than staffing operations.",
+        "If the task is generic transformation of staffing files without interpretation, data-merge-transform may be sufficient."
+      ],
+      "synonym_vocabulary": [
+        "capacity",
+        "utilization",
+        "allocation",
+        "forecast",
+        "bench",
+        "staffing",
+        "billable hours",
+        "available hours",
+        "resource plan",
+        "role capacity",
+        "over-allocated",
+        "underutilized"
+      ]
+    },
+    {
+      "domain_pack_id": "security-audit",
+      "purpose": "Use this domain when the task is to analyze controls, findings, assets, remediation items, or audit evidence in a security/compliance context. It is for security posture, control gaps, and remediation tracking.",
+      "entity_schemas": [
+        "security.control",
+        "security.finding",
+        "security.asset_ref",
+        "security.remediation_item"
+      ],
+      "planner_triggers": [
+        "security audit",
+        "controls review",
+        "findings report",
+        "remediation plan"
+      ],
+      "canonical_profiles": [
+        "security.table.json_rows.findings.v1",
+        "security.table.json_rows.remediation_items.v1",
+        "security.report.markdown.audit_summary.v1"
+      ],
+      "default_workflow_packs": [
+        "file-acquisition",
+        "analyze-score-rank",
+        "render-report"
+      ],
+      "example_user_goals": [
+        "Audit these security findings and produce a remediation summary.",
+        "Compare the control checklist against the evidence and flag gaps.",
+        "Build a security risk report from these findings and affected assets.",
+        "Summarize outstanding remediation items by severity and owner.",
+        "Review these control results and identify what is failing repeatedly.",
+        "Create a security audit dashboard from these finding exports.",
+        "Tell me which assets have the highest concentration of open findings.",
+        "Produce a control-gap summary and remediation plan from these audit artifacts."
+      ],
+      "disambiguation_notes": [
+        "Use security-audit when the context is controls, findings, assets, remediation, or compliance/security evidence. Use investigation-core when the task is a broader technical or operational investigation without a dominant security-audit structure.",
+        "Use security-audit rather than legal-review when the artifacts are security controls or findings rather than contractual/legal text.",
+        "If the work is primarily external research about threats or vendors, pair security-audit with research-synthesis rather than substituting one for the other."
+      ],
+      "synonym_vocabulary": [
+        "security audit",
+        "control gap",
+        "finding",
+        "remediation",
+        "severity",
+        "asset risk",
+        "evidence",
+        "control result",
+        "compliance",
+        "owner",
+        "security posture",
+        "open findings"
+      ]
+    }
+  ],
+  "entity_schema_starter_fields": {
+    "research.source_record": [
+      "source_id",
+      "url",
+      "path",
+      "title",
+      "publisher",
+      "author",
+      "published_at",
+      "source_artifact_ids"
+    ],
+    "research.claim": [
+      "claim_id",
+      "claim_text",
+      "support_level",
+      "citation_ids",
+      "source_artifact_ids",
+      "confidence",
+      "topic_tags"
+    ],
+    "research.evidence_row": [
+      "evidence_id",
+      "claim_id",
+      "excerpt",
+      "citation_ids",
+      "evidence_card_ids",
+      "source_artifact_ids"
+    ],
+    "resume.candidate_profile": [
+      "candidate_id",
+      "source_artifact_ids",
+      "candidate_name",
+      "email",
+      "phone",
+      "location",
+      "years_experience",
+      "skills",
+      "education",
+      "current_title"
+    ],
+    "resume.resume_audit_row": [
+      "candidate_id",
+      "job_requirement_id",
+      "score",
+      "strengths",
+      "risks",
+      "recommendation",
+      "citation_ids",
+      "source_artifact_ids"
+    ],
+    "billing.time_entry": [
+      "time_entry_id",
+      "employee_id",
+      "project_id",
+      "contract_id",
+      "customer_id",
+      "service_date",
+      "hours_decimal",
+      "billable_flag",
+      "work_type",
+      "source_artifact_ids"
+    ],
+    "billing.rate_card": [
+      "rate_card_id",
+      "contract_id",
+      "role_id",
+      "rate_amount_minor",
+      "currency_code",
+      "effective_date",
+      "source_artifact_ids"
+    ],
+    "billing.invoice_line_item": [
+      "invoice_line_id",
+      "invoice_id",
+      "project_id",
+      "customer_id",
+      "service_period_start",
+      "service_period_end",
+      "quantity_decimal",
+      "rate_amount_minor",
+      "actual_amount_minor",
+      "currency_code",
+      "source_artifact_ids"
+    ],
+    "billing.discrepancy_row": [
+      "discrepancy_id",
+      "time_entry_id",
+      "invoice_line_id",
+      "expected_amount_minor",
+      "actual_amount_minor",
+      "discrepancy_type",
+      "discrepancy_reason",
+      "currency_code",
+      "source_artifact_ids"
+    ],
+    "finance.ledger_entry": [
+      "ledger_entry_id",
+      "account_code",
+      "account_name",
+      "cost_center_id",
+      "entity_id",
+      "posting_date",
+      "amount_minor",
+      "currency_code",
+      "period_start",
+      "period_end",
+      "source_artifact_ids"
+    ],
+    "finance.variance_row": [
+      "variance_id",
+      "account_code",
+      "period_start",
+      "period_end",
+      "actual_amount_minor",
+      "budget_amount_minor",
+      "variance_amount_minor",
+      "variance_percent",
+      "currency_code",
+      "source_artifact_ids"
+    ],
+    "legal.clause_finding": [
+      "document_id",
+      "clause_id",
+      "clause_type",
+      "party_a",
+      "party_b",
+      "effective_date",
+      "termination_date",
+      "risk_level",
+      "citation_ids",
+      "evidence_card_ids",
+      "source_artifact_ids"
+    ],
+    "legal.obligation_row": [
+      "document_id",
+      "obligation_id",
+      "obligation_text",
+      "responsible_party",
+      "due_condition",
+      "citation_ids",
+      "source_artifact_ids"
+    ],
+    "web.site_spec": [
+      "site_id",
+      "site_name",
+      "theme_token_set_id",
+      "framework_id",
+      "pages",
+      "navigation",
+      "components",
+      "constraints"
+    ],
+    "web.page_spec": [
+      "page_id",
+      "route",
+      "title",
+      "layout_id",
+      "sections",
+      "seo",
+      "cta_set"
+    ],
+    "web.deployment_receipt": [
+      "deployment_id",
+      "site_id",
+      "provider",
+      "environment",
+      "status",
+      "deployment_url",
+      "preview_url",
+      "started_at",
+      "completed_at"
+    ],
+    "code.file_edit_request": [
+      "project_id",
+      "repo_id",
+      "file_path",
+      "language",
+      "edit_goal",
+      "acceptance_criteria",
+      "base_sha256"
+    ],
+    "code.change_set": [
+      "change_set_id",
+      "project_id",
+      "base_sha256",
+      "new_sha256",
+      "patch_text",
+      "touched_files",
+      "source_artifact_ids"
+    ],
+    "code.validation_result": [
+      "project_id",
+      "lint_status",
+      "build_status",
+      "test_status",
+      "validation_summary",
+      "artifact_path"
+    ],
+    "data.normalized_row": [
+      "entity_id",
+      "source_system",
+      "source_record_id",
+      "row_grain",
+      "period_start",
+      "period_end",
+      "metric_name",
+      "metric_value",
+      "unit",
+      "source_artifact_ids"
+    ],
+    "data.joined_row": [
+      "entity_id",
+      "join_keys",
+      "source_row_ids",
+      "row_grain",
+      "source_artifact_ids"
+    ],
+    "data.aggregated_row": [
+      "entity_id",
+      "group_keys",
+      "aggregation_fn",
+      "metric_name",
+      "metric_value",
+      "unit",
+      "source_artifact_ids"
+    ],
+    "crm.account": [
+      "account_id",
+      "name",
+      "owner_user_id",
+      "industry",
+      "region",
+      "source_artifact_ids"
+    ],
+    "crm.opportunity": [
+      "opportunity_id",
+      "account_id",
+      "stage",
+      "close_date",
+      "arr_amount_minor",
+      "currency_code",
+      "owner_user_id",
+      "source_artifact_ids"
+    ],
+    "psa.assignment": [
+      "assignment_id",
+      "employee_id",
+      "project_id",
+      "role_id",
+      "week_start",
+      "allocated_hours",
+      "billable_flag",
+      "source_artifact_ids"
+    ],
+    "psa.capacity_row": [
+      "employee_id",
+      "role_id",
+      "week_start",
+      "capacity_hours",
+      "allocated_hours",
+      "available_hours",
+      "source_artifact_ids"
+    ],
+    "psa.utilization_row": [
+      "employee_id",
+      "week_start",
+      "billable_hours",
+      "total_hours",
+      "utilization_pct",
+      "source_artifact_ids"
+    ],
+    "security.finding": [
+      "finding_id",
+      "control_id",
+      "asset_id",
+      "severity",
+      "status",
+      "due_date",
+      "owner_user_id",
+      "citation_ids",
+      "source_artifact_ids"
+    ]
+  },
+  "contract_profiles": [
+    {
+      "profile_id": "generic.object.json.source_manifest.v1",
+      "kind_key": "object.json",
+      "entity_schema_id": "generic.source_manifest",
+      "required_top_level_type": "object",
+      "required_fields": [
+        "sources"
+      ],
+      "allow_additional_fields": true,
+      "row_grain": null,
+      "provenance": {
+        "require_source_artifact_ids": false
+      }
+    },
+    {
+      "profile_id": "generic.file.batch_manifest.batch_manifest.v1",
+      "kind_key": "file.batch_manifest",
+      "entity_schema_id": "generic.batch_manifest",
+      "required_top_level_type": "object",
+      "required_fields": [
+        "items"
+      ],
+      "allow_additional_fields": true,
+      "row_grain": "item",
+      "provenance": {
+        "require_source_artifact_ids": false
+      }
+    },
+    {
+      "profile_id": "generic.object.json.file_download_request.v1",
+      "kind_key": "object.json",
+      "entity_schema_id": "generic.file_download_request",
+      "required_top_level_type": "object",
+      "required_fields": [
+        "url"
+      ],
+      "allow_additional_fields": true,
+      "row_grain": null,
+      "provenance": {
+        "require_source_artifact_ids": false
+      }
+    },
+    {
+      "profile_id": "generic.object.json.file_download_result.v1",
+      "kind_key": "object.json",
+      "entity_schema_id": "generic.file_download_result",
+      "required_top_level_type": "object",
+      "required_fields": [
+        "url",
+        "path",
+        "mime",
+        "bytes",
+        "sha256"
+      ],
+      "allow_additional_fields": true,
+      "row_grain": null,
+      "provenance": {
+        "require_source_artifact_ids": false
+      }
+    },
+    {
+      "profile_id": "generic.table.json_rows.file_inventory_rows.v1",
+      "kind_key": "table.json_rows",
+      "entity_schema_id": "generic.file_inventory_row",
+      "required_top_level_type": "array",
+      "required_fields": [
+        "path",
+        "mime",
+        "bytes",
+        "sha256"
+      ],
+      "allow_additional_fields": true,
+      "row_grain": "file",
+      "provenance": {
+        "require_source_artifact_ids": false
+      }
+    },
+    {
+      "profile_id": "generic.table.json_rows.document_spans.v1",
+      "kind_key": "table.json_rows",
+      "entity_schema_id": "generic.document_span",
+      "required_top_level_type": "array",
+      "required_fields": [
+        "source_artifact_id",
+        "excerpt"
+      ],
+      "allow_additional_fields": true,
+      "row_grain": "span",
+      "provenance": {
+        "require_source_artifact_ids": true
+      }
+    },
+    {
+      "profile_id": "generic.table.json_rows.normalized_rows.v1",
+      "kind_key": "table.json_rows",
+      "entity_schema_id": "data.normalized_row",
+      "required_top_level_type": "array",
+      "required_fields": [
+        "entity_id",
+        "source_system",
+        "source_record_id",
+        "source_artifact_ids"
+      ],
+      "allow_additional_fields": true,
+      "row_grain": "row",
+      "provenance": {
+        "require_source_artifact_ids": true
+      }
+    },
+    {
+      "profile_id": "generic.dataset.joined_rows.joined_rows.v1",
+      "kind_key": "dataset.joined_rows",
+      "entity_schema_id": "data.joined_row",
+      "required_top_level_type": "array",
+      "required_fields": [
+        "entity_id",
+        "source_row_ids",
+        "source_artifact_ids"
+      ],
+      "allow_additional_fields": true,
+      "row_grain": "row",
+      "provenance": {
+        "require_source_artifact_ids": true
+      }
+    },
+    {
+      "profile_id": "generic.dataset.aggregated_rows.aggregated_rows.v1",
+      "kind_key": "dataset.aggregated_rows",
+      "entity_schema_id": "data.aggregated_row",
+      "required_top_level_type": "array",
+      "required_fields": [
+        "entity_id",
+        "metric_name",
+        "metric_value",
+        "source_artifact_ids"
+      ],
+      "allow_additional_fields": true,
+      "row_grain": "group",
+      "provenance": {
+        "require_source_artifact_ids": true
+      }
+    },
+    {
+      "profile_id": "generic.table.json_rows.findings.v1",
+      "kind_key": "table.json_rows",
+      "entity_schema_id": "generic.finding",
+      "required_top_level_type": "array",
+      "required_fields": [
+        "finding_id",
+        "title",
+        "conclusion",
+        "confidence"
+      ],
+      "allow_additional_fields": true,
+      "row_grain": "finding",
+      "provenance": {
+        "require_source_artifact_ids": false
+      }
+    },
+    {
+      "profile_id": "generic.table.json_rows.scored_rows.v1",
+      "kind_key": "table.json_rows",
+      "entity_schema_id": "generic.scored_row",
+      "required_top_level_type": "array",
+      "required_fields": [
+        "entity_id",
+        "score"
+      ],
+      "allow_additional_fields": true,
+      "row_grain": "entity",
+      "provenance": {
+        "require_source_artifact_ids": false
+      }
+    },
+    {
+      "profile_id": "generic.report.markdown.summary.v1",
+      "kind_key": "report.markdown",
+      "entity_schema_id": "generic.summary_report",
+      "required_top_level_type": "string",
+      "required_fields": [],
+      "allow_additional_fields": false,
+      "row_grain": null,
+      "provenance": {
+        "require_source_artifact_ids": false
+      }
+    },
+    {
+      "profile_id": "generic.report.html.summary.v1",
+      "kind_key": "report.html",
+      "entity_schema_id": "generic.summary_report",
+      "required_top_level_type": "string",
+      "required_fields": [],
+      "allow_additional_fields": false,
+      "row_grain": null,
+      "provenance": {
+        "require_source_artifact_ids": false
+      }
+    },
+    {
+      "profile_id": "generic.report.pdf.summary.v1",
+      "kind_key": "report.pdf",
+      "entity_schema_id": "generic.summary_report",
+      "required_top_level_type": "binary",
+      "required_fields": [],
+      "allow_additional_fields": false,
+      "row_grain": null,
+      "provenance": {
+        "require_source_artifact_ids": false
+      }
+    },
+    {
+      "profile_id": "generic.object.json.publish_receipt.v1",
+      "kind_key": "object.json",
+      "entity_schema_id": "generic.publish_receipt",
+      "required_top_level_type": "object",
+      "required_fields": [
+        "status"
+      ],
+      "allow_additional_fields": true,
+      "row_grain": null,
+      "provenance": {
+        "require_source_artifact_ids": false
+      }
+    },
+    {
+      "profile_id": "research.table.json_rows.claims.v1",
+      "kind_key": "table.json_rows",
+      "entity_schema_id": "research.claim",
+      "required_top_level_type": "array",
+      "required_fields": [
+        "claim_id",
+        "claim_text",
+        "support_level",
+        "source_artifact_ids"
+      ],
+      "allow_additional_fields": true,
+      "row_grain": "claim",
+      "provenance": {
+        "require_source_artifact_ids": true
+      }
+    },
+    {
+      "profile_id": "research.table.json_rows.evidence_rows.v1",
+      "kind_key": "table.json_rows",
+      "entity_schema_id": "research.evidence_row",
+      "required_top_level_type": "array",
+      "required_fields": [
+        "evidence_id",
+        "claim_id",
+        "excerpt",
+        "source_artifact_ids"
+      ],
+      "allow_additional_fields": true,
+      "row_grain": "evidence",
+      "provenance": {
+        "require_source_artifact_ids": true
+      }
+    },
+    {
+      "profile_id": "research.report.markdown.summary.v1",
+      "kind_key": "report.markdown",
+      "entity_schema_id": "research.summary_report",
+      "required_top_level_type": "string",
+      "required_fields": [],
+      "allow_additional_fields": false,
+      "row_grain": null,
+      "provenance": {
+        "require_source_artifact_ids": false
+      }
+    },
+    {
+      "profile_id": "research.report.html.summary.v1",
+      "kind_key": "report.html",
+      "entity_schema_id": "research.summary_report",
+      "required_top_level_type": "string",
+      "required_fields": [],
+      "allow_additional_fields": false,
+      "row_grain": null,
+      "provenance": {
+        "require_source_artifact_ids": false
+      }
+    },
+    {
+      "profile_id": "resume.table.json_rows.candidate_profiles.v1",
+      "kind_key": "table.json_rows",
+      "entity_schema_id": "resume.candidate_profile",
+      "required_top_level_type": "array",
+      "required_fields": [
+        "candidate_id",
+        "source_artifact_ids"
+      ],
+      "allow_additional_fields": true,
+      "row_grain": "candidate",
+      "provenance": {
+        "require_source_artifact_ids": true
+      }
+    },
+    {
+      "profile_id": "resume.table.json_rows.resume_audit_rows.v1",
+      "kind_key": "table.json_rows",
+      "entity_schema_id": "resume.resume_audit_row",
+      "required_top_level_type": "array",
+      "required_fields": [
+        "candidate_id",
+        "score",
+        "recommendation",
+        "source_artifact_ids"
+      ],
+      "allow_additional_fields": true,
+      "row_grain": "candidate_job_pair",
+      "provenance": {
+        "require_source_artifact_ids": true
+      }
+    },
+    {
+      "profile_id": "resume.report.html.audit_summary.v1",
+      "kind_key": "report.html",
+      "entity_schema_id": "resume.audit_summary",
+      "required_top_level_type": "string",
+      "required_fields": [],
+      "allow_additional_fields": false,
+      "row_grain": null,
+      "provenance": {
+        "require_source_artifact_ids": false
+      }
+    },
+    {
+      "profile_id": "billing.table.json_rows.time_entries.v1",
+      "kind_key": "table.json_rows",
+      "entity_schema_id": "billing.time_entry",
+      "required_top_level_type": "array",
+      "required_fields": [
+        "time_entry_id",
+        "employee_id",
+        "project_id",
+        "service_date",
+        "hours_decimal",
+        "billable_flag",
+        "source_artifact_ids"
+      ],
+      "allow_additional_fields": true,
+      "row_grain": "time_entry",
+      "provenance": {
+        "require_source_artifact_ids": true
+      }
+    },
+    {
+      "profile_id": "billing.table.json_rows.rate_cards.v1",
+      "kind_key": "table.json_rows",
+      "entity_schema_id": "billing.rate_card",
+      "required_top_level_type": "array",
+      "required_fields": [
+        "rate_card_id",
+        "contract_id",
+        "role_id",
+        "rate_amount_minor",
+        "currency_code",
+        "source_artifact_ids"
+      ],
+      "allow_additional_fields": true,
+      "row_grain": "rate_card_row",
+      "provenance": {
+        "require_source_artifact_ids": true
+      }
+    },
+    {
+      "profile_id": "billing.table.json_rows.invoice_line_items.v1",
+      "kind_key": "table.json_rows",
+      "entity_schema_id": "billing.invoice_line_item",
+      "required_top_level_type": "array",
+      "required_fields": [
+        "invoice_line_id",
+        "invoice_id",
+        "project_id",
+        "actual_amount_minor",
+        "currency_code",
+        "source_artifact_ids"
+      ],
+      "allow_additional_fields": true,
+      "row_grain": "invoice_line",
+      "provenance": {
+        "require_source_artifact_ids": true
+      }
+    },
+    {
+      "profile_id": "billing.table.json_rows.discrepancy_rows.v1",
+      "kind_key": "table.json_rows",
+      "entity_schema_id": "billing.discrepancy_row",
+      "required_top_level_type": "array",
+      "required_fields": [
+        "discrepancy_id",
+        "discrepancy_type",
+        "discrepancy_reason",
+        "source_artifact_ids"
+      ],
+      "allow_additional_fields": true,
+      "row_grain": "discrepancy",
+      "provenance": {
+        "require_source_artifact_ids": true
+      }
+    },
+    {
+      "profile_id": "billing.report.html.audit_summary.v1",
+      "kind_key": "report.html",
+      "entity_schema_id": "billing.billing_summary",
+      "required_top_level_type": "string",
+      "required_fields": [],
+      "allow_additional_fields": false,
+      "row_grain": null,
+      "provenance": {
+        "require_source_artifact_ids": false
+      }
+    },
+    {
+      "profile_id": "finance.table.json_rows.ledger_entries.v1",
+      "kind_key": "table.json_rows",
+      "entity_schema_id": "finance.ledger_entry",
+      "required_top_level_type": "array",
+      "required_fields": [
+        "ledger_entry_id",
+        "account_code",
+        "posting_date",
+        "amount_minor",
+        "currency_code",
+        "source_artifact_ids"
+      ],
+      "allow_additional_fields": true,
+      "row_grain": "ledger_entry",
+      "provenance": {
+        "require_source_artifact_ids": true
+      }
+    },
+    {
+      "profile_id": "finance.table.json_rows.variance_rows.v1",
+      "kind_key": "table.json_rows",
+      "entity_schema_id": "finance.variance_row",
+      "required_top_level_type": "array",
+      "required_fields": [
+        "variance_id",
+        "account_code",
+        "variance_amount_minor",
+        "currency_code",
+        "source_artifact_ids"
+      ],
+      "allow_additional_fields": true,
+      "row_grain": "account_period",
+      "provenance": {
+        "require_source_artifact_ids": true
+      }
+    },
+    {
+      "profile_id": "finance.report.markdown.close_summary.v1",
+      "kind_key": "report.markdown",
+      "entity_schema_id": "finance.close_summary",
+      "required_top_level_type": "string",
+      "required_fields": [],
+      "allow_additional_fields": false,
+      "row_grain": null,
+      "provenance": {
+        "require_source_artifact_ids": false
+      }
+    },
+    {
+      "profile_id": "finance.report.html.close_summary.v1",
+      "kind_key": "report.html",
+      "entity_schema_id": "finance.close_summary",
+      "required_top_level_type": "string",
+      "required_fields": [],
+      "allow_additional_fields": false,
+      "row_grain": null,
+      "provenance": {
+        "require_source_artifact_ids": false
+      }
+    },
+    {
+      "profile_id": "legal.table.json_rows.clause_findings.v1",
+      "kind_key": "table.json_rows",
+      "entity_schema_id": "legal.clause_finding",
+      "required_top_level_type": "array",
+      "required_fields": [
+        "document_id",
+        "clause_id",
+        "clause_type",
+        "risk_level",
+        "source_artifact_ids"
+      ],
+      "allow_additional_fields": true,
+      "row_grain": "clause",
+      "provenance": {
+        "require_source_artifact_ids": true,
+        "require_citations": false,
+        "require_evidence_cards": false
+      }
+    },
+    {
+      "profile_id": "legal.table.json_rows.obligation_rows.v1",
+      "kind_key": "table.json_rows",
+      "entity_schema_id": "legal.obligation_row",
+      "required_top_level_type": "array",
+      "required_fields": [
+        "document_id",
+        "obligation_id",
+        "obligation_text",
+        "source_artifact_ids"
+      ],
+      "allow_additional_fields": true,
+      "row_grain": "obligation",
+      "provenance": {
+        "require_source_artifact_ids": true
+      }
+    },
+    {
+      "profile_id": "legal.report.markdown.evidence_summary.v1",
+      "kind_key": "report.markdown",
+      "entity_schema_id": "legal.document_summary",
+      "required_top_level_type": "string",
+      "required_fields": [],
+      "allow_additional_fields": false,
+      "row_grain": null,
+      "provenance": {
+        "require_source_artifact_ids": false
+      }
+    },
+    {
+      "profile_id": "legal.report.html.risk_register.v1",
+      "kind_key": "report.html",
+      "entity_schema_id": "legal.risk_register",
+      "required_top_level_type": "string",
+      "required_fields": [],
+      "allow_additional_fields": false,
+      "row_grain": null,
+      "provenance": {
+        "require_source_artifact_ids": false
+      }
+    },
+    {
+      "profile_id": "web.object.json.site_spec.v1",
+      "kind_key": "object.json",
+      "entity_schema_id": "web.site_spec",
+      "required_top_level_type": "object",
+      "required_fields": [
+        "site_id",
+        "pages"
+      ],
+      "allow_additional_fields": true,
+      "row_grain": null,
+      "provenance": {
+        "require_source_artifact_ids": false
+      }
+    },
+    {
+      "profile_id": "web.table.json_rows.page_specs.v1",
+      "kind_key": "table.json_rows",
+      "entity_schema_id": "web.page_spec",
+      "required_top_level_type": "array",
+      "required_fields": [
+        "page_id",
+        "route",
+        "title"
+      ],
+      "allow_additional_fields": true,
+      "row_grain": "page",
+      "provenance": {
+        "require_source_artifact_ids": false
+      }
+    },
+    {
+      "profile_id": "web.web.bundle.static.site_bundle.v1",
+      "kind_key": "web.bundle.static",
+      "entity_schema_id": "web.asset_manifest",
+      "required_top_level_type": "object",
+      "required_fields": [
+        "site_id",
+        "artifact_paths"
+      ],
+      "allow_additional_fields": true,
+      "row_grain": null,
+      "provenance": {
+        "require_source_artifact_ids": false
+      }
+    },
+    {
+      "profile_id": "web.object.json.deployment_receipt.v1",
+      "kind_key": "deployment.receipt",
+      "entity_schema_id": "web.deployment_receipt",
+      "required_top_level_type": "object",
+      "required_fields": [
+        "deployment_id",
+        "status"
+      ],
+      "allow_additional_fields": true,
+      "row_grain": null,
+      "provenance": {
+        "require_source_artifact_ids": false
+      }
+    },
+    {
+      "profile_id": "web.object.json.validation_results.v1",
+      "kind_key": "validation.results",
+      "entity_schema_id": "code.validation_result",
+      "required_top_level_type": "object",
+      "required_fields": [
+        "validation_summary"
+      ],
+      "allow_additional_fields": true,
+      "row_grain": null,
+      "provenance": {
+        "require_source_artifact_ids": false
+      }
+    },
+    {
+      "profile_id": "code.object.json.edit_request.v1",
+      "kind_key": "object.json",
+      "entity_schema_id": "code.file_edit_request",
+      "required_top_level_type": "object",
+      "required_fields": [
+        "project_id",
+        "file_path",
+        "edit_goal",
+        "base_sha256"
+      ],
+      "allow_additional_fields": true,
+      "row_grain": null,
+      "provenance": {
+        "require_source_artifact_ids": false
+      }
+    },
+    {
+      "profile_id": "code.code.patch.unified_diff.change_set.v1",
+      "kind_key": "code.patch.unified_diff",
+      "entity_schema_id": "code.change_set",
+      "required_top_level_type": "string",
+      "required_fields": [],
+      "allow_additional_fields": false,
+      "row_grain": null,
+      "provenance": {
+        "require_source_artifact_ids": false
+      }
+    },
+    {
+      "profile_id": "code.object.json.validation_results.v1",
+      "kind_key": "validation.results",
+      "entity_schema_id": "code.validation_result",
+      "required_top_level_type": "object",
+      "required_fields": [
+        "lint_status",
+        "build_status",
+        "test_status"
+      ],
+      "allow_additional_fields": true,
+      "row_grain": null,
+      "provenance": {
+        "require_source_artifact_ids": false
+      }
+    },
+    {
+      "profile_id": "crm.table.json_rows.accounts.v1",
+      "kind_key": "table.json_rows",
+      "entity_schema_id": "crm.account",
+      "required_top_level_type": "array",
+      "required_fields": [
+        "account_id",
+        "name",
+        "source_artifact_ids"
+      ],
+      "allow_additional_fields": true,
+      "row_grain": "account",
+      "provenance": {
+        "require_source_artifact_ids": true
+      }
+    },
+    {
+      "profile_id": "crm.table.json_rows.opportunities.v1",
+      "kind_key": "table.json_rows",
+      "entity_schema_id": "crm.opportunity",
+      "required_top_level_type": "array",
+      "required_fields": [
+        "opportunity_id",
+        "account_id",
+        "stage",
+        "source_artifact_ids"
+      ],
+      "allow_additional_fields": true,
+      "row_grain": "opportunity",
+      "provenance": {
+        "require_source_artifact_ids": true
+      }
+    },
+    {
+      "profile_id": "crm.report.markdown.pipeline_summary.v1",
+      "kind_key": "report.markdown",
+      "entity_schema_id": "crm.pipeline_summary",
+      "required_top_level_type": "string",
+      "required_fields": [],
+      "allow_additional_fields": false,
+      "row_grain": null,
+      "provenance": {
+        "require_source_artifact_ids": false
+      }
+    },
+    {
+      "profile_id": "psa.table.json_rows.assignments.v1",
+      "kind_key": "table.json_rows",
+      "entity_schema_id": "psa.assignment",
+      "required_top_level_type": "array",
+      "required_fields": [
+        "assignment_id",
+        "employee_id",
+        "project_id",
+        "source_artifact_ids"
+      ],
+      "allow_additional_fields": true,
+      "row_grain": "assignment",
+      "provenance": {
+        "require_source_artifact_ids": true
+      }
+    },
+    {
+      "profile_id": "psa.table.json_rows.capacity_rows.v1",
+      "kind_key": "table.json_rows",
+      "entity_schema_id": "psa.capacity_row",
+      "required_top_level_type": "array",
+      "required_fields": [
+        "employee_id",
+        "week_start",
+        "capacity_hours",
+        "source_artifact_ids"
+      ],
+      "allow_additional_fields": true,
+      "row_grain": "employee_week",
+      "provenance": {
+        "require_source_artifact_ids": true
+      }
+    },
+    {
+      "profile_id": "psa.table.json_rows.utilization_rows.v1",
+      "kind_key": "table.json_rows",
+      "entity_schema_id": "psa.utilization_row",
+      "required_top_level_type": "array",
+      "required_fields": [
+        "employee_id",
+        "week_start",
+        "utilization_pct",
+        "source_artifact_ids"
+      ],
+      "allow_additional_fields": true,
+      "row_grain": "employee_week",
+      "provenance": {
+        "require_source_artifact_ids": true
+      }
+    },
+    {
+      "profile_id": "psa.report.html.capacity_summary.v1",
+      "kind_key": "report.html",
+      "entity_schema_id": "psa.capacity_summary",
+      "required_top_level_type": "string",
+      "required_fields": [],
+      "allow_additional_fields": false,
+      "row_grain": null,
+      "provenance": {
+        "require_source_artifact_ids": false
+      }
+    },
+    {
+      "profile_id": "security.table.json_rows.findings.v1",
+      "kind_key": "table.json_rows",
+      "entity_schema_id": "security.finding",
+      "required_top_level_type": "array",
+      "required_fields": [
+        "finding_id",
+        "severity",
+        "status",
+        "source_artifact_ids"
+      ],
+      "allow_additional_fields": true,
+      "row_grain": "finding",
+      "provenance": {
+        "require_source_artifact_ids": true
+      }
+    },
+    {
+      "profile_id": "security.table.json_rows.remediation_items.v1",
+      "kind_key": "table.json_rows",
+      "entity_schema_id": "security.remediation_item",
+      "required_top_level_type": "array",
+      "required_fields": [
+        "finding_id",
+        "owner_user_id",
+        "due_date"
+      ],
+      "allow_additional_fields": true,
+      "row_grain": "remediation",
+      "provenance": {
+        "require_source_artifact_ids": false
+      }
+    },
+    {
+      "profile_id": "security.report.markdown.audit_summary.v1",
+      "kind_key": "report.markdown",
+      "entity_schema_id": "security.audit_summary",
+      "required_top_level_type": "string",
+      "required_fields": [],
+      "allow_additional_fields": false,
+      "row_grain": null,
+      "provenance": {
+        "require_source_artifact_ids": false
+      }
+    }
+  ],
+  "adapters": [
+    {
+      "adapter_id": "adapter.table-csv.__to__.generic.table.json_rows.normalized_rows.v1",
+      "from_kind": "table.csv",
+      "to_profile_id": "generic.table.json_rows.normalized_rows.v1",
+      "purpose": "CSV parse to canonical row array"
+    },
+    {
+      "adapter_id": "adapter.file-batch-manifest.__to__.generic.table.json_rows.file_inventory_rows.v1",
+      "from_profile_id": "generic.file.batch_manifest.batch_manifest.v1",
+      "to_profile_id": "generic.table.json_rows.file_inventory_rows.v1",
+      "purpose": "Batch manifest to inventory rows"
+    },
+    {
+      "adapter_id": "adapter.generic.document-spans.__to__.research.table.json_rows.evidence_rows.v1",
+      "from_profile_id": "generic.table.json_rows.document_spans.v1",
+      "to_profile_id": "research.table.json_rows.evidence_rows.v1",
+      "purpose": "Map extracted spans to research evidence rows"
+    },
+    {
+      "adapter_id": "adapter.generic.document-spans.__to__.legal.table.json_rows.clause_findings.v1",
+      "from_profile_id": "generic.table.json_rows.document_spans.v1",
+      "to_profile_id": "legal.table.json_rows.clause_findings.v1",
+      "purpose": "Legal clause extractor/normalizer"
+    },
+    {
+      "adapter_id": "adapter.generic.normalized-rows.__to__.billing.table.json_rows.time_entries.v1",
+      "from_profile_id": "generic.table.json_rows.normalized_rows.v1",
+      "to_profile_id": "billing.table.json_rows.time_entries.v1",
+      "purpose": "Map generic rows to billing time entry grain"
+    },
+    {
+      "adapter_id": "adapter.generic.normalized-rows.__to__.finance.table.json_rows.ledger_entries.v1",
+      "from_profile_id": "generic.table.json_rows.normalized_rows.v1",
+      "to_profile_id": "finance.table.json_rows.ledger_entries.v1",
+      "purpose": "Map generic rows to ledger entry grain"
+    },
+    {
+      "adapter_id": "adapter.web.site-spec.__to__.web.web.bundle.static.site_bundle.v1",
+      "from_profile_id": "web.object.json.site_spec.v1",
+      "to_profile_id": "web.web.bundle.static.site_bundle.v1",
+      "purpose": "Render site spec into bundle"
+    },
+    {
+      "adapter_id": "adapter.code.edit-request.__to__.code.code.patch.unified_diff.change_set.v1",
+      "from_profile_id": "code.object.json.edit_request.v1",
+      "to_profile_id": "code.code.patch.unified_diff.change_set.v1",
+      "purpose": "Turn edit request into patch/change set"
+    },
+    {
+      "adapter_id": "adapter.joined-rows.__to__.generic.dataset.aggregated_rows.aggregated_rows.v1",
+      "from_profile_id": "generic.dataset.joined_rows.joined_rows.v1",
+      "to_profile_id": "generic.dataset.aggregated_rows.aggregated_rows.v1",
+      "purpose": "Aggregate joined rows"
+    }
+  ],
+  "planner_compiler_guidance": {
+    "planner_should_choose": [
+      "domain pack shortlist",
+      "workflow pack shortlist",
+      "semantic intent (entity schema family or desired deliverable family)",
+      "preferred output family when obvious (html/markdown/json_rows/pdf)"
+    ],
+    "compiler_should_choose": [
+      "concrete profile_id bindings for each slot",
+      "adapter insertion when allowed by policy",
+      "producer/consumer compatibility enforcement",
+      "fail-closed decisions when requirements are unmet"
+    ],
+    "compatibility_order": [
+      "representation / kind compatibility",
+      "semantic entity schema compatibility",
+      "row_grain compatibility",
+      "required field compatibility",
+      "provenance / policy compatibility"
+    ]
+  },
+  "seeding_recommendation": {
+    "phase_1_core": [
+      "generic artifact kinds",
+      "policy profiles",
+      "workflow packs",
+      "domain packs: research-synthesis, investigation-core, resume-audit, billing-audit, legal-review, website-build, code-modification, data-merge-transform"
+    ],
+    "phase_2_expansion": [
+      "finance-analysis",
+      "sales-crm",
+      "psa-capacity",
+      "security-audit",
+      "additional adapters/normalizers"
+    ]
+  }
+}

@@ -1,0 +1,36 @@
+/* ============================================================================
+   EXECUTIVE THEME
+   Conservative, authoritative. Navy/gold palette with serif headings.
+   Best for: C-suite reports, board presentations, client deliverables.
+   ============================================================================ */
+
+:root {
+  /* Primary palette */
+  --color-primary: #1B2A4A;
+  --color-secondary: #C9A962;
+  --color-accent: #3D7EAA;
+
+  /* Text */
+  --color-text: #2D2D2D;
+  --color-text-light: #666666;
+
+  /* Backgrounds */
+  --color-bg: #FFFFFF;
+  --color-bg-alt: #F5F5F0;
+  --color-border: #E0E0E0;
+
+  /* Semantic colors */
+  --color-success: #27AE60;
+  --color-warning: #F39C12;
+  --color-danger: #E74C3C;
+
+  /* Typography */
+  --font-heading: Georgia, 'Times New Roman', serif;
+  --font-body: Calibri, Helvetica, Arial, sans-serif;
+  --font-mono: 'Courier New', Courier, monospace;
+
+  /* Layout */
+  --spacing-section: 36px;
+  --border-radius: 4px;
+  --max-width: 900px;
+}
