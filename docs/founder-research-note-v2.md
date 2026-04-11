@@ -681,6 +681,6 @@ That is the audience I want to reach first. Not people looking for a magic demo.
 
 ---
 
-*The full architecture thesis, proof artifacts, and supporting technical documentation are available at [link]. This note is the front door. The building is behind it.*
+*The [full architecture thesis](https://amadalis.ai/research/architecture), [proof artifacts](https://github.com/amadalis-ai/forge-architecture), and supporting technical documentation are available. This note is the front door. The building is behind it.*
 
-*Simone Coelho is the founder of Amadalis. He has been building systems architecture for over two decades, starting with a Pascal compiler at fifteen and a college thesis on compiler design. He can be reached at [contact].*
+*Simone Coelho is the founder of Amadalis. He has been building systems architecture for over two decades, starting with a Pascal compiler at fifteen and a college thesis on compiler design. He can be reached via the [contact page](https://amadalis.ai/contact).*
