@@ -11,6 +11,49 @@ April 2026
 
 ---
 
+## Table of Contents
+
+**[Part I — The Problem](#part-i--the-problem)**
+[1.1 The interpreter pattern](#11-the-interpreter-pattern) · [1.2 A taxonomy of structural failures](#12-a-taxonomy-of-structural-failures) · [1.3 Three operational assumptions](#13-three-operational-assumptions)
+
+**[Part II — The Imprinting Protocol](#part-ii--the-imprinting-protocol)**
+[2.1 Why JSON schemas fail](#21-why-json-schemas-fail-for-models) · [2.2 The template token language](#22-the-template-token-language) · [2.3 Recursive nested traversal](#23-recursive-nested-traversal) · [2.4 The bidirectional serializer](#24-the-bidirectional-serializer) · [2.5 The planner template](#25-the-planner-template) · [2.6 What imprinting made possible](#26-what-the-imprinting-protocol-made-possible)
+
+**[Part III — The Validation Ladder](#part-iii--the-validation-ladder)**
+[3.1 Imprinting and validation](#31-the-relationship-between-imprinting-and-validation) · [3.2 Stage-by-stage breakdown](#32-stage-by-stage-breakdown) · [3.3 Where the ladder runs](#33-where-the-ladder-runs) · [3.4 From validation to semantic translation](#34-from-validation-to-semantic-translation)
+
+**[Part IV — The Type System for Autonomous Work](#part-iv--the-type-system-for-autonomous-work)**
+[4.1 Why a type system](#41-why-a-type-system) · [4.2 Domain packs](#42-domain-packs) · [4.3 Workflow packs](#43-workflow-packs) · [4.4 Artifact kinds and slots](#44-artifact-kinds-and-cross-step-slots) · [4.5 Policy profiles](#45-policy-profiles) · [4.6 Compatibility and adapters](#46-compatibility-and-adapters) · [4.7 Extensibility](#47-extensibility)
+
+**[Part V — The Compilation Pipeline](#part-v--the-compilation-pipeline)**
+[5.1 Overview](#51-overview) · [5.2 Pass A — Planning](#52-pass-a--structural-planning) · [5.3 Pass B — Intent resolution](#53-pass-b--intent-resolution) · [5.4 Pass C — Compilation](#54-pass-c--compilation) · [5.5 Pass D — Skill resolution](#55-pass-d--skill-resolution) · [5.6 Pass E — Dispatch](#56-pass-e--contract-finalization-and-dispatch) · [5.7 One step through all passes](#57-one-step-through-all-five-passes)
+
+**[Part VI — The Executor and Sandbox](#part-vi--the-executor-and-sandbox)**
+[6.1 Code-Act](#61-code-act-the-model-thinks-in-code) · [6.2 The executor model](#62-the-executor-model) · [6.3 The system-owned harness](#63-the-system-owned-harness) · [6.4 Fresh mind per step](#64-fresh-mind-per-step) · [6.5 Repair policy](#65-repair-policy) · [6.6 Prompt authority hierarchy](#66-the-prompt-authority-hierarchy) · [6.7 Verification](#67-verification-proven-vs-planned)
+
+**[Part VII — Skills as Linked Libraries](#part-vii--skills-as-linked-libraries)**
+[7.1 What a skill contains](#71-what-a-skill-package-contains) · [7.2 Materialization](#72-materialization) · [7.3 Discovery](#73-discovery) · [7.4 Governance](#74-governance)
+
+**[Part VIII — Capsules and Replay](#part-viii--capsules-and-replay)**
+[8.1 What a capsule is](#81-what-a-capsule-is) · [8.2 Format](#82-format) · [8.3 Sealed capsules](#83-sealed-capsules-proven) · [8.4 Structural capsules](#84-structural-capsules-proven) · [8.5 Headless execution](#85-headless-execution-proven) · [8.6 The economics](#86-the-economics)
+
+**[Part IX — Workspaces and Execution Profiles](#part-ix--workspaces-and-execution-profiles)**
+[9.1 Workspaces](#91-workspaces-are-not-chat-windows) · [9.2 Execution profiles](#92-execution-profiles) · [9.3 Planner bindings](#93-per-phase-planner-bindings) · [9.4 Executor bindings](#94-per-backend-executor-bindings) · [9.5 Validation manifest](#95-validation-manifest) · [9.6 Skill policy](#96-skill-policy) · [9.7 Runtime overrides](#97-runtime-overrides-and-reasoning-parameters) · [9.8 Configurability](#98-the-configurability-picture) · [9.9 File system bridge](#99-the-file-system-bridge)
+
+**[Part X — Governance](#part-x--governance)**
+[10.1 Egress](#101-egress-control) · [10.2 Budget enforcement](#102-budget-enforcement) · [10.3 Tool allowlists](#103-tool-allowlists) · [10.4 Policy freezing](#104-policy-freezing) · [10.5 Human-in-the-loop](#105-human-in-the-loop-as-structural-gates) · [10.6 Enterprise reality](#106-the-enterprise-reality) · [10.7 Traceability](#107-the-traceability-argument)
+
+**[Part X-b — What This Architecture Enables](#part-x-b--what-this-architecture-enables)**
+[Construction analogy](#the-construction-analogy) · [Document analysis](#document-analysis-and-audit) · [Building](#building-and-construction) · [Operations](#operational-processes) · [Extensibility](#extensibility)
+
+**[Part XI — What Is Proven, What Is Not](#part-xi--what-is-proven-what-is-not)**
+
+**[Part XII — The Thesis](#part-xii--the-thesis)**
+
+**[Appendix A — Proof Artifacts](#appendix-a--proof-artifacts)** · **[Appendix B — Glossary](#appendix-b--glossary)**
+
+---
+
 # Part I — The Problem
 
 ## 1.1 The interpreter pattern
@@ -897,7 +940,7 @@ The shipped execution mode is strict replay. The frozen plan template is re-exec
 
 An operation that cost a full planning run the first time costs near-zero on every subsequent execution. The intelligence was amortized at compile time. The code was proven. The contracts were validated. Now it just runs.
 
-## 8.4 Structural capsules (designed, in development)
+## 8.4 Structural capsules (proven)
 
 The architectural design for structural Capsules preserves the compiled step graph — the structure, the contracts, the validation requirements, the model assignments — but clears the generated code for selected steps. The model executes fresh within the frozen architecture, reasoning over new content, writing new code as needed, producing outputs that conform to the same contracts.
 
