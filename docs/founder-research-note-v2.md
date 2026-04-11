@@ -4,7 +4,6 @@
 Founder, Amadalis
 April 2026
 
----
 
 If you are expecting this to be another post about how AI agents are going to change everything, you can stop here. There are thousands of those. This is not one of them.
 
@@ -229,7 +228,7 @@ Domain packs say what the data is. Workflow packs say how the work flows.
 
 The disambiguation rules are the critical part. The system knows that "reconcile" is not the same as "normalize." It knows "compare" requires two or more inputs. It knows the difference between scoring one source and comparing two. These are the type distinctions that prevent a plan from wiring incompatible steps together.
 
-Today there are 12 domain packs, 12 workflow packs, 24 artifact kinds, 15 cross-step slots, and 5 policy profiles. It is a type system for autonomous work. It is early — 12 domains, not 200. But it is the same move that every programming language eventually makes: you cannot compile without types.
+Today there are 12 domain packs, 12 workflow packs, 24 artifact kinds, 15 cross-step slots, and 5 policy profiles. This is not a type system in the classic programming language sense — it is closer to a semantic contract catalog with typed handoff discipline. But it serves the same function: it gives the compilation pipeline the vocabulary it needs to validate compatibility before execution. It is early — 12 domains, not 200. And like any type system, it gets more useful as it grows.
 
 ---
 
@@ -245,9 +244,11 @@ By this point, I had built:
 
 I started noticing what I had actually been building.
 
-A language for expressing intent. A system that validates output against formal contracts. A semantic layer that resolves meaning across representations. A type system. A pipeline that checks everything before execution starts.
+A language for expressing intent. A system that validates output against formal contracts. A semantic layer that resolves meaning across representations. A typed contract discipline. A pipeline that checks everything before execution starts.
 
-I had been building a compiler. Not metaphorically. Structurally.
+I had been building something that looked a lot like a compiler.
+
+I should be precise about what I mean by that. I am not claiming I built GCC for AI. I use "compiler" in the broader systems sense: a pipeline that transforms a high-level human objective into a lower-level executable representation, performs resolution and compatibility checks before runtime, freezes the resulting specification, and executes it under a governed runtime. It is not a traditional native-code compiler. It is a compiler-shaped system for autonomous work. The value of the analogy is not the binary — it is the shift from runtime improvisation to pre-execution structure.
 
 ### The interpreter pattern
 
@@ -294,7 +295,7 @@ But here is the critical relationship: letting a model write arbitrary code with
 
 The compiler is what makes Code-Act safe. The contract defines what the code must produce. The sandbox governs what it can access. The postflight receipt verifies what it actually produced. The model is free to invent whatever solution it wants — any algorithm, any approach, any library — as long as the output satisfies the contract. Maximum creativity within structural governance.
 
-That is the relationship between the compiler and the executor. The compiler provides the constraints. The model provides the intelligence. The code provides the proof.
+That is the relationship between the compilation pipeline and the executor. The pipeline provides the constraints and contracts. The model provides the intelligence and adaptation. The code provides the inspectable evidence.
 
 ---
 
@@ -645,7 +646,7 @@ When a step's compilation determines it needs this skill, the entire package is 
 
 **Governance as walls, not rules.** Network egress is controlled at the sandbox level with domain, subdomain, path, and method granularity — not by asking the model to avoid certain URLs, but by structurally blocking them. Budget enforcement uses projected pre-checks and runtime counters to halt execution at the boundary, not after the money is spent. Tool allowlists are both frozen into the step plan at compile time and re-enforced at runtime dispatch. These are not rules the model promises to follow. They are walls.
 
-**Built from scratch.** The entire system is built from the ground up on Cloudflare primitives — Workers, Durable Objects, R2, KV, Queues, Vectorize, Containers, and Neon Postgres via Hyperdrive. There are no AI orchestration frameworks, no agent SDKs, no third-party workflow engines. The compilation pipeline, the executor, the validation ladder, the skill materializer, the governance layer — all of it is original code. The only external dependency is the model API itself. Everything between the user's intent and the model's response is infrastructure I wrote.
+**No frameworks, no SDKs.** The system runs on Cloudflare primitives — Workers, Durable Objects, R2, KV, Queues, Vectorize, Containers, and Neon Postgres via Hyperdrive. There are no AI orchestration frameworks and no third-party workflow engines in the stack. The compilation pipeline, the executor, the validation ladder, the skill materializer, and the governance layer are original code. The only external dependency is the model API itself.
 
 ---
 
@@ -663,24 +664,26 @@ This is not a finished product. It is a running system with real evidence and ho
 
 ## What I want this note to do
 
-I want a small number of technical readers to stop and think about four things:
+I want a small number of technical readers to consider four things:
 
-Maybe the dominant agent architecture — interpret, act, observe, decide — is not the final shape.
+Maybe the dominant agent architecture — interpret, act, observe, decide — has structural limitations that better models alone will not fix.
 
 Maybe model capability is only half the story, and the other half is the infrastructure that wraps around it.
 
 Maybe the way we communicate information to models — the format, the structure, the language — matters as much as how smart the models are.
 
-Maybe autonomous work needs the same progression that every other serious computing discipline eventually needed: from interpretation to compilation.
+Maybe autonomous work benefits from the same kind of pre-execution structure, validation, and contract discipline that compilers brought to software engineering.
 
-I am not publishing this to win a branding exercise. I am not publishing it to launch a product. I am publishing it because I want the right people to see the structure.
+I am not publishing this to define a new category or to claim I have solved everything. I am publishing it because the architecture addresses real failure modes in a way I have not seen elsewhere, and I want to show the work to people who can evaluate it honestly.
 
-If you have built agent systems and felt the pain of runtime ambiguity, silent contract mismatches, capability hallucination, or context decay, then you already understand why I ended up here. And if you come from compilers, operating systems, enterprise integration, or data infrastructure, I suspect the shape of this argument feels familiar.
+The novelty here is not any single primitive — workflow engines, typed DAGs, capability registries, sandboxed execution, and replayable jobs all exist in various forms. What may be different is the degree of integration: compilation-style planning, typed handoffs, frozen policy, code-backed execution, and replayable capsules composed into one disciplined system.
 
-That is the audience I want to reach first. Not people looking for a magic demo. People who can see what happens when autonomous work stops being interpreted and starts being compiled.
+If you have built agent systems and felt the pain of runtime ambiguity, silent contract mismatches, capability hallucination, or context decay, then you understand why I ended up here. And if you come from compilers, enterprise integration, or data infrastructure, the shape of this argument probably feels familiar.
+
+That is the audience I want to reach. Not people looking for a magic demo. People who can evaluate whether applying compiler principles to autonomous work is a meaningful architectural direction.
 
 ---
 
-*The [full architecture thesis](https://amadalis.ai/research/architecture), [proof artifacts](https://github.com/amadalis-ai/forge-architecture), and supporting technical documentation are available. This note is the front door. The building is behind it.*
+*The [full architecture thesis](/research/architecture), [proof artifacts](https://github.com/amadalis-ai/forge-architecture), and supporting technical documentation are available. This note is the front door. The building is behind it.*
 
-*Simone Coelho is the founder of Amadalis. He has been building systems architecture for over two decades, starting with a Pascal compiler at fifteen and a college thesis on compiler design. He can be reached via the [contact page](https://amadalis.ai/contact).*
+*Simone Coelho is the founder of Amadalis. He has been building systems architecture for over two decades, starting with a Pascal compiler at fifteen and a college thesis on compiler design. He can be reached via the [contact page](/contact).*
