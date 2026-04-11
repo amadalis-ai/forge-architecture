@@ -532,11 +532,11 @@ An operation that cost a full planning run the first time costs almost nothing o
 
 Some work requires judgment that depends on content. Analyzing a resume requires code — parsing, field extraction, scoring formula computation — but it also requires the model to reason over the actual substance of the resume, weigh qualifications against criteria, and make decisions that cannot be pre-programmed.
 
-This is where structural Capsules are headed. The compiled step graph is preserved — the structure, the contracts, the validation requirements, the model assignments. But the generated code for selected steps is cleared. The model executes fresh within the frozen architecture, reasoning over the new content, writing new code as needed, producing outputs that conform to the same contracts.
+Structural Capsules preserve the compiled step graph — the structure, the contracts, the validation requirements, the model assignments. But the generated code for selected steps is cleared. The model executes fresh within the frozen architecture, reasoning over the new content, writing new code as needed, producing outputs that conform to the same contracts.
 
 Everything that was deterministic stays deterministic. Everything that requires thinking gets fresh thinking. And you did not pay for a new plan.
 
-Today, strict replay — the sealed Capsule — is implemented and running. Structural Capsules with selective fresh reasoning are designed and in development. I mention both because the architectural distinction matters even though only one mode is proven today.
+Both modes are implemented and running. Sealed Capsules for deterministic replay with pre-generated code. Structural Capsules for fresh creative reasoning within a frozen architecture.
 
 ### What this actually means
 
