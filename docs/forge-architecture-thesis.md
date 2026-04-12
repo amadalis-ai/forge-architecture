@@ -525,23 +525,22 @@ The consequence: every new domain pack extends what the compiler can compile cor
 
 The compilation pipeline transforms a human objective expressed in natural language into a set of governed, executable step contracts. It runs through five passes:
 
-```
-USER INTENT MESSAGE
-    ↓
-Pass A — Operator Planner (LLM)
-  Structural decomposition into abstract step graph
-    ↓
-Pass B — Intent Resolver (LLM + retrieval)
-  Annotate with domain packs, workflow packs, policy profiles
-    ↓
-Pass C — Compiler (deterministic)
-  Resolve contracts, bind slots, insert adapters, freeze
-    ↓
-Pass D — Skill Resolver (LLM + retrieval)
-  Select tools, skills, execution mode per step
-    ↓
-Pass E — Contract Finalization + Dispatch
-  Freeze execution profile, write to ledger, queue for execution
+```mermaid
+flowchart LR
+    U["👤 User Objective\n(natural language)"]
+    A["Pass A\nStructural\nPlanning"]
+    B["Pass B\nIntent\nResolution"]
+    C["Pass C\nCompilation"]
+    D["Pass D\nSkill\nResolution"]
+    E["Pass E\nFreeze &\nDispatch"]
+
+    U --> A --> B --> C --> D --> E
+
+    A -.- A1["🧠 Frontier model\nExtended thinking\nStep graph + dependencies"]
+    B -.- B1["🧠 Fast model\nDomain packs\nWorkflow packs\nPolicy profiles"]
+    C -.- C1["⚙️ Deterministic\nSlot bindings\nAdapter insertion\nContract hashes"]
+    D -.- D1["🧠 Fast model\nTool selection\nSkill binding\nExecution mode"]
+    E -.- E1["⚙️ Platform\nProfile snapshot\nLedger write\nQueue dispatch"]
 ```
 
 Three of the five passes involve model intelligence (A, B, D). One is fully deterministic (C). One is infrastructure orchestration (E). The most expensive model call — the planner — happens once. Everything after it is either cheap model calls (B, D) or deterministic computation (C, E).
@@ -745,6 +744,106 @@ A real compiled sub-step from a production run — the model-generated business 
 ```
 
 The model wrote a Python script that calls 35+ API endpoints, structures the data, writes the result, and self-validates. The output path was injected by the compiler. The model cannot write to a different location.
+
+### The step harness — visual overview
+
+```mermaid
+flowchart LR
+    subgraph PRE["Pre-execution Harness"]
+        direction TB
+        H1["1. Prepare workspace"]
+        H2["2. Materialize inputs"]
+        H3["3. Project paths"]
+        H4["4. Preflight receipt"]
+        H5["5. Verify inputs"]
+        H1 --> H2 --> H3 --> H4 --> H5
+    end
+
+    subgraph EXEC["6. Executor Model's Code"]
+        direction TB
+        E1["Read contracted inputs"]
+        E2["Write code to fulfill\nthe step contract"]
+        E3["Iterate, compute,\ntransform, build,\ncall governed tools"]
+        E4["Write outputs that\nsatisfy the contract"]
+
+        E1 --> E2 --> E3 --> E4
+    end
+
+    subgraph POST["Post-execution Harness"]
+        direction TB
+        H7["7. Postflight receipt"]
+        H8["8. Verify outputs"]
+        H9["9. Persist"]
+        H7 --> H8 --> H9
+    end
+
+    PRE --> EXEC --> POST
+```
+
+### Executor and evaluator — separation of concerns
+
+The governed evaluator is not a sandbox implementation detail. It is a first-class architectural concept: the separation of execution from evaluation, with a governed tool bridge mediating every model call.
+
+```mermaid
+flowchart LR
+    subgraph COMPILE["Compilation Phase"]
+        P["Planner\n🧠 Plans the work"]
+        C["Compiler\n⚙️ Freezes contracts"]
+    end
+
+    subgraph EXECUTE["Execution Phase"]
+        EX["Executor\n🧠 Does the work\nWrites code\nOwns the loop"]
+        EV["Evaluator\n🧠 Judges the work\nSemantic verification\nEvidence bundles"]
+    end
+
+    subgraph GOVERN["Governance Layer"]
+        TB["Tool Bridge\nBudgets, tracing,\nproof persistence"]
+        RE["Receipts\nSHA-256 hashes\nSchema inference"]
+    end
+
+    P --> C
+    C -->|"Frozen\ncontracts"| EX
+
+    EX -->|"Calls via\ntool bridge"| TB
+    TB -->|"Governed\nmodel call"| EV
+    EV -->|"Verdict +\nproof"| TB
+    TB -->|"Result"| EX
+
+    EX -->|"Outputs"| RE
+```
+
+### The governed tool bridge — call sequence
+
+```mermaid
+sequenceDiagram
+    participant S as Sandbox Executor<br/>(model-generated code)
+    participant B as Governed Tool Bridge<br/>(platform)
+    participant E as Evaluator Model<br/>(separate AI)
+    participant P as Proof Store<br/>(R2 + Postgres)
+
+    S->>S: Extract source text
+    S->>S: Write derived JSON
+    S->>S: Assemble evidence bundle
+
+    S->>B: call("operator.artifact.evaluate",<br/>{path: bundle, rubric, enforcement: "block"})
+
+    B->>B: Validate against budget
+    B->>B: Load bundle contents
+    B->>B: Build bounded model context
+
+    B->>E: Evaluate evidence bundle<br/>against rubric
+
+    E->>E: Semantic judgment:<br/>faithful? grounded?<br/>hallucinations? omissions?
+
+    E->>B: Evaluation result + verdict
+
+    B->>P: Persist proof:<br/>model_call_id, bundle_sha256,<br/>verdict, evidence
+
+    B->>S: Return result to sandbox
+
+    S->>S: Write per-item audit card
+    S->>S: Continue to next item
+```
 
 ## 6.4 Fresh mind per step
 
@@ -1204,6 +1303,26 @@ This is the difference between this system and every platform that tries to have
 
 **Screening a thousand resumes.** The executor loops over candidates within a step — extracting source text, assembling a per-candidate evidence bundle (source resume + extracted profile + rubric), and calling the platform's governed evaluator per item. One thousand bounded evaluator calls, not one massive prompt. Each call produces a proof-backed candidate card. The cards aggregate into batch rankings and a global merge, with top-N re-evaluation against source bundles for borderline cases. Every score traces to both the extraction code and the governed evaluator call that assessed it. Encapsulate it. Next hiring cycle, run the same Capsule.
 
+```mermaid
+flowchart LR
+    subgraph LOOP["Executor iterates over 1,000 candidates"]
+        direction TB
+        R1["Extract resume\nsource text"]
+        R2["Write extracted\nprofile JSON"]
+        R3["Assemble evidence bundle\n(source + profile + rubric)"]
+        R4["🧠 Call governed\nevaluator model\nvia tool bridge"]
+        R5["Write proof-backed\ncandidate card"]
+        R6{"More\ncandidates?"}
+
+        R1 --> R2 --> R3 --> R4 --> R5 --> R6
+        R6 -->|Yes| R1
+    end
+
+    AGG["Aggregate cards\ninto batch rankings\n→ global merge\n→ top-N re-eval"]
+
+    R6 -->|No| AGG
+```
+
 **Auditing a year of vendor contracts.** The system extracts clauses, identifies obligations, flags non-standard terms, produces a risk register with citations traceable to exact paragraphs with line numbers. A compliance officer follows the chain from finding to source without asking the model anything.
 
 **Reconciling billing data every Friday.** Sealed Capsule. No model inference. The transformation code is frozen. Every discrepancy traces through the computation chain to the source rows. The finance team reads the code, not the model's self-report.
@@ -1214,7 +1333,67 @@ This is the difference between this system and every platform that tries to have
 
 **Building a 500-page website.** The plan compiles the full structure — navigation, pages, components, content, styling. The executor iterates over pages within a step — generating each page individually, calling governed evaluators for quality verification as needed. Page 47 does not carry the context of pages 1 through 46. The compiler guarantees that navigation components and theme assets will be there, because those are contracted outputs of earlier steps. The model generates the code for each page fresh, adapting to the content, but within the structural constraints of the compiled architecture.
 
+```mermaid
+flowchart LR
+    subgraph LOOP["Executor iterates over page manifest"]
+        direction TB
+        W1["Read page spec\nfrom manifest"]
+        W2["Generate page HTML\nusing skill scripts +\ntheme assets"]
+        W3["Validate structure\n(navigation, links,\nrequired components)"]
+        W4{"Needs semantic\nreview?"}
+        W5["🧠 Call governed\nevaluator model\n(content quality)"]
+        W6["Write verified page\nto output"]
+        W7{"More\npages?"}
+
+        W1 --> W2 --> W3 --> W4
+        W4 -->|No| W6
+        W4 -->|Yes| W5 --> W6
+        W6 --> W7
+        W7 -->|Yes| W1
+    end
+
+    OUT["Assemble site bundle\nnavigation index\nasset manifest"]
+
+    W7 -->|No| OUT
+```
+
 **Customer onboarding workflows.** Configuring an application for a new customer — theming, branding, data loading, permission setup, integration configuration. Some of it is repetitive and can be sealed Capsules that run identically for every customer. Some of it requires the model to adapt — querying data mid-workflow, adjusting configuration based on what it finds. The compiled plan provides the structure. The executor provides the adaptation. The governance provides the guardrails.
+
+```mermaid
+flowchart LR
+    subgraph SEALED["Deterministic (Sealed)"]
+        direction TB
+        S1["Apply branding\n& theming"]
+        S2["Load base\nconfiguration"]
+        S3["Create user\naccounts & roles"]
+        S1 --> S2 --> S3
+    end
+
+    subgraph ADAPTIVE["Adaptive (Executor loops)"]
+        direction TB
+        A1["Query customer\ndata source"]
+        A2["Analyze schema\n& data quality"]
+        A3{"Data issues?"}
+        A4["🧠 Call evaluator\nfor remediation\nrecommendation"]
+        A5["Transform &\nload data"]
+        A6["Configure\nintegrations"]
+        A7["Run validation\nchecks"]
+
+        A1 --> A2 --> A3
+        A3 -->|No| A5
+        A3 -->|Yes| A4 --> A5
+        A5 --> A6 --> A7
+    end
+
+    subgraph VERIFY["Governed Verification"]
+        direction TB
+        V1["🧠 Call evaluator:\nonboarding completeness\nagainst checklist"]
+        V2["Generate onboarding\nreport"]
+        V1 --> V2
+    end
+
+    SEALED --> ADAPTIVE --> VERIFY
+```
 
 ## Operational processes
 

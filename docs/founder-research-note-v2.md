@@ -301,6 +301,34 @@ The compiler is what makes Code-Act safe. The contract defines what the code mus
 
 That is the relationship between the compilation pipeline and the executor. The pipeline provides the constraints and contracts. The model provides the intelligence and adaptation. The code provides the inspectable evidence.
 
+```mermaid
+flowchart LR
+    subgraph COMPILE["Compilation Phase"]
+        P["Planner\n🧠 Plans the work"]
+        C["Compiler\n⚙️ Freezes contracts"]
+    end
+
+    subgraph EXECUTE["Execution Phase"]
+        EX["Executor\n🧠 Does the work\nWrites code\nOwns the loop"]
+        EV["Evaluator\n🧠 Judges the work\nSemantic verification\nEvidence bundles"]
+    end
+
+    subgraph GOVERN["Governance Layer"]
+        TB["Tool Bridge\nBudgets, tracing,\nproof persistence"]
+        RE["Receipts\nSHA-256 hashes\nSchema inference"]
+    end
+
+    P --> C
+    C -->|"Frozen\ncontracts"| EX
+
+    EX -->|"Calls via\ntool bridge"| TB
+    TB -->|"Governed\nmodel call"| EV
+    EV -->|"Verdict +\nproof"| TB
+    TB -->|"Result"| EX
+
+    EX -->|"Outputs"| RE
+```
+
 ---
 
 ## What I can show today
