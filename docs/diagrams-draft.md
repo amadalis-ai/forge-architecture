@@ -18,18 +18,7 @@ flowchart LR
     D["Pass D\nSkill\nResolution"]
     E["Pass E\nFreeze &\nDispatch"]
 
-    U --> A
-    A --> B
-    B --> C
-    C --> D
-    D --> E
-
-    style A fill:#1e2028,stroke:#c8a44e,color:#e8e9ed
-    style B fill:#1e2028,stroke:#c8a44e,color:#e8e9ed
-    style C fill:#1e2028,stroke:#c8a44e,color:#e8e9ed
-    style D fill:#1e2028,stroke:#c8a44e,color:#e8e9ed
-    style E fill:#1e2028,stroke:#c8a44e,color:#e8e9ed
-    style U fill:#0a0b0f,stroke:#9498a8,color:#e8e9ed
+    U --> A --> B --> C --> D --> E
 
     A -.- A1["🧠 Frontier model\nExtended thinking\nStep graph + dependencies"]
     B -.- B1["🧠 Fast model\nDomain packs\nWorkflow packs\nPolicy profiles"]
@@ -75,11 +64,6 @@ flowchart LR
     end
 
     PRE --> EXEC --> POST
-
-    style PRE fill:#0a0b0f,stroke:#2a2d38,color:#9498a8
-    style EXEC fill:#161920,stroke:#c8a44e,color:#e8e9ed
-    style POST fill:#0a0b0f,stroke:#2a2d38,color:#9498a8
-    style E3 fill:#1e2028,stroke:#c8a44e,color:#c8a44e,stroke-width:2px
 ```
 
 ---
@@ -106,10 +90,6 @@ flowchart LR
     AGG["Aggregate cards\ninto batch rankings\n→ global merge\n→ top-N re-eval"]
 
     R6 -->|No| AGG
-
-    style LOOP fill:#161920,stroke:#c8a44e,color:#e8e9ed
-    style R4 fill:#1e2028,stroke:#c8a44e,color:#c8a44e,stroke-width:2px
-    style AGG fill:#0a0b0f,stroke:#c8a44e,color:#c8a44e
 ```
 
 ---
@@ -140,10 +120,6 @@ flowchart LR
     OUT["Assemble site bundle\nnavigation index\nasset manifest"]
 
     W7 -->|No| OUT
-
-    style LOOP fill:#161920,stroke:#c8a44e,color:#e8e9ed
-    style W5 fill:#1e2028,stroke:#c8a44e,color:#c8a44e,stroke-width:2px
-    style OUT fill:#0a0b0f,stroke:#c8a44e,color:#c8a44e
 ```
 
 ---
@@ -177,10 +153,6 @@ flowchart LR
     RPT["Build correction\ncandidates\n→ simulate submissions\n→ generate report"]
 
     B8 -->|No| RPT
-
-    style LOOP fill:#161920,stroke:#c8a44e,color:#e8e9ed
-    style B6 fill:#1e2028,stroke:#c8a44e,color:#c8a44e,stroke-width:2px
-    style RPT fill:#0a0b0f,stroke:#c8a44e,color:#c8a44e
 ```
 
 ---
@@ -223,12 +195,6 @@ flowchart LR
     end
 
     SEALED --> ADAPTIVE --> VERIFY
-
-    style SEALED fill:#0a0b0f,stroke:#2a2d38,color:#9498a8
-    style ADAPTIVE fill:#161920,stroke:#c8a44e,color:#e8e9ed
-    style VERIFY fill:#0a0b0f,stroke:#c8a44e,color:#c8a44e
-    style A4 fill:#1e2028,stroke:#c8a44e,color:#c8a44e,stroke-width:2px
-    style V1 fill:#1e2028,stroke:#c8a44e,color:#c8a44e,stroke-width:2px
 ```
 
 ---
@@ -308,10 +274,6 @@ flowchart TB
     B2 --> ITEM
     BN --> ITEM
     ITEM --> AGG
-
-    style I4 fill:#1e2028,stroke:#c8a44e,color:#c8a44e,stroke-width:2px
-    style DS fill:#0a0b0f,stroke:#9498a8,color:#e8e9ed
-    style A4 fill:#0a0b0f,stroke:#c8a44e,color:#c8a44e
 ```
 
 ---
@@ -346,13 +308,6 @@ flowchart LR
     TB -->|"Result"| EX
 
     EX -->|"Outputs"| RE
-
-    style COMPILE fill:#0a0b0f,stroke:#2a2d38,color:#9498a8
-    style EXECUTE fill:#0a0b0f,stroke:#c8a44e,color:#e8e9ed
-    style GOVERN fill:#0a0b0f,stroke:#2a2d38,color:#9498a8
-    style EX fill:#161920,stroke:#c8a44e,color:#e8e9ed
-    style EV fill:#161920,stroke:#c8a44e,color:#c8a44e
-    style TB fill:#161920,stroke:#c8a44e,color:#9498a8
 ```
 
 ---
@@ -383,10 +338,6 @@ flowchart TB
 
     BUNDLE --> EVAL
     EVAL --> PROOF
-
-    style BUNDLE fill:#161920,stroke:#2a2d38,color:#9498a8
-    style EVAL fill:#1e2028,stroke:#c8a44e,color:#c8a44e
-    style PROOF fill:#1e2028,stroke:#c8a44e,color:#9498a8
 ```
 
 ---
@@ -396,12 +347,13 @@ flowchart TB
 | Diagram | Document | Location |
 |---------|----------|----------|
 | 1. Compilation Pipeline | Thesis Part V, Section 5.1 | After the text pipeline overview |
-| 2. Step Harness with Loop | Thesis Part VI, Section 6.3 | Replace the text-only harness description |
-| 3. Governed Tool Bridge | Thesis Part VI, new section 6.x | Between executor and verification |
+| 2. Step Harness (generic) | Thesis Part VI, Section 6.3 | Replace the text-only harness description |
+| 2a-2d. Domain examples | Thesis Part X-b or new section | After the generic harness, showing domain-specific patterns |
+| 3. Governed Tool Bridge | Thesis Part VI, new section | Between executor and verification — elevates evaluator to architectural concept |
 | 4. Hierarchical Processing | Thesis Part X-b | In the resume screening use case |
-| 5. Executor + Evaluator | Thesis Part VI, Section 6.1 or new section | Architectural elevation of the evaluator concept |
+| 5. Executor + Evaluator | Thesis Part VI or new section | Architectural elevation of the evaluator concept |
 | 6. Evidence Bundle | Thesis Part VI or new section | Alongside the governed evaluator description |
 
-For the **founder note**, diagrams 3 (tool bridge sequence) and 5 (executor + evaluator separation) are the most relevant — they show the architecture without overwhelming a shorter document.
+For the **founder note**, diagrams 3 (tool bridge sequence) and 5 (executor + evaluator separation) are the most relevant.
 
-For the **landing page**, diagram 5 could be simplified into a visual on the page, but Mermaid won't render in Astro without a plugin. We'd need to render it as an SVG or image.
+For the **landing page**, diagram 5 could be simplified into a visual, but Mermaid won't render in Astro without a plugin — we'd render as SVG or image.
