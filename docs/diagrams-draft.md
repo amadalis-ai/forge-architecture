@@ -45,44 +45,48 @@ flowchart LR
 Shows the 9-step harness and expands step 6 to reveal the executor's iteration and governed evaluator calls.
 
 ```mermaid
-flowchart TB
-    subgraph HARNESS["Compiler-Generated Harness"]
-        H1["1. Prepare\nworkspace"]
-        H2["2. Materialize\ninputs"]
-        H3["3. Project\ninput paths"]
-        H4["4. Preflight\nreceipt"]
-        H5["5. Verify\nrequired inputs"]
-        H7["7. Postflight\nreceipt"]
-        H8["8. Verify\nexpected outputs"]
-        H9["9. Persist\noutputs"]
+flowchart LR
+    subgraph PRE["Pre-execution Harness"]
+        direction TB
+        H1["1. Prepare workspace"]
+        H2["2. Materialize inputs"]
+        H3["3. Project paths"]
+        H4["4. Preflight receipt"]
+        H5["5. Verify inputs"]
+        H1 --> H2 --> H3 --> H4 --> H5
     end
 
     subgraph EXEC["6. Executor Model's Code"]
         direction TB
-        E1["Read contracted inputs"]
-        E2{"Iterate over\nitems?"}
-        E3["Process item:\nextract, transform,\nwrite intermediate files"]
-        E4["Assemble evidence\nbundle for item"]
-        E5["Call governed\nevaluator model\nvia tool bridge"]
-        E6["Write per-item\naudit result"]
-        E7["More items?"]
-        E8["Aggregate results\nWrite final output"]
+        E1["Read inputs"]
+        E2{"Dataset?"}
+        E3["Process item"]
+        E4["Assemble bundle"]
+        E5["🧠 Governed\nevaluator call"]
+        E6["Write audit card"]
+        E7{"More?"}
+        E8["Aggregate &\nwrite output"]
 
         E1 --> E2
-        E2 -->|"Single item\nor computation"| E8
-        E2 -->|"Dataset\niteration"| E3
-        E3 --> E4
-        E4 --> E5
-        E5 --> E6
-        E6 --> E7
+        E2 -->|Single| E8
+        E2 -->|Iterate| E3 --> E4 --> E5 --> E6 --> E7
         E7 -->|Yes| E3
         E7 -->|No| E8
     end
 
-    H1 --> H2 --> H3 --> H4 --> H5 --> EXEC --> H7 --> H8 --> H9
+    subgraph POST["Post-execution Harness"]
+        direction TB
+        H7["7. Postflight receipt"]
+        H8["8. Verify outputs"]
+        H9["9. Persist"]
+        H7 --> H8 --> H9
+    end
 
-    style HARNESS fill:#0a0b0f,stroke:#2a2d38,color:#9498a8
+    PRE --> EXEC --> POST
+
+    style PRE fill:#0a0b0f,stroke:#2a2d38,color:#9498a8
     style EXEC fill:#161920,stroke:#c8a44e,color:#e8e9ed
+    style POST fill:#0a0b0f,stroke:#2a2d38,color:#9498a8
     style E5 fill:#1e2028,stroke:#c8a44e,color:#c8a44e,stroke-width:2px
 ```
 
