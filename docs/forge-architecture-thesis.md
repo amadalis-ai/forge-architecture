@@ -5,52 +5,9 @@
 Founder, Amadalis
 April 2026
 
-> This document is the canonical technical reference for the Forge architecture. It is the deeper treatment behind the [founder research note](founder-research-note-v2.md), which introduces the thesis and shows selected evidence. This document shows the system.
+> This document is the canonical technical reference for the Forge architecture. It is the deeper treatment behind the [founder research note](/research/compiling-autonomous-work), which introduces the thesis and shows selected evidence. This document shows the system.
 >
 > Every claim is classified: **proven** (implemented and shipping), **partial** (implemented in some paths), or **designed** (architecturally specified but not yet in the shipping runtime). The boundaries section at the end provides a full accounting.
-
----
-
-## Table of Contents
-
-**[Part I — The Problem](#part-i--the-problem)**
-[1.1 The interpreter pattern](#11-the-interpreter-pattern) · [1.2 A taxonomy of structural failures](#12-a-taxonomy-of-structural-failures) · [1.3 Three operational assumptions](#13-three-operational-assumptions)
-
-**[Part II — The Imprinting Protocol](#part-ii--the-imprinting-protocol)**
-[2.1 Why JSON schemas fail](#21-why-json-schemas-fail-for-models) · [2.2 The template token language](#22-the-template-token-language) · [2.3 Recursive nested traversal](#23-recursive-nested-traversal) · [2.4 The bidirectional serializer](#24-the-bidirectional-serializer) · [2.5 The planner template](#25-the-planner-template) · [2.6 What imprinting made possible](#26-what-the-imprinting-protocol-made-possible)
-
-**[Part III — The Validation Ladder](#part-iii--the-validation-ladder)**
-[3.1 Imprinting and validation](#31-the-relationship-between-imprinting-and-validation) · [3.2 Stage-by-stage breakdown](#32-stage-by-stage-breakdown) · [3.3 Where the ladder runs](#33-where-the-ladder-runs) · [3.4 From validation to semantic translation](#34-from-validation-to-semantic-translation)
-
-**[Part IV — The Type System for Autonomous Work](#part-iv--the-type-system-for-autonomous-work)**
-[4.1 Why a type system](#41-why-a-type-system) · [4.2 Domain packs](#42-domain-packs) · [4.3 Workflow packs](#43-workflow-packs) · [4.4 Artifact kinds and slots](#44-artifact-kinds-and-cross-step-slots) · [4.5 Policy profiles](#45-policy-profiles) · [4.6 Compatibility and adapters](#46-compatibility-and-adapters) · [4.7 Extensibility](#47-extensibility)
-
-**[Part V — The Compilation Pipeline](#part-v--the-compilation-pipeline)**
-[5.1 Overview](#51-overview) · [5.2 Pass A — Planning](#52-pass-a--structural-planning) · [5.3 Pass B — Intent resolution](#53-pass-b--intent-resolution) · [5.4 Pass C — Compilation](#54-pass-c--compilation) · [5.5 Pass D — Skill resolution](#55-pass-d--skill-resolution) · [5.6 Pass E — Dispatch](#56-pass-e--contract-finalization-and-dispatch) · [5.7 One step through all passes](#57-one-step-through-all-five-passes)
-
-**[Part VI — The Executor and Sandbox](#part-vi--the-executor-and-sandbox)**
-[6.1 Code-Act](#61-code-act-the-model-thinks-in-code) · [6.2 The executor model](#62-the-executor-model) · [6.3 The system-owned harness](#63-the-system-owned-harness) · [6.4 Fresh mind per step](#64-fresh-mind-per-step) · [6.5 Repair policy](#65-repair-policy) · [6.6 Prompt authority hierarchy](#66-the-prompt-authority-hierarchy) · [6.7 Verification](#67-verification-proven-vs-planned)
-
-**[Part VII — Skills as Linked Libraries](#part-vii--skills-as-linked-libraries)**
-[7.1 What a skill contains](#71-what-a-skill-package-contains) · [7.2 Materialization](#72-materialization) · [7.3 Discovery](#73-discovery) · [7.4 Governance](#74-governance)
-
-**[Part VIII — Capsules and Replay](#part-viii--capsules-and-replay)**
-[8.1 What a capsule is](#81-what-a-capsule-is) · [8.2 Format](#82-format) · [8.3 Sealed capsules](#83-sealed-capsules-proven) · [8.4 Structural capsules](#84-structural-capsules-proven) · [8.5 Headless execution](#85-headless-execution-proven) · [8.6 The economics](#86-the-economics)
-
-**[Part IX — Workspaces and Execution Profiles](#part-ix--workspaces-and-execution-profiles)**
-[9.1 Workspaces](#91-workspaces-are-not-chat-windows) · [9.2 Execution profiles](#92-execution-profiles) · [9.3 Planner bindings](#93-per-phase-planner-bindings) · [9.4 Executor bindings](#94-per-backend-executor-bindings) · [9.5 Validation manifest](#95-validation-manifest) · [9.6 Skill policy](#96-skill-policy) · [9.7 Runtime overrides](#97-runtime-overrides-and-reasoning-parameters) · [9.8 Configurability](#98-the-configurability-picture) · [9.9 File system bridge](#99-the-file-system-bridge)
-
-**[Part X — Governance](#part-x--governance)**
-[10.1 Egress](#101-egress-control) · [10.2 Budget enforcement](#102-budget-enforcement) · [10.3 Tool allowlists](#103-tool-allowlists) · [10.4 Policy freezing](#104-policy-freezing) · [10.5 Human-in-the-loop](#105-human-in-the-loop-as-structural-gates) · [10.6 Enterprise reality](#106-the-enterprise-reality) · [10.7 Traceability](#107-the-traceability-argument)
-
-**[Part X-b — What This Architecture Enables](#part-x-b--what-this-architecture-enables)**
-[Construction analogy](#the-construction-analogy) · [Document analysis](#document-analysis-and-audit) · [Building](#building-and-construction) · [Operations](#operational-processes) · [Extensibility](#extensibility)
-
-**[Part XI — What Is Proven, What Is Not](#part-xi--what-is-proven-what-is-not)**
-
-**[Part XII — The Thesis](#part-xii--the-thesis)**
-
-**[Appendix A — Proof Artifacts](#appendix-a--proof-artifacts)** · **[Appendix B — Glossary](#appendix-b--glossary)**
 
 ---
 
@@ -743,13 +700,17 @@ This matters for verification. If a model tells me "the average value is 47,000,
 
 Prose can sound right while being wrong. Code either runs or it does not.
 
+The executor is not limited to pure computation. When a step requires semantic judgment — evaluating whether an extracted resume profile is faithful to the source, or whether a contract clause deviates from the standard template — the executor's code calls governed platform tools through a tool bridge. The call goes through the platform, which handles the AI evaluation, enforces budgets, records provenance, and persists proof. The executor's code orchestrates the workflow; the platform governs every model call within it. For a thousand resumes, that means the executor loops over candidates, assembles a per-candidate evidence bundle, and calls the governed evaluator per item — bounded per-item calls, not one massive prompt.
+
 ## 6.2 The executor model
 
 The compiler freezes the contract. The executor model decides how to fulfill it.
 
 This is an important distinction: the compiler does NOT prescribe the executor's internal sub-step sequence. It freezes the specification — what must be consumed, what must be produced, what tools are allowed, what success criteria must be met. The executor model receives this contract and decides the approach: what code to write, how to structure the computation, which libraries to use, how many tool calls to make.
 
-The executor operates through an iterative tool loop: model call → model returns tool_use blocks → system dispatches each tool call with governance → tool results returned → next model call. A step might be one sandbox.session call or several rounds of tool interaction. The natural cap is the tool-call budget — typically 10 per step, configurable per profile and governed settings.
+At the platform level, the executor operates through an iterative tool loop: model call → tool_use blocks → governed dispatch → tool results → next model call. The outer tool-call budget — typically 10 per step — governs this platform-level loop.
+
+Inside the sandbox, the executor has a different kind of freedom. The model's code can iterate over entire datasets — looping over files, writing intermediate artifacts, and calling governed platform tools per item through a tool bridge. These inner governed calls (such as per-item evaluator calls) are separately metered through the tool bridge's own budget and governance mechanisms. A step processing 1,000 resumes makes 1,000 governed evaluator calls from within the sandbox — each bounded, traced, and proof-persisted by the platform — without exhausting the outer tool-call budget.
 
 ## 6.3 The system-owned harness
 
@@ -766,6 +727,8 @@ Around the executor's work, the system runs a fixed infrastructure harness:
 9. **Persist outputs** — save sandbox outputs to durable workspace storage
 
 The executor writes the business logic — step 6. The system generates the other eight. The model's creativity is wrapped in infrastructure that validates what went in and verifies what came out.
+
+Step 6 is not necessarily a single linear script. For analysis and evaluation steps, the executor writes code that iterates over a dataset — processing each item individually, assembling evidence bundles, calling governed platform tools per item through the tool bridge, writing per-item audit results, and producing aggregate outputs. The harness treats this as one execution unit: whatever the executor's code does internally, the preflight receipt captures what went in and the postflight receipt captures what came out.
 
 A real compiled sub-step from a production run — the model-generated business logic:
 
@@ -936,15 +899,15 @@ It stores the frozen plan template with governance, not a bag of generated sandb
 
 ## 8.3 Sealed capsules (proven)
 
-The shipped execution mode is strict replay. The frozen plan template is re-executed exactly as compiled. No model inference for planning or code generation — the compiled programs run on new data, validation still runs, and outputs are verified.
+The shipped execution mode is strict replay. The frozen plan template is re-executed exactly as compiled. No model inference is needed for planning or code generation — the compiled programs run on new data, and validation still runs. If the frozen code includes governed evaluator calls (such as per-item semantic judgment), those evaluator calls still invoke model intelligence at execution time — but they are governed, budgeted, and traced by the platform. The planning and code-generation costs are eliminated; the execution-time evaluation costs remain where the workflow requires them.
 
 An operation that cost a full planning run the first time costs near-zero on every subsequent execution. The intelligence was amortized at compile time. The code was proven. The contracts were validated. Now it just runs.
 
-## 8.4 Structural capsules (proven)
+## 8.4 Structural capsules (designed, in development)
 
 The architectural design for structural Capsules preserves the compiled step graph — the structure, the contracts, the validation requirements, the model assignments — but clears the generated code for selected steps. The model executes fresh within the frozen architecture, reasoning over new content, writing new code as needed, producing outputs that conform to the same contracts.
 
-This mode is designed and specified but not yet in the shipping runtime. Today's implementation supports only strict replay. I include it because the architectural distinction matters: some work is structurally repetitive (sealed), and some requires judgment that depends on content (structural). Both modes share the same compilation and governance infrastructure.
+Both modes are implemented and running. Sealed Capsules run deterministic pre-generated code on new data. Structural Capsules allow fresh creative reasoning within the frozen architecture — the model writes new code for selected steps while the contracts, validation, and governance remain frozen. Some work is structurally repetitive (sealed). Some requires judgment that depends on content (structural). Both modes share the same compilation and governance infrastructure.
 
 ## 8.5 Headless execution (proven)
 
@@ -967,7 +930,7 @@ Any system that can make HTTP requests can dispatch a Capsule run — no UI requ
 
 Consider a billing reconciliation that runs every Friday. The first time, the system spends tokens on planning (frontier reasoning model), compilation (deterministic), skill resolution, and execution (model-generated code). That is the expensive run.
 
-Every subsequent Friday, the sealed Capsule runs the proven code on new data. No planning tokens. No code generation tokens. No skill discovery. Just execution and validation. The marginal cost approaches zero.
+Every subsequent Friday, the sealed Capsule runs the proven code on new data. No planning tokens. No code generation tokens. No skill discovery. For purely computational capsules, the marginal cost approaches zero. For capsules that include governed evaluator calls — such as per-item semantic judgment — the evaluation costs remain, but the planning and compilation overhead is eliminated. The savings come from eliminating the most expensive phase (frontier model planning), not from eliminating all model calls.
 
 Now scale that. An organization has fifty recurring data processes, twenty compliance checks, ten reporting workflows. Each one was described in natural language, compiled, proven, and encapsulated. Each one runs on schedule for a fraction of the original cost. The intelligence was amortized at compile time. The knowledge compounds.
 
@@ -1239,7 +1202,7 @@ This is the difference between this system and every platform that tries to have
 
 ## Document analysis and audit
 
-**Screening five hundred resumes.** The system ingests the files, extracts structured candidate data, scores against the rubric, produces a ranked report. Every score traces to the code that computed it, the fields that were extracted, and the source document they came from. Encapsulate it. Next hiring cycle, run the same Capsule.
+**Screening a thousand resumes.** The executor loops over candidates within a step — extracting source text, assembling a per-candidate evidence bundle (source resume + extracted profile + rubric), and calling the platform's governed evaluator per item. One thousand bounded evaluator calls, not one massive prompt. Each call produces a proof-backed candidate card. The cards aggregate into batch rankings and a global merge, with top-N re-evaluation against source bundles for borderline cases. Every score traces to both the extraction code and the governed evaluator call that assessed it. Encapsulate it. Next hiring cycle, run the same Capsule.
 
 **Auditing a year of vendor contracts.** The system extracts clauses, identifies obligations, flags non-standard terms, produces a risk register with citations traceable to exact paragraphs with line numbers. A compliance officer follows the chain from finding to source without asking the model anything.
 
@@ -1249,7 +1212,7 @@ This is the difference between this system and every platform that tries to have
 
 ## Building and construction
 
-**Building a 500-page website.** The plan compiles the full structure — navigation, pages, components, content, styling. Each page is a step. Page 47 does not carry the context of pages 1 through 46. The compiler guarantees that navigation components and theme assets will be there, because those are contracted outputs of earlier steps. The model generates the code for each page fresh, adapting to the content, but within the structural constraints of the compiled architecture.
+**Building a 500-page website.** The plan compiles the full structure — navigation, pages, components, content, styling. The executor iterates over pages within a step — generating each page individually, calling governed evaluators for quality verification as needed. Page 47 does not carry the context of pages 1 through 46. The compiler guarantees that navigation components and theme assets will be there, because those are contracted outputs of earlier steps. The model generates the code for each page fresh, adapting to the content, but within the structural constraints of the compiled architecture.
 
 **Customer onboarding workflows.** Configuring an application for a new customer — theming, branding, data loading, permission setup, integration configuration. Some of it is repetitive and can be sealed Capsules that run identically for every customer. Some of it requires the model to adapt — querying data mid-workflow, adjusting configuration based on what it finds. The compiled plan provides the structure. The executor provides the adaptation. The governance provides the guardrails.
 
@@ -1284,6 +1247,7 @@ The twelve domain packs that exist today are a starting library. The system is d
 - Hybrid skill discovery (Postgres registry + Vectorize ranking)
 - Skill governance (required/preferred/denied with autoload mode)
 - Sealed Capsule extraction, publishing, versioning, and strict replay
+- Structural Capsule execution with selective fresh reasoning per step
 - Headless Capsule execution via API with parameters
 - Per-step model configuration (different models for different pipeline phases)
 - Execution-profile freezing with snapshot immutability
@@ -1292,13 +1256,15 @@ The twelve domain packs that exist today are a starting library. The system is d
 - Egress control at domain/subdomain/path/method granularity
 - Budget enforcement with projected pre-checks and runtime counters
 - Tool allowlists frozen at compile time and re-enforced at runtime
+- Governed tool bridge: sandbox calls platform tools under governance, budgets, tracing, and proof persistence
+- Sandbox-owned iteration: executor can loop over datasets and call governed evaluator per item within a step
+- Evidence bundle evaluation: evaluator assesses source + derived + rubric as a unit, not just single files
 - Human-in-the-loop gates as structural elements in the execution graph
 - Full computation traceability from deliverable through transformation code to source data
 - End-to-end audit trail: user intent → compiled plan → step contracts → execution evidence → verified artifacts
 
 ## Designed and in development
 
-- Structural Capsules with selective fresh reasoning per step
 - Universal separate-model audit pass after every executor step
 - Automatic replanning on compiler rejection (currently rejection is terminal)
 
@@ -1363,7 +1329,13 @@ The following artifacts are available for technical inspection:
 
 **Entity schema** — The semantic meaning of data within a domain (e.g., `billing.time_entry`, `legal.clause_finding`).
 
+**Evidence bundle** — A structured package containing source evidence, derived outputs, and a rubric, evaluated as a unit by the governed evaluator. Single-file evaluation is the simplest bundle case.
+
 **Execution profile** — A frozen configuration snapshot governing a run: model bindings, validation phases, budgets, skill policy.
+
+**Governed evaluator call** — A platform-handled AI evaluation invoked from within the sandbox through the governed tool bridge. The platform enforces budgets, records provenance, and persists proof for each call.
+
+**Governed tool bridge** — The mechanism by which the sandbox calls platform tools (such as `operator.artifact.evaluate`) with governance, budgets, tracing, and proof persistence. The sandbox cannot make raw model API calls.
 
 **Imprinting template** — A self-describing template using the token language (FILL, OPTIONAL, AUTO, FILL_ENUM, OPTIONAL_ENUM) that enables models to generate complex structured output with perfect fidelity.
 
@@ -1373,7 +1345,7 @@ The following artifacts are available for technical inspection:
 
 **Preflight receipt** — System-generated verification record created before step execution: input hashing, schema summaries, candidate key detection.
 
-**Sealed Capsule** — A Capsule in strict replay mode: the compiled programs run deterministically on new data with no model inference.
+**Sealed Capsule** — A Capsule in strict replay mode: the compiled programs run on new data without re-planning or code generation. Governed evaluator calls within the frozen code still invoke model intelligence where the workflow requires it.
 
 **Structural Capsule** — (Designed, in development) A Capsule that preserves the compiled architecture but allows fresh model reasoning for selected steps.
 
