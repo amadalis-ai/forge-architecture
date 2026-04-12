@@ -277,6 +277,8 @@ In this system, each step begins clean. It receives its compiled contract, its v
 
 Step 300 is as sharp as step 1 — because for the executor, it is step 1.
 
+This does not mean the executor is limited to a single action within its step. A step can contain an entire iterative workflow — the executor can loop over a dataset, process each item individually, write intermediate files, and call governed platform tools per item. The fresh-mind principle means the executor is not polluted by other steps' history, but within its own step it can do substantial, multi-item work.
+
 ### The model thinks in code
 
 Most agent platforms work by giving the model a set of pre-built tools and letting it pick which ones to call. The model becomes a dispatcher — it selects from a fixed menu of functions that someone else wrote.
@@ -290,6 +292,8 @@ This is the difference between an AI that tells you things and an AI that does t
 If a model tells me "the average value is 47,000," I have to trust that statement. It could be hallucinated. It could be a plausible-sounding number the model confabulated from pattern matching. I have no way to verify it without independently re-running the work.
 
 If the model writes ten lines of code that reads the dataset, sums the values, divides by the count, and prints the result — and that code runs and produces 47,000 — then the answer is tied to computation, not to prediction. The code is inspectable. The execution is logged. The result is verifiable. Prose can sound right while being wrong. Code either runs or it does not.
+
+The executor is not limited to pure computation. When a step requires semantic judgment — evaluating whether an extracted resume profile is faithful to the source document, or whether a contract clause deviates from the standard template — the executor's code calls governed platform tools through a tool bridge. The platform handles the AI evaluation call, enforces budgets, records provenance, and persists proof. The executor's code orchestrates the workflow; the platform governs every model call within it. For 1,000 resumes, that means the executor loops over candidates, assembles a per-candidate evidence bundle (source text, extracted profile, rubric), and calls the governed evaluator per item — 1,000 bounded evaluator calls, not one massive prompt.
 
 But here is the critical relationship: letting a model write arbitrary code without structure is dangerous. Without contracts, there is no guarantee that the code produces what the next step expects. Without isolation, the code can access things it should not. Without verification, a script that runs successfully but produces garbage will cascade that garbage downstream.
 
@@ -487,6 +491,8 @@ The model wrote a complete Python script that calls 35+ API endpoints, structure
 
 And after this sub-step finishes, sub-steps 7 through 9 run automatically — the compiler-generated harness hashes the output, verifies it parses as valid JSON, infers the schema, and persists it for the next step. The model did not have to remember to do any of that. The infrastructure handled it.
 
+The example above is the simplest pattern — a data-gathering step where the model writes one script that fetches data and produces one output. But the executor is not limited to this pattern. For analysis and evaluation steps, the model writes code that iterates over a dataset and calls governed platform tools per item. For example, a resume screening step might loop over 1,000 candidates: for each one, the executor extracts source text, assembles an evidence bundle (source resume + extracted profile + scoring rubric), and calls the platform's governed evaluator tool. The platform handles each evaluator call under governance — enforcing budgets, recording provenance, persisting proof. The sandbox owns the iteration loop; the platform governs every model call within it.
+
 ### The attempt record
 
 Every execution of a step is recorded as an attempt with full forensics:
@@ -583,13 +589,13 @@ The key insight is the construction analogy. A compiled plan is a blueprint. Eac
 
 That is the difference between this system and every platform that tries to have one model do everything in one long session. Here, each step is a specialist with a contract, a fresh mind, and the freedom to solve its part of the problem however it sees fit — as long as the output satisfies the contract. The model adapts. It writes its own tools. It invents whatever approach makes sense. But it operates within structural constraints that guarantee the downstream steps will receive what they need.
 
-**Screening five hundred resumes.** The system ingests the files, extracts structured candidate data, scores against the rubric, produces a ranked report. Every score is traceable to the code that computed it, the fields that were extracted, and the source document they came from. Encapsulate it. Next hiring cycle, run the same Capsule on new resumes.
+**Screening a thousand resumes.** The executor loops over candidates within a single step — extracting source text, assembling a per-candidate evidence bundle (source resume + extracted profile + rubric), and calling the platform's governed evaluator per item. One thousand resumes means one thousand bounded governed evaluator calls, not one massive prompt. Each call produces a proof-backed candidate card. The cards aggregate into batch rankings and a global merge. Every score traces to both the extraction code and the governed evaluator call that assessed it. Encapsulate it. Next hiring cycle, run the same Capsule on new resumes.
 
 **Auditing a year of vendor contracts.** The system extracts clauses, identifies obligations, flags non-standard terms, produces a risk register with citations. Every finding traces back through the extraction code to the exact paragraphs in the source documents — with line numbers. A compliance officer can follow the chain from finding to source without asking the model anything.
 
 **Reconciling billing data every Friday.** Sealed Capsule. No model inference. The transformation code is frozen. Every discrepancy in the output can be traced through the computation chain to the source rows. The finance team does not have to trust the model. They can read the code.
 
-**Large-scale research across hundreds of documents.** The system processes every document, extracts claims with citations, cross-references across sources, synthesizes findings. Every claim in the final report is linked to the specific documents, specific paragraphs, and specific extraction code that produced it. At 400 steps, the traceability is the same as at step 1.
+**Large-scale research across hundreds of documents.** The executor iterates over documents within a step, extracting claims and evidence per document through governed evaluator calls. Each evaluator call receives a bounded evidence bundle and produces a proof-backed result. Cross-referencing and synthesis happen from audited per-document cards. Every claim in the final report traces to both the extraction code and the governed evaluator call that assessed it — the specific documents, specific paragraphs, and the evaluator's proof record.
 
 **Building a 500-page website.** The plan compiles the full structure — navigation, pages, components, content, styling. Each page is a step. The step that builds page 47 does not need to know how page 12 was built. It needs to know that the navigation component and the theme assets will be there — and the compiler guarantees they will be, because those are contracted outputs of earlier steps. The model generates the code for each page fresh, adapting to the content, but within the structural constraints of the compiled architecture. You do not lose track at page 200 because no single model is carrying the context of pages 1 through 199.
 
@@ -644,7 +650,7 @@ When a step's compilation determines it needs this skill, the entire package is 
 
 **A governed workspace and file system.** The model sees a file system during execution. The user sees a durable workspace. They are bridged by a materialization layer with provenance tracking — human-uploaded files and agent-produced files tracked separately, with full lineage from origin to deliverable.
 
-**Governance as walls, not rules.** Network egress is controlled at the sandbox level with domain, subdomain, path, and method granularity — not by asking the model to avoid certain URLs, but by structurally blocking them. Budget enforcement uses projected pre-checks and runtime counters to halt execution at the boundary, not after the money is spent. Tool allowlists are both frozen into the step plan at compile time and re-enforced at runtime dispatch. These are not rules the model promises to follow. They are walls.
+**Governance as walls, not rules.** Network egress is controlled at the sandbox level with domain, subdomain, path, and method granularity — not by asking the model to avoid certain URLs, but by structurally blocking them. Budget enforcement uses projected pre-checks and runtime counters to halt execution at the boundary, not after the money is spent. Tool allowlists are both frozen into the step plan at compile time and re-enforced at runtime dispatch. When the executor calls governed platform tools from within the sandbox — like the evaluator for semantic judgment — each call goes through a governed tool bridge where the platform enforces budgets, records provenance, and persists proof. The sandbox cannot make raw model API calls. These are not rules the model promises to follow. They are walls.
 
 **No frameworks, no SDKs.** The system runs on Cloudflare primitives — Workers, Durable Objects, R2, KV, Queues, Vectorize, Containers, and Neon Postgres via Hyperdrive. There are no AI orchestration frameworks and no third-party workflow engines in the stack. The compilation pipeline, the executor, the validation ladder, the skill materializer, and the governance layer are original code. The only external dependency is the model API itself.
 
