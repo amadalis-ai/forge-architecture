@@ -40,9 +40,9 @@ flowchart LR
 
 ---
 
-## Diagram 2: The Step Harness with Executor Loop
+## Diagram 2: The Step Harness — General Architecture
 
-Shows the 9-step harness and expands step 6 to reveal the executor's iteration and governed evaluator calls.
+The executor's code is not limited to one pattern. It can compute, iterate, call governed evaluators, write files, adapt — whatever the contract requires. The harness wraps it with verification.
 
 ```mermaid
 flowchart LR
@@ -58,20 +58,12 @@ flowchart LR
 
     subgraph EXEC["6. Executor Model's Code"]
         direction TB
-        E1["Read inputs"]
-        E2{"Dataset?"}
-        E3["Process item"]
-        E4["Assemble bundle"]
-        E5["🧠 Governed\nevaluator call"]
-        E6["Write audit card"]
-        E7{"More?"}
-        E8["Aggregate &\nwrite output"]
+        E1["Read contracted inputs"]
+        E2["Write code to fulfill\nthe step contract"]
+        E3["Iterate, compute,\ntransform, build,\ncall governed tools"]
+        E4["Write outputs that\nsatisfy the contract"]
 
-        E1 --> E2
-        E2 -->|Single| E8
-        E2 -->|Iterate| E3 --> E4 --> E5 --> E6 --> E7
-        E7 -->|Yes| E3
-        E7 -->|No| E8
+        E1 --> E2 --> E3 --> E4
     end
 
     subgraph POST["Post-execution Harness"]
@@ -87,7 +79,156 @@ flowchart LR
     style PRE fill:#0a0b0f,stroke:#2a2d38,color:#9498a8
     style EXEC fill:#161920,stroke:#c8a44e,color:#e8e9ed
     style POST fill:#0a0b0f,stroke:#2a2d38,color:#9498a8
-    style E5 fill:#1e2028,stroke:#c8a44e,color:#c8a44e,stroke-width:2px
+    style E3 fill:#1e2028,stroke:#c8a44e,color:#c8a44e,stroke-width:2px
+```
+
+---
+
+## Diagram 2a: Example — Resume Screening (1,000 candidates)
+
+The executor loops over candidates, assembles per-item evidence bundles, and calls a governed evaluator model per item.
+
+```mermaid
+flowchart LR
+    subgraph LOOP["Executor iterates over 1,000 candidates"]
+        direction TB
+        R1["Extract resume\nsource text"]
+        R2["Write extracted\nprofile JSON"]
+        R3["Assemble evidence bundle\n(source + profile + rubric)"]
+        R4["🧠 Call governed\nevaluator model\nvia tool bridge"]
+        R5["Write proof-backed\ncandidate card"]
+        R6{"More\ncandidates?"}
+
+        R1 --> R2 --> R3 --> R4 --> R5 --> R6
+        R6 -->|Yes| R1
+    end
+
+    AGG["Aggregate cards\ninto batch rankings\n→ global merge\n→ top-N re-eval"]
+
+    R6 -->|No| AGG
+
+    style LOOP fill:#161920,stroke:#c8a44e,color:#e8e9ed
+    style R4 fill:#1e2028,stroke:#c8a44e,color:#c8a44e,stroke-width:2px
+    style AGG fill:#0a0b0f,stroke:#c8a44e,color:#c8a44e
+```
+
+---
+
+## Diagram 2b: Example — Building a Website (500 pages)
+
+The executor iterates over a page manifest, generates each page individually, and optionally calls a governed evaluator for quality verification.
+
+```mermaid
+flowchart LR
+    subgraph LOOP["Executor iterates over page manifest"]
+        direction TB
+        W1["Read page spec\nfrom manifest"]
+        W2["Generate page HTML\nusing skill scripts +\ntheme assets"]
+        W3["Validate structure\n(navigation, links,\nrequired components)"]
+        W4{"Needs semantic\nreview?"}
+        W5["🧠 Call governed\nevaluator model\n(content quality)"]
+        W6["Write verified page\nto output"]
+        W7{"More\npages?"}
+
+        W1 --> W2 --> W3 --> W4
+        W4 -->|No| W6
+        W4 -->|Yes| W5 --> W6
+        W6 --> W7
+        W7 -->|Yes| W1
+    end
+
+    OUT["Assemble site bundle\nnavigation index\nasset manifest"]
+
+    W7 -->|No| OUT
+
+    style LOOP fill:#161920,stroke:#c8a44e,color:#e8e9ed
+    style W5 fill:#1e2028,stroke:#c8a44e,color:#c8a44e,stroke-width:2px
+    style OUT fill:#0a0b0f,stroke:#c8a44e,color:#c8a44e
+```
+
+---
+
+## Diagram 2c: Example — Billing Audit (753 entries)
+
+The executor iterates over time entries, performs computational reconciliation, and calls the governed evaluator for complex judgment items.
+
+```mermaid
+flowchart LR
+    subgraph LOOP["Executor iterates over 753 time entries"]
+        direction TB
+        B1["Read entry +\nmatched contract +\nrate card"]
+        B2["Compute rate delta,\namount check,\ncap check"]
+        B3{"Discrepancy\nfound?"}
+        B4["Write discrepancy\nrecord with\ncomputation proof"]
+        B5{"Complex\njudgment?"}
+        B6["🧠 Call governed\nevaluator model\n(exception classification)"]
+        B7["Write audit result"]
+        B8{"More\nentries?"}
+
+        B1 --> B2 --> B3
+        B3 -->|No| B8
+        B3 -->|Yes| B4 --> B5
+        B5 -->|No| B7
+        B5 -->|Yes| B6 --> B7
+        B7 --> B8
+        B8 -->|Yes| B1
+    end
+
+    RPT["Build correction\ncandidates\n→ simulate submissions\n→ generate report"]
+
+    B8 -->|No| RPT
+
+    style LOOP fill:#161920,stroke:#c8a44e,color:#e8e9ed
+    style B6 fill:#1e2028,stroke:#c8a44e,color:#c8a44e,stroke-width:2px
+    style RPT fill:#0a0b0f,stroke:#c8a44e,color:#c8a44e
+```
+
+---
+
+## Diagram 2d: Example — Customer Onboarding
+
+Mix of deterministic steps (sealed capsule segments) and adaptive steps where the executor queries data mid-workflow and adjusts.
+
+```mermaid
+flowchart LR
+    subgraph SEALED["Deterministic (Sealed)"]
+        direction TB
+        S1["Apply branding\n& theming"]
+        S2["Load base\nconfiguration"]
+        S3["Create user\naccounts & roles"]
+        S1 --> S2 --> S3
+    end
+
+    subgraph ADAPTIVE["Adaptive (Executor loops)"]
+        direction TB
+        A1["Query customer\ndata source"]
+        A2["Analyze schema\n& data quality"]
+        A3{"Data issues?"}
+        A4["🧠 Call evaluator\nfor remediation\nrecommendation"]
+        A5["Transform &\nload data"]
+        A6["Configure\nintegrations"]
+        A7["Run validation\nchecks"]
+
+        A1 --> A2 --> A3
+        A3 -->|No| A5
+        A3 -->|Yes| A4 --> A5
+        A5 --> A6 --> A7
+    end
+
+    subgraph VERIFY["Governed Verification"]
+        direction TB
+        V1["🧠 Call evaluator:\nonboarding completeness\nagainst checklist"]
+        V2["Generate onboarding\nreport"]
+        V1 --> V2
+    end
+
+    SEALED --> ADAPTIVE --> VERIFY
+
+    style SEALED fill:#0a0b0f,stroke:#2a2d38,color:#9498a8
+    style ADAPTIVE fill:#161920,stroke:#c8a44e,color:#e8e9ed
+    style VERIFY fill:#0a0b0f,stroke:#c8a44e,color:#c8a44e
+    style A4 fill:#1e2028,stroke:#c8a44e,color:#c8a44e,stroke-width:2px
+    style V1 fill:#1e2028,stroke:#c8a44e,color:#c8a44e,stroke-width:2px
 ```
 
 ---
