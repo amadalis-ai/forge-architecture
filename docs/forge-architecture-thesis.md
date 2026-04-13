@@ -11,6 +11,12 @@ April 2026
 
 ---
 
+## Table of Contents
+
+**[Part I — The Problem](#part-i--the-problem)** · **[Part II — The Imprinting Protocol](#part-ii--the-imprinting-protocol)** · **[Part III — The Validation Ladder](#part-iii--the-validation-ladder)** · **[Part IV — The Type System](#part-iv--the-type-system-for-autonomous-work)** · **[Part V — The Compilation Pipeline](#part-v--the-compilation-pipeline)** · **[Part VI — The Executor and Sandbox](#part-vi--the-executor-and-sandbox)** · **[Part VII — Skills](#part-vii--skills-as-linked-libraries)** · **[Part VIII — Capsules and Replay](#part-viii--capsules-and-replay)** · **[Part IX — Workspaces and Execution Profiles](#part-ix--workspaces-and-execution-profiles)** · **[Part X — Governance](#part-x--governance)** · **[Part X-b — What This Enables](#part-x-b--what-this-architecture-enables)** · **[Part X-c — System Model and Invariants](#part-x-c--system-model-and-invariants)** · **[Part XI — What Is Proven](#part-xi--what-is-proven-what-is-not)** · **[Part XII — The Thesis](#part-xii--the-thesis)** · **[Appendix A — Proof Artifacts](#appendix-a--proof-artifacts)** · **[Appendix B — Glossary](#appendix-b--glossary)**
+
+---
+
 # Part I — The Problem
 
 ## 1.1 The interpreter pattern
