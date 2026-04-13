@@ -147,7 +147,7 @@ Everyone in the industry describes the inversion abstractly: "let the AI focus o
 
 Solving the generation problem exposed a new one.
 
-The model could now produce the right shape. It could fill complex templates with perfect structural fidelity. But who checks that the values are correct? That the `customer_id` field maps to what the downstream API actually expects? That business rules are enforced — rate limits, required fields, conditional constraints? That the semantic drift between two platforms' vocabulary is handled before it causes a silent failure three steps downstream?
+The model could now produce the right shape. It could fill complex templates with high structural fidelity. But who checks that the values are correct? That the `customer_id` field maps to what the downstream API actually expects? That business rules are enforced — rate limits, required fields, conditional constraints? That the semantic drift between two platforms' vocabulary is handled before it causes a silent failure three steps downstream?
 
 You cannot ask the model to be careful. Careful is not a system property. Careful is a hope.
 
@@ -587,7 +587,7 @@ Structural Capsules preserve the compiled step graph — the structure, the cont
 
 Everything that was deterministic stays deterministic. Everything that requires thinking gets fresh thinking. And you did not pay for a new plan.
 
-Both modes are implemented and running. Sealed Capsules for deterministic replay with pre-generated code. Structural Capsules for fresh creative reasoning within a frozen architecture.
+The platform supports both modes. Sealed Capsules run deterministic pre-generated code on new data. Structural Capsules allow fresh creative reasoning within a frozen architecture. The public artifact set currently demonstrates sealed replay; structural capsule runs are in active use internally.
 
 ### What this actually means
 

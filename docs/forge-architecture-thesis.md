@@ -175,13 +175,13 @@ Here is a fragment of the actual Pass A output contract — the template the pla
 }
 ```
 
-Every field tells the model exactly what to produce. The model generates plans that span a hundred steps with a thousand sub-steps — with perfect structural fidelity. The model was never the bottleneck for plan generation. The way we were talking to it was.
+Every field tells the model exactly what to produce. In the published runs, the model generates plans that span a hundred steps with a thousand sub-steps — with high structural fidelity. The model was never the bottleneck for plan generation. The way we were talking to it was.
 
 ## 2.6 What the imprinting protocol made possible
 
 With the serializer and template language in place, a fundamental capability unlocked: the model can reliably generate arbitrarily complex structured contracts. Not because the model got smarter. Because the communication protocol between the system and the model was redesigned around how models actually process information.
 
-This is the foundation everything else is built on. The validation ladder, the type system, the compilation pipeline, the step contracts — all of them depend on the model being able to generate complex structured output with perfect fidelity. Without the imprinting protocol, none of the downstream architecture would work.
+This is the foundation everything else is built on. The validation ladder, the type system, the compilation pipeline, the step contracts — all of them depend on the model being able to generate complex structured output with high structural fidelity. Without the imprinting protocol, none of the downstream architecture would work.
 
 ---
 
@@ -549,7 +549,7 @@ Three of the five passes involve model intelligence (A, B, D). One is fully dete
 
 The planner receives the user's intent message and produces a `PlannerCandidate`: a structured plan with mission, abstract steps, dependencies, and success criteria.
 
-The planner uses the imprinting protocol — it fills in a self-describing template rather than generating free-form output. This is how it produces complex plans with perfect structural fidelity.
+The planner uses the imprinting protocol — it fills in a self-describing template rather than generating free-form output. This is how it produces complex plans with high structural fidelity.
 
 A concrete Pass A output for a "Render HTML report" step:
 
@@ -845,6 +845,74 @@ sequenceDiagram
     S->>S: Continue to next item
 ```
 
+### Hierarchical processing at scale
+
+At scale, the system processes items through iteration, not context stuffing:
+
+```mermaid
+flowchart TB
+    DS["📋 Dataset Manifest\n1,000 items"]
+
+    subgraph BATCHES["Batch Processing"]
+        B1["Batch 1\n(items 1-20)"]
+        B2["Batch 2\n(items 21-40)"]
+        BN["Batch N\n(items 981-1000)"]
+    end
+
+    subgraph ITEM["Per-Item Processing (× 1,000)"]
+        I1["Extract source\nrepresentation"]
+        I2["Write derived\nJSON / ranking"]
+        I3["Assemble evidence\nbundle"]
+        I4["🧠 Governed evaluator\nmodel call"]
+        I5["Proof-backed\ncandidate card"]
+
+        I1 --> I2 --> I3 --> I4 --> I5
+    end
+
+    subgraph AGG["Aggregation"]
+        A1["Batch rankings\nfrom audited cards"]
+        A2["Global merge\nacross batches"]
+        A3["Top-N re-evaluation\nagainst source bundles"]
+        A4["📄 Final ranked\nreport"]
+
+        A1 --> A2 --> A3 --> A4
+    end
+
+    DS --> BATCHES
+    B1 --> ITEM
+    B2 --> ITEM
+    BN --> ITEM
+    ITEM --> AGG
+```
+
+### Evidence bundle structure
+
+What the evaluator model actually receives for each item:
+
+```mermaid
+flowchart TB
+    subgraph BUNDLE["Evidence Bundle (one item)"]
+        direction TB
+        SRC["Source Evidence"]
+        DRV["Derived Evidence"]
+        RUB["Rubric"]
+
+        SRC --- S1["resume_source_text.md\n(original extracted text)"]
+        SRC --- S2["resume_page_001.png\n(scanned page image)"]
+
+        DRV --- D1["extracted_profile.json\n(candidate fields)"]
+        DRV --- D2["ranking_judgment.json\n(scoring + rationale)"]
+
+        RUB --- R1["Criteria:\n- no invented facts\n- no omitted evidence\n- rationale cites source\n- uncertainty flagged"]
+    end
+
+    EVAL["🧠 Evaluator Model"]
+    PROOF["Proof Record\nmodel_call_id\nbundle_sha256\nverdict\nper-criterion results"]
+
+    BUNDLE --> EVAL
+    EVAL --> PROOF
+```
+
 ## 6.4 Fresh mind per step
 
 Each step executes without the context of prior steps. The executor receives its compiled contract, its verified inputs, and its allowed capabilities. It does not receive the history of the run. It does not know what happened before it. It does not carry forward any accumulated noise.
@@ -1002,11 +1070,11 @@ The shipped execution mode is strict replay. The frozen plan template is re-exec
 
 An operation that cost a full planning run the first time costs near-zero on every subsequent execution. The intelligence was amortized at compile time. The code was proven. The contracts were validated. Now it just runs.
 
-## 8.4 Structural capsules (designed, in development)
+## 8.4 Structural capsules
 
 The architectural design for structural Capsules preserves the compiled step graph — the structure, the contracts, the validation requirements, the model assignments — but clears the generated code for selected steps. The model executes fresh within the frozen architecture, reasoning over new content, writing new code as needed, producing outputs that conform to the same contracts.
 
-Both modes are implemented and running. Sealed Capsules run deterministic pre-generated code on new data. Structural Capsules allow fresh creative reasoning within the frozen architecture — the model writes new code for selected steps while the contracts, validation, and governance remain frozen. Some work is structurally repetitive (sealed). Some requires judgment that depends on content (structural). Both modes share the same compilation and governance infrastructure.
+The platform supports both modes. Sealed Capsules run deterministic pre-generated code on new data. Structural Capsules allow fresh creative reasoning within the frozen architecture — the model writes new code for selected steps while the contracts, validation, and governance remain frozen. The public artifact set currently demonstrates sealed replay; structural capsule runs are in active use internally. Some work is structurally repetitive (sealed). Some requires judgment that depends on content (structural). Both modes share the same compilation and governance infrastructure.
 
 ## 8.5 Headless execution (proven)
 
@@ -1325,7 +1393,34 @@ flowchart LR
 
 **Auditing a year of vendor contracts.** The system extracts clauses, identifies obligations, flags non-standard terms, produces a risk register with citations traceable to exact paragraphs with line numbers. A compliance officer follows the chain from finding to source without asking the model anything.
 
-**Reconciling billing data every Friday.** Sealed Capsule. No model inference. The transformation code is frozen. Every discrepancy traces through the computation chain to the source rows. The finance team reads the code, not the model's self-report.
+**Reconciling billing data every Friday.** Sealed Capsule. The transformation code is frozen. For purely computational reconciliation, no model inference is needed. For complex judgment items, governed evaluator calls still invoke model intelligence. Every discrepancy traces through the computation chain to the source rows.
+
+```mermaid
+flowchart LR
+    subgraph LOOP["Executor iterates over 753 time entries"]
+        direction TB
+        B1["Read entry +\nmatched contract +\nrate card"]
+        B2["Compute rate delta,\namount check,\ncap check"]
+        B3{"Discrepancy\nfound?"}
+        B4["Write discrepancy\nrecord with\ncomputation proof"]
+        B5{"Complex\njudgment?"}
+        B6["🧠 Call governed\nevaluator model\n(exception classification)"]
+        B7["Write audit result"]
+        B8{"More\nentries?"}
+
+        B1 --> B2 --> B3
+        B3 -->|No| B8
+        B3 -->|Yes| B4 --> B5
+        B5 -->|No| B7
+        B5 -->|Yes| B6 --> B7
+        B7 --> B8
+        B8 -->|Yes| B1
+    end
+
+    RPT["Build correction\ncandidates\n→ simulate submissions\n→ generate report"]
+
+    B8 -->|No| RPT
+```
 
 **Large-scale research across hundreds of documents.** Every claim in the final report is linked to the specific documents, specific paragraphs, and specific extraction code that produced it. At 400 steps, the traceability is the same as at step 1.
 
@@ -1456,7 +1551,10 @@ These invariants are enforced by the platform, not by model cooperation:
 | **Sandbox/runtime failure** | Container crash, HTTP 5xx, session death | Fresh container, replay same contract |
 | **Tool-bridge failure** | Governed tool call fails (budget, timeout, error) | Retry under same contract with repair context |
 | **Semantic-verdict failure** | Governed evaluator returns negative judgment | Step blocks if enforcement is "block"; logged if "report" |
+| **Output-shape failure** | Step produces output that exists but has wrong schema or structure | Postflight receipt catches mismatch — retry under same contract or hard stop |
+| **Policy violation failure** | Egress block, denied skill, tool not in allowlist, or governance constraint violated | Hard stop — structurally blocked, not retryable |
 | **Budget exhaustion** | Tool-call budget or wall-clock timeout exceeded | Step terminates, marked failed |
+| **Human-gate pending** | Step requires human approval before downstream work can proceed | Execution pauses at gate — resumes only after explicit human approval |
 
 Each failure class maps to a specific repair boundary. The repair policy is part of the compiled contract — not improvised at runtime.
 
@@ -1547,13 +1645,46 @@ The following artifacts are available for technical inspection:
 | Execution profile manifest | Per-phase planner bindings, per-backend executor bindings, validation manifest, skill policy, budget overrides |
 | Pipeline progression | One step through all 5 passes (A → B → C → D → E) |
 
+## Artifact tree — Run 002 (Billing Audit)
+
+A literal file tree of one public run, inspectable at [GitHub](https://github.com/amadalis-ai/forge-architecture/tree/main/assets/runs/002-billing-audit):
+
+```
+002-billing-audit/
+├── README.md                                    # User message + walkthrough
+├── plan/
+│   └── full-plan-unfiltered-*.json              # Compiled plan with all step contracts
+├── compiled-steps/
+│   ├── compilation-brief.md                     # AI analysis of compiler decisions
+│   ├── all-compiled-steps-*.json                # Every sub-step with model-generated code
+│   └── all-attempts-*.json                      # Every attempt with full forensics
+├── deliverables/
+│   ├── schema_profile_simone.json               # Phase 1: input profiling
+│   ├── normalized_sources.json                  # Phase 2: normalized data
+│   ├── contract_applicability_simone.json       # Phase 3: contract resolution
+│   ├── discrepancies_simone.json                # Phase 4: billing discrepancies
+│   ├── exception_summary_simone.json            # Phase 5: exception aggregation
+│   ├── correction_candidates_simone.json        # Phase 6: correction payloads
+│   ├── correction_submission_result_simone.json  # Phase 7: mock API submissions
+│   ├── billing_audit_report_simone.html         # Phase 8: HTML report
+│   └── billing_audit_report_simonetesting.pdf   # Phase 9: PDF conversion
+└── screenshots/
+    ├── plan.png                                 # Compiled plan in workspace UI
+    ├── billing-report.png                       # Rendered HTML report
+    └── billing-report-2.png                     # Report detail view
+```
+
 # Appendix B — Glossary
 
 **Adapter** — An explicit transformation inserted by the compiler when a producer's artifact kind does not match a consumer's accepted kind, but both share the same entity schema.
 
+**Artifact contract** — A schema requirement attached to a declared output artifact, specifying the expected format, required fields, and validation rules. Frozen into the compiled step contract.
+
 **Artifact kind** — The representation format of a data artifact (e.g., `table.json_rows`, `report.html`, `code.patch.unified_diff`).
 
 **Capsule** — A self-contained, reusable execution unit extracted from a successful compiled run. Contains the frozen plan template, parameter schema, governance rules, and source provenance. Called "operator package" in the runtime.
+
+**Compiled step contract** — The frozen specification for a single step, produced by the compiler. Contains input/output bindings, artifact contracts, repair policy, allowed tools, and a SHA-256 contract hash. Immutable after compilation.
 
 **Contract hash** — SHA-256 digest sealing a step's complete compiled specification. Immutable after compilation.
 
@@ -1563,7 +1694,11 @@ The following artifacts are available for technical inspection:
 
 **Entity schema** — The semantic meaning of data within a domain (e.g., `billing.time_entry`, `legal.clause_finding`).
 
+**Evaluator** — A separate AI model invoked through the governed tool bridge to perform semantic judgment on evidence bundles. The evaluator is distinct from the executor — the executor does the work, the evaluator judges the work. The platform governs each evaluator call independently.
+
 **Evidence bundle** — A structured package containing source evidence, derived outputs, and a rubric, evaluated as a unit by the governed evaluator. Single-file evaluation is the simplest bundle case.
+
+**Executable contract** — The runtime-facing version of the compiled step contract (`executable_contract_v2`), containing step inputs/outputs, execution policy, and repair strategy. Frozen at dispatch time.
 
 **Execution profile** — A frozen configuration snapshot governing a run: model bindings, validation phases, budgets, skill policy.
 
@@ -1571,9 +1706,11 @@ The following artifacts are available for technical inspection:
 
 **Governed tool bridge** — The mechanism by which the sandbox calls platform tools (such as `operator.artifact.evaluate`) with governance, budgets, tracing, and proof persistence. The sandbox cannot make raw model API calls.
 
-**Imprinting template** — A self-describing template using the token language (FILL, OPTIONAL, AUTO, FILL_ENUM, OPTIONAL_ENUM) that enables models to generate complex structured output with perfect fidelity.
+**Imprinting template** — A self-describing template using the token language (FILL, OPTIONAL, AUTO, FILL_ENUM, OPTIONAL_ENUM) that enables models to generate complex structured output with high structural fidelity.
 
 **Policy profile** — Governance rules controlling compiler and runtime strictness (e.g., `strict.fail-closed.v1`, `provenance.required.v1`).
+
+**Skill package** — A versioned capability module containing behavioral instructions, technical reference, executable scripts, assets, templates, and schema contracts. Materialized into the sandbox at `/skills/{skill_id}/` from R2 storage. The model calls skill scripts as subprocesses — library linking, not capability hallucination.
 
 **Postflight receipt** — System-generated verification record created after step execution: output hashing, parse validation, schema inference.
 
