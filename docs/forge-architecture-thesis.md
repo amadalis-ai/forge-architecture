@@ -1407,6 +1407,61 @@ The twelve domain packs that exist today are a starting library. The system is d
 
 ---
 
+# Part X-c — System Model and Invariants
+
+## Formal execution lifecycle
+
+The system follows a defined lifecycle from user intent to durable artifact:
+
+```
+Mission (natural language objective)
+  → Plan (abstract step graph with dependencies and success criteria)
+    → Compiled Step Contracts (frozen specifications with SHA-256 hashes)
+      → Dispatch Packages (execution-ready packets with skill bindings and profiles)
+        → Substep Harness (compiler-generated pre/post infrastructure)
+          → Executor Code (model-generated business logic with governed tool calls)
+            → Receipts (preflight and postflight, independent of model self-report)
+              → Published Artifacts (verified outputs with provenance)
+                → Capsule (replayable execution unit)
+```
+
+Each stage produces a machine-inspectable artifact. No stage relies on the previous stage's self-report — each is independently verifiable.
+
+## Runtime invariants
+
+These invariants are enforced by the platform, not by model cooperation:
+
+1. **Required inputs must bind or the step blocks.** If a declared input artifact does not exist at the contracted path, the step does not execute. Fail-closed.
+
+2. **Declared outputs cannot drift.** Output bindings are immutable after compilation. The executor cannot write to paths other than those declared in the contract.
+
+3. **The runtime cannot publish artifacts without provenance.** Every output carries a provenance chain: which step produced it, which contract governed it, which inputs it consumed, and which receipts verified it.
+
+4. **Sandbox execution is capability-bounded.** The sandbox can only reach network endpoints in the allowlist, call tools in the allowed_tool_ids set, and use skills that were materialized by the platform. The model cannot expand its own capabilities.
+
+5. **Postflight receipts are independent of the model's self-report.** The system hashes outputs, validates parse correctness, infers schema, and checks expected-output existence — all without asking the model whether it succeeded.
+
+6. **Governed evaluator calls go through the platform tool bridge.** The sandbox cannot make raw model API calls. Every AI evaluation is budget-checked, provenance-recorded, and proof-persisted by the platform.
+
+7. **Execution profiles are frozen before the first AI call.** The configuration that governs step 1 is the same configuration that governs step N. Governance cannot drift mid-execution.
+
+8. **Human-in-the-loop gates are structural.** If the compiled plan includes an approval gate, the gate is enforced by the platform. The model cannot bypass it.
+
+## Failure model
+
+| Failure class | What happens | Repair boundary |
+|--------------|-------------|-----------------|
+| **Contract/schema failure** | Compiled contracts are incompatible, slot bindings fail | Compiler rejects the plan — terminal |
+| **Missing artifact failure** | A declared input does not exist at execution time | Step blocks, fail-closed — does not execute |
+| **Sandbox/runtime failure** | Container crash, HTTP 5xx, session death | Fresh container, replay same contract |
+| **Tool-bridge failure** | Governed tool call fails (budget, timeout, error) | Retry under same contract with repair context |
+| **Semantic-verdict failure** | Governed evaluator returns negative judgment | Step blocks if enforcement is "block"; logged if "report" |
+| **Budget exhaustion** | Tool-call budget or wall-clock timeout exceeded | Step terminates, marked failed |
+
+Each failure class maps to a specific repair boundary. The repair policy is part of the compiled contract — not improvised at runtime.
+
+---
+
 # Part XI — What Is Proven, What Is Not
 
 ## Proven and shipping

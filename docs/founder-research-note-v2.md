@@ -13,6 +13,26 @@ If you have actually tried to make autonomous AI systems work reliably at scale 
 
 ---
 
+## What is proven in the public artifacts
+
+Before the philosophy, the evidence. The following claims are testable and inspectable in the [proof artifacts on GitHub](https://github.com/amadalis-ai/forge-architecture):
+
+- **A 9-step compiled workflow reconciled 753 billing entries** against contracts and rate cards — with fail-closed unbound inputs, immutable output bindings, cross-validation before reporting, and a correction simulation with business rule enforcement. ([Run 002 — Billing Audit](https://github.com/amadalis-ai/forge-architecture/tree/main/assets/runs/002-billing-audit))
+
+- **Every compiled step carries a SHA-256 contract hash, declared input/output artifact refs, repair policy, validator rules, and allowed tool IDs.** The plan cannot execute unless all bindings resolve. ([Plan artifact](https://github.com/amadalis-ai/forge-architecture/tree/main/assets/runs/002-billing-audit/plan))
+
+- **The compiler generates a harness around the executor's code** — workspace preparation, input materialization, preflight receipts, postflight receipts, output verification, and persistence — all independent of the model's self-report. ([Compiled steps](https://github.com/amadalis-ai/forge-architecture/tree/main/assets/runs/002-billing-audit/compiled-steps))
+
+- **When a step fails, the system retries under the same immutable contract with a fresh container.** The contract does not change. Only the implementation changes. ([Attempt records](https://github.com/amadalis-ai/forge-architecture/tree/main/assets/runs/001-jsonplaceholder-analysis/compiled-steps))
+
+- **Execution profiles freeze per-phase model selection, validation manifests, skill policy, and budgets into an immutable snapshot** before the first AI call. Governance cannot drift mid-execution. ([Execution profiles](https://github.com/amadalis-ai/forge-architecture/blob/main/docs/execution-profiles.md))
+
+- **A compilation brief documents the compiler's reasoning** — which domain packs were selected, how contracts were wired, what routing decisions were made, and what governance was applied. ([Compilation brief](https://github.com/amadalis-ai/forge-architecture/blob/main/assets/runs/002-billing-audit/compiled-steps/compilation-brief.md))
+
+The rest of this note explains how I got here and why the architecture looks the way it does.
+
+---
+
 ## What I kept seeing
 
 When ChatGPT first came out, I immediately started imagining what we could do with this. Automating enterprise workflows. Long-horizon execution. Multi-step processes with real APIs, real data, real deliverables. The potential was obvious to anyone who had spent decades building systems architecture.
@@ -21,15 +41,11 @@ So I started experimenting. I tried to make autonomous runs reliable — long ex
 
 About eighteen months ago, I set out to solve this problem for real. It was driving me crazy. I could see what needed to exist, and it did not exist anywhere. So I started building it — nights and weekends, alongside my day job.
 
-And through all of that building, I kept reading announcements from companies claiming they have replaced entire teams with agents. I read founders describing 95 percent success rates on complex autonomous work. I read technical posts that make reliability sound like a solved problem.
+And through all of that building, I kept reading announcements — companies claiming they have replaced entire teams with agents, founders describing near-perfect success rates on complex autonomous work, technical posts that make reliability sound like a solved problem.
 
-I do not buy most of it.
+I have not found public evidence that other systems jointly demonstrate compilation-style planning, typed handoffs, frozen policy, governed code execution, and receipt-backed verification in one runtime. Pieces exist. The combination — enforced simultaneously, in one machine-verifiable execution model — I have not seen.
 
-Some teams are better than others, absolutely. Some have genuinely pushed the boundary. But the gap between what is claimed in public and what I have observed in practice is wide. After eighteen months of building, testing, failing, and rebuilding, I believe the majority of those claims are overstated.
-
-Either I am missing something that everyone else has figured out, or a lot of people have not actually run these systems at the scale and duration they describe.
-
-I do not say this to be provocative. I say it because it is the honest starting point for everything that follows. If the reliability problem were actually solved, I would not have spent a year building what I built.
+Either I am missing something, or the gap between what is claimed and what is publicly inspectable is wide. I say this not to be dismissive. Some teams have genuinely pushed the boundary. But if the reliability problem were actually solved, I would not have spent eighteen months building what I built.
 
 ### What the failures actually look like
 
@@ -121,7 +137,7 @@ This extends far beyond API calls. The same protocol drives the planner itself. 
 
 Look at the pattern. Every field tells the model exactly what to put there. `{FILL|string}` means "you provide a string." `{ENUM|json|csv|parquet|html|md}` means "pick one of these." `{OPTIONAL_ENUM|none|preferred|required}` means "pick one, or skip it." The model never has to guess what a field accepts. It never has to look elsewhere to find the constraints. The menu is self-contained.
 
-This was the game changer. With this protocol, the model generates contracts for plans that span a hundred steps with a thousand sub-steps — with perfect fidelity. The model was never the bottleneck for generation. The way we were talking to it was.
+This was the game changer. In the published runs linked in this note, the template protocol preserved structural fidelity across compiled step generation and downstream contract emission — plans spanning a hundred steps with a thousand sub-steps. The model was never the bottleneck for generation. The way we were talking to it was.
 
 Everyone in the industry describes the inversion abstractly: "let the AI focus on intent, not mechanics." I built the actual mechanism. A bidirectional translator between any JSON schema and a model-consumable template language. Menu in, order out, payload delivered.
 
@@ -236,7 +252,7 @@ Today there are 12 domain packs, 12 workflow packs, 24 artifact kinds, 15 cross-
 
 By this point, I had built:
 
-- A language the model can consume with perfect fidelity (imprinting templates)
+- A language the model can consume with high structural fidelity (imprinting templates)
 - A bidirectional serializer that translates between any JSON schema and that language
 - A validation ladder that catches errors before they propagate
 - A semantic layer that maps between different platform vocabularies
@@ -684,6 +700,25 @@ When a step's compilation determines it needs this skill, the entire package is 
 
 ---
 
+## Claims and evidence
+
+Every architectural claim in this note maps to inspectable proof in the [public artifact set](https://github.com/amadalis-ai/forge-architecture):
+
+| Claim | Evidence |
+|-------|----------|
+| Execution is fail-closed on missing inputs | Compilation brief: unbound inputs block the step |
+| Output bindings are immutable after compilation | Compiled step contract: `immutable_output_bindings: true`, repair policy |
+| Runtime emits receipts independent of the model's self-report | Compiled steps artifact: preflight and postflight receipt sub-steps |
+| Sandbox cannot make raw model API calls | Governed tool bridge: all model calls go through platform governance |
+| Each step runs in a fresh execution context | Attempt records: different sandbox_id per step |
+| Contract hashes seal the specification before execution | Plan artifact: `contract_hash: "sha256:..."` per step |
+| Governed evaluator calls are individually traced and proof-persisted | Tool bridge architecture: model_call_id, bundle_sha256, verdict per call |
+| Execution profiles are frozen before the first AI call | Execution profiles documentation: immutable snapshot at run start |
+| The system handles infrastructure failure transparently | Attempt records: fresh container retry on sandbox 5xx, model never knew |
+| Successful runs can be extracted as replayable capsules | Operator packages API: extraction, versioning, headless strict-replay execution |
+
+---
+
 ## What I have not solved
 
 The semantic type system is at the beginning of its evolution. Twelve domain packs. Not two hundred.
@@ -710,7 +745,7 @@ Maybe autonomous work benefits from the same kind of pre-execution structure, va
 
 I am not publishing this to define a new category or to claim I have solved everything. I am publishing it because the architecture addresses real failure modes in a way I have not seen elsewhere, and I want to show the work to people who can evaluate it honestly.
 
-The novelty here is not any single primitive — workflow engines, typed DAGs, capability registries, sandboxed execution, and replayable jobs all exist in various forms. What may be different is the degree of integration: compilation-style planning, typed handoffs, frozen policy, code-backed execution, and replayable capsules composed into one disciplined system.
+The claim is not that any individual primitive is new — workflow engines, typed DAGs, capability registries, sandboxed execution, and replayable jobs all exist in various forms. The claim is that this runtime enforces these invariants simultaneously, in one machine-verifiable execution model: compilation-style planning, typed handoffs, frozen policy, code-backed execution, governed evaluation, and replayable capsules.
 
 If you have built agent systems and felt the pain of runtime ambiguity, silent contract mismatches, capability hallucination, or context decay, then you understand why I ended up here. And if you come from compilers, enterprise integration, or data infrastructure, the shape of this argument probably feels familiar.
 
