@@ -349,20 +349,36 @@ flowchart LR
 
 ## What I can show today
 
-I care a lot about separating theory from evidence. Here is a real compiled run.
+I care a lot about separating theory from evidence. Here is a real compiled run — a 9-step billing audit over 753 time entries, publicly inspectable in the [proof artifacts](https://github.com/amadalis-ai/forge-architecture/tree/main/assets/runs/002-billing-audit).
 
-### The anatomy
+### The run
 
-A 4-step plan: fetch API data, assemble a relationship graph, compute user metrics, render a ranking page in HTML. Each plan step was decomposed into 8 to 14 compiled sub-steps. The model writes the business logic — one sub-step. The other 7 to 9 are compiler-generated harness: workspace preparation, input materialization, preflight validation, the actual work, postflight validation, output verification, and persistence.
+A user provided 753 professional services time entries, 7 contracts, 7 rate cards, 6 invoices, and a finance policy document. The objective: reconcile every time entry against its contract terms and rate card, detect discrepancies, build correction candidates with business rule enforcement, simulate API submissions, and generate an HTML report with PDF.
 
-The compiled step contract:
+The compiler produced a 9-step plan under the `strict.allow-normalizers.v1` policy profile — fail-closed on missing inputs, immutable output bindings, explicit adapters permitted, no silent coercion:
+
+| Step | What it does | Consumes from |
+|------|-------------|---------------|
+| 1. Profile inputs | Read all CSVs, report schemas and nulls | Source attachments |
+| 2. Normalize | Parse CSVs, convert dates, verify types | Step 1 |
+| 3. Resolve contracts | Composite-key joins, classify linkage status for all 753 entries | Step 2 |
+| 4. Compute discrepancies | Rate check, amount check, cap check per entry | Step 3 |
+| 5. Summarize exceptions | Aggregate by type with dollar impact | Step 4 |
+| 6. Build corrections | Per-invoice correction payloads with $100/$25 business rules | Steps 4, 5 |
+| 7. Simulate submissions | Mock finance API with acceptance/rejection logic | Step 6 |
+| 8. Generate HTML report | Executive summary, discrepancy tables, correction outcomes | Steps 4, 5, 6, 7 |
+| 9. Convert to PDF | HTML → PDF | Step 8 |
+
+Every step carries a SHA-256 contract hash, declared input/output artifact refs, repair policy, and allowed tool IDs. The [compilation brief](https://github.com/amadalis-ai/forge-architecture/blob/main/assets/runs/002-billing-audit/compiled-steps/compilation-brief.md) documents the compiler's reasoning — which domain packs were selected, how contracts were wired, what governance was applied.
+
+### The compiled contract
+
+Each step's specification is frozen before execution:
 
 ```json
 {
-  "contract_hash": "sha256:e2ddab22...1490dd4c0b",
+  "contract_hash": "sha256:...",
   "allowed_tool_ids": ["sandbox.session"],
-  "execution_backend": "sandbox.session",
-  "routing_reason": "governed_routing_mode:sandbox_first",
   "repair_policy": {
     "strategy": "retry_same_contract",
     "max_retries": 6,
@@ -371,73 +387,41 @@ The compiled step contract:
 }
 ```
 
-The contract hash seals the entire specification. The repair policy is part of the contract — not an afterthought bolted on at runtime.
+The contract hash seals the specification. The repair policy is part of the contract — not an afterthought. If a step fails, the system retries under the same immutable contract with a fresh container. The contract does not change. Only the implementation changes.
 
 ### Artifact wiring
 
-Step 0 declares what it will produce. Step 1 declares what it needs to consume. The compiler resolves these before any code runs.
+Step 4 (compute discrepancies) declares that it consumes Step 3's output (resolved contract entries). The compiler verified this binding before Step 1 ran. If Step 3 does not produce `contract_applicability_simone.json` at the declared path, Step 4 never starts. Fail-closed.
 
-```json
-// Step 0 declares its output:
-"output_artifact_refs": [{
-  "path": "output/_slots/ps-0-fetch-api-datasets/raw_api_data.json",
-  "ref_id": "ps-0-fetch-api-datasets:output:3:raw-api-data"
-}]
-
-// Step 1 declares it as an input:
-"input_artifact_refs": [{
-  "path": "output/_slots/ps-0-fetch-api-datasets/raw_api_data.json",
-  "ref_id": "ps-1-assemble-relationship-graph:input:0:raw-api-data"
-}]
-
-// Step 3 consumes three upstream outputs:
-"input_artifact_refs": [
-  { "ref_id": "ps-3:input:0:enriched-users" },
-  { "ref_id": "ps-3:input:1:raw-api-data" },
-  { "ref_id": "ps-3:input:2:related-data-graph" }
-]
-```
-
-This is not a prompt chain. It is a build graph. The artifacts have stable addresses. The wiring is resolved before step 1 executes. If step 0 does not produce what step 1 expects, step 1 never starts.
+Each step's outputs flow to downstream steps through declared artifact refs — stable addresses resolved at compilation time. This is not a prompt chain. It is a build graph.
 
 ### The receipts
 
-After each step, the system independently verifies the model's output:
+After each step, the system independently verifies the output — hashing, parse validation, schema inference:
 
 ```json
 {
-  "step_id": "ps-0-fetch-api-datasets",
+  "step_id": "ps-3-resolve-contracts",
   "outputs": [{
     "exists": true,
-    "size_bytes": 117067,
-    "sha256": "5ce4986d121f06dc418bcb6565640c54...",
+    "size_bytes": 245891,
+    "sha256": "...",
     "parse_validation": { "ok": true },
     "schema_summary": {
-      "top_level_keys": ["source","users","users_by_id","collections"],
-      "row_count_hint": 10,
-      "candidate_key_hints": [{
-        "columns": ["id"],
-        "distinct_count": 10,
-        "observed_unique_in_sample": true
-      }]
+      "row_count_hint": 753,
+      "candidate_key_hints": [{ "columns": ["time_entry_id"], "distinct_count": 753 }]
     }
   }]
 }
 ```
 
-The system hashes the output. It validates that it parses. It infers the schema — column names, row counts, candidate keys. This schema summary flows downstream to the next step, so the next model has type information about its inputs without anyone having to declare it manually.
+753 records in, 753 records out. The receipt confirms it independently — the model does not get to say "I processed all of them." The system checks.
 
-The model does not get to say "I did it." The system checks.
+### The deliverables
 
-### What happens when something breaks
+Nine verified output files, each traceable through the contract chain: schema profile, normalized sources, contract applicability (753 records), discrepancies, exception summary, correction candidates, correction submission results (accepted/rejected/approval-required), HTML audit report, and PDF. The [full artifact set](https://github.com/amadalis-ai/forge-architecture/tree/main/assets/runs/002-billing-audit/deliverables) is publicly inspectable.
 
-Two real failures from this same run:
-
-**Infrastructure failure.** The sandbox returned HTTP 500. The system tried a fresh handle on the same container — also failed. So it provisioned an entirely new container and replayed the identical compiled code. The model never knew. The business logic was unchanged. Only the infrastructure was replaced.
-
-**Logic failure.** The model's own validation caught an extra field (`rank`) that the contract did not specify. The system retried under the same immutable contract. The second model invocation generated different code that passed its own checks. The contract did not change. Only the implementation changed.
-
-This is the compiler-runtime separation in practice. The contract is the specification. The model is the implementation. If the implementation fails, you re-compile fresh code under the same specification. You do not debug the failure — you replace the implementation.
+Everything else in this note — the API data analysis run, the CSV join transform — is the same architecture applied to different domains. The billing audit is the strongest public evidence because it demonstrates the most invariants simultaneously: fail-closed inputs, immutable outputs, composite-key joins, business rule enforcement, cross-phase validation, and governed report generation.
 
 ---
 
@@ -633,25 +617,15 @@ The key insight is the construction analogy. A compiled plan is a blueprint. Eac
 
 That is the difference between this system and every platform that tries to have one model do everything in one long session. Here, each step is a specialist with a contract, a fresh mind, and the freedom to solve its part of the problem however it sees fit — as long as the output satisfies the contract. The model adapts. It writes its own tools. It invents whatever approach makes sense. But it operates within structural constraints that guarantee the downstream steps will receive what they need.
 
-**Screening a thousand resumes.** The executor loops over candidates within a single step — extracting source text, assembling a per-candidate evidence bundle (source resume + extracted profile + rubric), and calling the platform's governed evaluator per item. One thousand resumes means one thousand bounded governed evaluator calls, not one massive prompt. Each call produces a proof-backed candidate card. The cards aggregate into batch rankings and a global merge. Every score traces to both the extraction code and the governed evaluator call that assessed it. Encapsulate it. Next hiring cycle, run the same Capsule on new resumes.
+**Screening a thousand resumes.** The executor loops over candidates within a single step — extracting source text, assembling a per-candidate evidence bundle (source resume + extracted profile + rubric), and calling the platform's governed evaluator per item. One thousand resumes means one thousand bounded governed evaluator calls, not one massive prompt. Each call produces a proof-backed candidate card. The cards aggregate into batch rankings and a global merge. Every score traces to both the extraction code and the governed evaluator call that assessed it. Encapsulate it. Next hiring cycle, run the same Capsule.
 
-**Auditing a year of vendor contracts.** The system extracts clauses, identifies obligations, flags non-standard terms, produces a risk register with citations. Every finding traces back through the extraction code to the exact paragraphs in the source documents — with line numbers. A compliance officer can follow the chain from finding to source without asking the model anything.
+**Reconciling 753 billing entries.** The executor iterates over time entries, computing rate deltas and cap violations in code, calling governed evaluators for complex judgment items like exception classification. Every discrepancy traces through the computation code and evaluator proof. The 9-step billing audit in the [public artifact set](https://github.com/amadalis-ai/forge-architecture/tree/main/assets/runs/002-billing-audit) demonstrates this end-to-end: source attachments → normalization → contract applicability → discrepancies → exception summary → corrections → report → PDF.
 
-**Reconciling billing data every Friday.** Sealed Capsule. No model inference. The transformation code is frozen. Every discrepancy in the output can be traced through the computation chain to the source rows. The finance team does not have to trust the model. They can read the code.
+**Customer onboarding.** Mix of sealed Capsules (deterministic: branding, config, accounts) and adaptive steps (executor queries data mid-workflow, calls governed evaluators for remediation, adjusts based on what it finds). The compiled plan provides the structure. The executor provides the adaptation. The governance provides the guardrails.
 
-**Large-scale research across hundreds of documents.** The executor iterates over documents within a step, extracting claims and evidence per document through governed evaluator calls. Each evaluator call receives a bounded evidence bundle and produces a proof-backed result. Cross-referencing and synthesis happen from audited per-document cards. Every claim in the final report traces to both the extraction code and the governed evaluator call that assessed it — the specific documents, specific paragraphs, and the evaluator's proof record.
+The same architecture applies to contract auditing, large-scale research, website construction, support triage with structural human-in-the-loop gates, and repetitive scheduled processes. The [architecture thesis](/research/architecture) covers each in detail with diagrams. The point is not the use cases — it is that every one is governed, traceable, and repeatable, whether it is 4 steps or 400.
 
-**Building a 500-page website.** The plan compiles the full structure — navigation, pages, components, content, styling. Each page is a step. The step that builds page 47 does not need to know how page 12 was built. It needs to know that the navigation component and the theme assets will be there — and the compiler guarantees they will be, because those are contracted outputs of earlier steps. The model generates the code for each page fresh, adapting to the content, but within the structural constraints of the compiled architecture. You do not lose track at page 200 because no single model is carrying the context of pages 1 through 199.
-
-**Customer onboarding workflows.** Imagine a process that configures an application for a new customer — theming, branding, data loading, permission setup, integration configuration, validation checks. Some of it is repetitive and can be sealed Capsules that run identically for every customer. Some of it requires the model to adapt — querying data mid-workflow, adjusting configuration based on what it finds, rewriting the approach when a step encounters something unexpected. The compiled plan provides the structure. The executor provides the adaptation. The governance provides the guardrails.
-
-**Support ticket triage with human-in-the-loop.** The system can determine mid-execution that a step requires human approval — and the plan was compiled with that gate built in. The model cannot evade it. There is only one gatekeeper, and the gatekeeper is the platform — the operating system that runs the compiled program. If the plan says step 5 requires human review before step 6 can start, then step 6 does not start until a human approves. This is not a prompt instruction the model might ignore. It is a structural gate in the compiled execution graph.
-
-**Repetitive operational processes.** Any process that happens on a schedule — weekly data transformation, monthly compliance checks, quarterly reporting — can be compiled once, proven once, and encapsulated. The sealed Capsule runs deterministically with new data. The organization builds a library of compiled programs that get cheaper to run over time. A non-technical person described what they wanted. The system compiled it. Now it runs.
-
-The point is not the use cases themselves. The point is that the architecture makes each one governed, traceable, and repeatable — whether it is a 4-step data pipeline or a 400-step enterprise process. The model has complete freedom to adapt and invent within each step. But the structure around it guarantees that the contracts are met, the governance is enforced, the human-in-the-loop gates cannot be bypassed, and every computation is traceable from deliverable back to source.
-
-The twelve domain packs that exist today — billing audit, legal review, resume screening, research synthesis, finance analysis, security audit, and others — are a starting library. The system is designed for custom packs. If you need a domain pack for insurance claims processing, customer onboarding, or manufacturing quality control, you build it and register it. Every new pack extends what the compiler can compile correctly.
+The twelve domain packs are a starting library. The system is designed for custom packs — insurance claims, clinical trials, manufacturing quality control. Every new pack extends what the compiler can compile correctly.
 
 ---
 

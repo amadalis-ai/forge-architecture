@@ -1678,50 +1678,124 @@ A literal file tree of one public run, inspectable at [GitHub](https://github.co
 
 **Adapter** — An explicit transformation inserted by the compiler when a producer's artifact kind does not match a consumer's accepted kind, but both share the same entity schema.
 
-**Artifact contract** — A schema requirement attached to a declared output artifact, specifying the expected format, required fields, and validation rules. Frozen into the compiled step contract.
+**Adapter** — An explicit transformation inserted by the compiler when a producer's artifact kind does not match a consumer's accepted kind, but both share the same entity schema.
+
+**Artifact contract** — A schema requirement attached to a declared output artifact. Frozen into the compiled step contract.
+```json
+{ "output/report.html": { "kind_key": "report.html", "format": "html" } }
+```
 
 **Artifact kind** — The representation format of a data artifact (e.g., `table.json_rows`, `report.html`, `code.patch.unified_diff`).
 
 **Capsule** — A self-contained, reusable execution unit extracted from a successful compiled run. Contains the frozen plan template, parameter schema, governance rules, and source provenance. Called "operator package" in the runtime.
 
-**Compiled step contract** — The frozen specification for a single step, produced by the compiler. Contains input/output bindings, artifact contracts, repair policy, allowed tools, and a SHA-256 contract hash. Immutable after compilation.
+**Compiled step contract** — The frozen specification for a single step. Immutable after compilation.
+```json
+{
+  "contract_hash": "sha256:e2ddab22...1490dd4c0b",
+  "allowed_tool_ids": ["sandbox.session"],
+  "input_artifact_refs": [{ "ref_id": "ps-0:output:3:raw-api-data", "path": "output/raw_api_data.json" }],
+  "output_artifact_refs": [{ "ref_id": "ps-1:output:0:graph", "path": "output/graph.json" }],
+  "repair_policy": { "strategy": "retry_same_contract", "max_retries": 6, "immutable_output_bindings": true }
+}
+```
 
 **Contract hash** — SHA-256 digest sealing a step's complete compiled specification. Immutable after compilation.
 
 **Cross-step slot** — A semantic role for data flowing between steps (e.g., `normalized_rows`, `findings`, `report_artifact`).
 
-**Domain pack** — A standard library for a business domain. Contains entity schemas, trigger patterns, disambiguation rules, and synonym vocabulary.
+**Domain pack** — A standard library for a business domain.
+```json
+{
+  "domain_pack_id": "billing-audit",
+  "entity_schemas": ["billing.time_entry", "billing.rate_card", "billing.discrepancy_row"],
+  "triggers": ["billing audit", "invoice discrepancies", "timesheet reconciliation"],
+  "disambiguation": ["Use billing-audit for billable work. Use finance-analysis for ledger/budget."]
+}
+```
 
 **Entity schema** — The semantic meaning of data within a domain (e.g., `billing.time_entry`, `legal.clause_finding`).
 
-**Evaluator** — A separate AI model invoked through the governed tool bridge to perform semantic judgment on evidence bundles. The evaluator is distinct from the executor — the executor does the work, the evaluator judges the work. The platform governs each evaluator call independently.
+**Evaluator** — A separate AI model invoked through the governed tool bridge to perform semantic judgment on evidence bundles. The executor does the work; the evaluator judges the work.
 
-**Evidence bundle** — A structured package containing source evidence, derived outputs, and a rubric, evaluated as a unit by the governed evaluator. Single-file evaluation is the simplest bundle case.
+**Evidence bundle** — A structured package evaluated as a unit by the governed evaluator.
+```json
+{
+  "item_id": "candidate_001",
+  "source_evidence": [{ "path": "work/resumes/001/source_text.md", "role": "original_resume_text" }],
+  "derived_evidence": [{ "path": "work/resumes/001/profile.json", "role": "extracted_profile" }],
+  "rubric": { "criteria": ["no invented facts", "no omitted evidence", "rationale cites source"] }
+}
+```
 
 **Executable contract** — The runtime-facing version of the compiled step contract (`executable_contract_v2`), containing step inputs/outputs, execution policy, and repair strategy. Frozen at dispatch time.
 
-**Execution profile** — A frozen configuration snapshot governing a run: model bindings, validation phases, budgets, skill policy.
+**Execution profile** — A frozen configuration snapshot governing a run.
+```json
+{
+  "planner_phase_bindings": { "pass_a": { "model_binding_ref": "anthropic:claude-opus-4-6" } },
+  "executor_by_backend": { "sandbox.session": { "model_binding_ref": "anthropic:claude-opus-4-6" } },
+  "validation": { "phases": { "step_output": { "mode": "block" } } },
+  "skill_policy": { "pinned_skills": [{ "skill_id": "html-report-generator", "priority": "required" }] }
+}
+```
 
-**Governed evaluator call** — A platform-handled AI evaluation invoked from within the sandbox through the governed tool bridge. The platform enforces budgets, records provenance, and persists proof for each call.
+**Governed evaluator call** — A platform-handled AI evaluation invoked from within the sandbox through the governed tool bridge.
+```json
+call("operator.artifact.evaluate", {
+  "path": "work/eval_bundles/candidate_001.json",
+  "rubric": "Judge extraction fidelity against source resume.",
+  "enforcement": "block"
+})
+```
 
-**Governed tool bridge** — The mechanism by which the sandbox calls platform tools (such as `operator.artifact.evaluate`) with governance, budgets, tracing, and proof persistence. The sandbox cannot make raw model API calls.
+**Governed tool bridge** — The mechanism by which the sandbox calls platform tools with governance, budgets, tracing, and proof persistence. The sandbox cannot make raw model API calls.
 
-**Imprinting template** — A self-describing template using the token language (FILL, OPTIONAL, AUTO, FILL_ENUM, OPTIONAL_ENUM) that enables models to generate complex structured output with high structural fidelity.
+**Imprinting template** — A self-describing template using the token language that enables models to generate complex structured output with high structural fidelity.
+```json
+{
+  "label": "{imperative verb phrase}",
+  "status": "{FILL_ENUM|active|paused|archived}",
+  "score": "{FILL|number}",
+  "notes": "{OPTIONAL|string}"
+}
+```
 
 **Policy profile** — Governance rules controlling compiler and runtime strictness (e.g., `strict.fail-closed.v1`, `provenance.required.v1`).
 
-**Skill package** — A versioned capability module containing behavioral instructions, technical reference, executable scripts, assets, templates, and schema contracts. Materialized into the sandbox at `/skills/{skill_id}/` from R2 storage. The model calls skill scripts as subprocesses — library linking, not capability hallucination.
-
-**Postflight receipt** — System-generated verification record created after step execution: output hashing, parse validation, schema inference.
+**Postflight receipt** — System-generated verification record created after step execution.
+```json
+{
+  "step_id": "ps-0-fetch-api-datasets",
+  "outputs": [{ "exists": true, "size_bytes": 117067, "sha256": "5ce4986d...", "parse_validation": { "ok": true } }]
+}
+```
 
 **Preflight receipt** — System-generated verification record created before step execution: input hashing, schema summaries, candidate key detection.
 
 **Sealed Capsule** — A Capsule in strict replay mode: the compiled programs run on new data without re-planning or code generation. Governed evaluator calls within the frozen code still invoke model intelligence where the workflow requires it.
 
-**Structural Capsule** — (Designed, in development) A Capsule that preserves the compiled architecture but allows fresh model reasoning for selected steps.
+**Skill package** — A versioned capability module materialized into the sandbox at `/skills/{skill_id}/`.
+```
+html-report-generator/
+├── SKILL.md              # behavioral instructions
+├── scripts/render_report.py
+├── assets/templates/*.html
+└── references/content-schema.json
+```
+
+**Structural Capsule** — A Capsule that preserves the compiled architecture but allows fresh model reasoning for selected steps.
 
 **Validation ladder** — A multi-stage pipeline (L0–L6, 11 stages) that validates and corrects payloads through progressive deterministic and AI-powered stages.
 
-**Workflow pack** — Operational semantics for a class of work transformation. Defines typical input/output slots, trigger patterns, and disambiguation rules.
+**Workflow pack** — Operational semantics for a class of work transformation.
+```json
+{
+  "workflow_pack_id": "reconcile-compare",
+  "typical_slots": { "inputs": ["normalized_rows", "joined_rows"], "outputs": ["findings", "scores"] },
+  "triggers": ["compare two sources", "find discrepancies", "reconcile datasets"],
+  "disambiguation": ["Requires two+ input sources. analyze-score-rank operates on one source."]
+}
+```
 
 **Workspace** — A persistent computing environment with its own file system, memory, governance policies, knowledge base, model assignments, and skill configurations.
